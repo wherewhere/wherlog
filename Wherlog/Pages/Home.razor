@@ -7,7 +7,7 @@
 
 <h1>Home</h1>
 
-@if (postList  == null)
+@if (postList == null)
 {
     <FluentProgressRing />
 }
@@ -17,8 +17,8 @@ else
         @foreach (PostModel post in postList)
         {
             <FluentCard>
-                <h1>@post.Title</h1>
-                <span style="white-space: pre-wrap;">@post.Excerpt</span>
+                <h3>@post.Title</h3>
+                @(new MarkupString(post.Excerpt))
             </FluentCard>
         }
     </FluentStack>

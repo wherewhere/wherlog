@@ -1,0 +1,45 @@
+﻿@page "/pages/{*path}"
+@using Wherlog.Helpers
+@using Wherlog.Models.Page
+@inject NavigationManager Navigation
+
+@if (pageModel == null)
+{
+    <PageTitle>Page</PageTitle>
+
+    <h1>Page</h1>
+}
+else
+{
+    <PageTitle>@pageModel.Title</PageTitle>
+
+    <div class="main-inner">
+        <h1 class="post-title">@pageModel.Title</h1>
+        @(new MarkupString(pageModel.Content))
+    </div>
+}
+
+@code {
+    private RequestHelper request = RequestHelper.Default;
+    private PageModel pageModel;
+
+    [Parameter]
+    public string Path { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Path = Path ?? "404";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            pageModel = await request.GetPageAsync(Path).ContinueWith(x => x.Result?.Data);
+        }
+        catch
+        {
+            pageModel = await request.GetPageAsync("404").ContinueWith(x => x.Result?.Data);
+        }
+    }
+}

@@ -34,11 +34,15 @@ namespace Wherlog.Helpers
 
         public Task<Entry<PagesModel[]>> GetPagesAsync(CancellationToken cancellationToken = default) =>
             GetAsync("api/pages.json", SourceGenerationContext.Default.EntryPagesModelArray, cancellationToken);
+
+        public Task<Entry<PageModel>> GetPageAsync(string path, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/pages/{path}.json", SourceGenerationContext.Default.EntryPageModel, cancellationToken);
     }
 
     [JsonSerializable(typeof(Entry<SiteModel>))]
     [JsonSerializable(typeof(Entry<PostsModel>))]
     [JsonSerializable(typeof(Entry<PostsIndexModel>))]
     [JsonSerializable(typeof(Entry<PagesModel[]>))]
+    [JsonSerializable(typeof(Entry<PageModel>))]
     public partial class SourceGenerationContext : JsonSerializerContext;
 }
