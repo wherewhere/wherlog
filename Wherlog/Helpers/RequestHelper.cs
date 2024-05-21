@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
-using Wherlog.Models.Page;
-using Wherlog.Models;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
+using System.Threading.Tasks;
+using Wherlog.Models;
+using Wherlog.Models.Page;
 using Wherlog.Models.Post;
 
 namespace Wherlog.Helpers
@@ -18,14 +20,25 @@ namespace Wherlog.Helpers
         public Task<Entry<T>> GetAsync<T>(string url, CancellationToken cancellationToken = default) =>
             HttpClient.GetFromJsonAsync<Entry<T>>(url, cancellationToken);
 
+        public Task<Entry<T>> GetAsync<T>(string url, JsonTypeInfo<Entry<T>> jsonTypeInfo, CancellationToken cancellationToken = default) =>
+            HttpClient.GetFromJsonAsync(url, jsonTypeInfo, cancellationToken);
+
+        public Task<Entry<SiteModel>> GetSiteAsync(CancellationToken cancellationToken = default) =>
+            GetAsync("api/site.json", SourceGenerationContext.Default.EntrySiteModel, cancellationToken);
+
         public Task<Entry<PostsModel>> GetPostsAsync(CancellationToken cancellationToken = default) =>
-            GetAsync<PostsModel>("api/posts.json", cancellationToken);
+            GetAsync("api/posts.json", SourceGenerationContext.Default.EntryPostsModel, cancellationToken);
 
         public Task<Entry<PostsIndexModel>> GetPostsAsync(int index, CancellationToken cancellationToken = default) =>
-            GetAsync<PostsIndexModel>($"api/posts/page.{index}.json", cancellationToken);
+            GetAsync($"api/posts/page.{index}.json", SourceGenerationContext.Default.EntryPostsIndexModel, cancellationToken);
 
         public Task<Entry<PagesModel[]>> GetPagesAsync(CancellationToken cancellationToken = default) =>
-            GetAsync<PagesModel[]>("api/pages.json", cancellationToken);
-
+            GetAsync("api/pages.json", SourceGenerationContext.Default.EntryPagesModelArray, cancellationToken);
     }
+
+    [JsonSerializable(typeof(Entry<SiteModel>))]
+    [JsonSerializable(typeof(Entry<PostsModel>))]
+    [JsonSerializable(typeof(Entry<PostsIndexModel>))]
+    [JsonSerializable(typeof(Entry<PagesModel[]>))]
+    public partial class SourceGenerationContext : JsonSerializerContext;
 }

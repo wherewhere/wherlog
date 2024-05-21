@@ -1,17 +1,17 @@
-﻿@inherits LayoutComponentBase
+﻿@using Wherlog.Helpers
+@using Wherlog.Models
+@inherits LayoutComponentBase
 
 <FluentLayout>
-    <FluentHeader>Wherlog</FluentHeader>
+    <FluentHeader>@(site?.Title ?? "wherlog")</FluentHeader>
     <FluentStack Orientation="Orientation.Horizontal" Width="100%">
-        <div style="background: var(--neutral-layer-1);">
+        <div style="background: var(--neutral-layer-1); border-radius: calc(var(--layer-corner-radius)* 1px); padding-left: 1px; padding-right: 1px;">
             <NavMenu />
         </div>
         <FluentBodyContent Class="body-content">
             <ErrorBoundary>
                 <ChildContent>
-                    <div class="content">
-                        @Body
-                    </div>
+                    <div class="content">@Body</div>
                 </ChildContent>
                 <ErrorContent Context="ex">
                     <div class="blazor-error-boundary">@ex.Message</div>
@@ -20,8 +20,19 @@
         </FluentBodyContent>
     </FluentStack>
     <FluentFooter>
-        <a href="https://www.fluentui-blazor.net" target="_blank">Documentation and demos</a>
+        <span>Copyright © 2017 - 2024 wherewhere. All Rights Reserved</span>
         <FluentSpacer />
-        <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor" target="_blank">About Blazor</a>
+        <a href="https://github.com/wherewhere/wherlog" target="_blank">Github</a>
     </FluentFooter>
 </FluentLayout>
+
+@code
+{
+    private RequestHelper request = RequestHelper.Default;
+    private SiteModel site;
+
+    protected override async Task OnInitializedAsync()
+    {
+        site = await request.GetSiteAsync().ContinueWith(x => x.Result?.Data);
+    }
+}

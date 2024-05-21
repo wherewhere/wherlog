@@ -7,15 +7,21 @@
 
 <h1>Home</h1>
 
-@if(@postList != null)
+@if (postList  == null)
 {
-    @foreach (PostModel post in postList)
-    {
-        <FluentCard>
-            <h1>@post.Title</h1>
-            <p style="white-space: pre-wrap;">@post.Excerpt</p>
-        </FluentCard>
-    }
+    <FluentProgressRing />
+}
+else
+{
+    <FluentStack Orientation="Orientation.Vertical">
+        @foreach (PostModel post in postList)
+        {
+            <FluentCard>
+                <h1>@post.Title</h1>
+                <span style="white-space: pre-wrap;">@post.Excerpt</span>
+            </FluentCard>
+        }
+    </FluentStack>
 }
 
 @code
@@ -29,7 +35,7 @@
         postsIndex = await request.GetPostsAsync().ContinueWith(x => x.Result?.Data);
         foreach (IndexModel<InfoModel> index in postsIndex?.Pages)
         {
-            postList.AddRange(await request.GetAsync<PostsIndexModel>(index.Api).ContinueWith(x => x.Result.Data.Posts));
+            postList.AddRange(await request.GetAsync(index.Api, SourceGenerationContext.Default.EntryPostsIndexModel).ContinueWith(x => x.Result.Data.Posts));
         }
     }
 }
