@@ -1,0 +1,24 @@
+﻿<FluentNavMenu
+    Width="250"
+    Collapsible="true"
+    CollapsedChildNavigation="true"
+    Title="Navigation menu"
+    @bind-Expanded="expanded">
+    <FluentNavLink
+        Href="/"
+        Match="NavLinkMatch.All"
+        Icon="@(new Icons.Regular.Size20.Home())"
+        IconColor="Color.Accent">
+        Home
+    </FluentNavLink>
+    <FluentNavLink
+        Href="settings"
+        Icon="@(new Icons.Regular.Size20.Settings())"
+        IconColor="Color.Accent">
+        Settings
+    </FluentNavLink>
+</FluentNavMenu>
+
+@code {
+    private bool expanded = true;
+}

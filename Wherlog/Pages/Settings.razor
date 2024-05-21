@@ -1,0 +1,21 @@
+﻿@page "/settings"
+
+<FluentDesignTheme
+    @bind-Mode="@Mode"
+    StorageName="theme" />
+
+<PageTitle>Settings</PageTitle>
+
+<h1>Settings</h1>
+
+<FluentStack>
+    <FluentSelect
+        Label="Theme"
+        Width="250px"
+        Items="@(Enum.GetValues<DesignThemeModes>())"
+        @bind-SelectedOption="@Mode" />
+</FluentStack>
+
+@code {
+    public DesignThemeModes Mode { get; set; }
+}
