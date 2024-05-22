@@ -79,14 +79,14 @@ namespace Wherlog.Layout
         {
             if (!string.IsNullOrWhiteSpace(value))
             {
-                var builder = new MarkdownPipelineBuilder()
+                MarkdownPipelineBuilder builder = new MarkdownPipelineBuilder()
                         .UseAdvancedExtensions()
                         .Use<MarkdownSectionPreCodeExtension>();
 
-                var pipeline = builder.Build();
+                MarkdownPipeline pipeline = builder.Build();
 
                 // Convert markdown string to HTML
-                var html = Markdown.ToHtml(value, pipeline);
+                string html = Markdown.ToHtml(value, pipeline);
 
                 // Return sanitized HTML as a MarkupString that Blazor can render
                 return new MarkupString(html);

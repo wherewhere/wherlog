@@ -1,5 +1,5 @@
-﻿using Markdig.Renderers;
-using Markdig;
+﻿using Markdig;
+using Markdig.Renderers;
 using Markdig.Renderers.Html;
 
 namespace Wherlog.Layout
@@ -12,13 +12,12 @@ namespace Wherlog.Layout
 
         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
         {
-            var htmlRenderer = renderer as TextRendererBase<HtmlRenderer>;
-            if (htmlRenderer == null)
+            if (renderer is not TextRendererBase<HtmlRenderer> htmlRenderer)
             {
                 return;
             }
 
-            var originalCodeBlockRenderer = htmlRenderer.ObjectRenderers.FindExact<CodeBlockRenderer>();
+            CodeBlockRenderer originalCodeBlockRenderer = htmlRenderer.ObjectRenderers.FindExact<CodeBlockRenderer>();
             if (originalCodeBlockRenderer != null)
             {
                 htmlRenderer.ObjectRenderers.Remove(originalCodeBlockRenderer);

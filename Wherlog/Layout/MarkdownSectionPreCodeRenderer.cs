@@ -5,11 +5,11 @@
 using Markdig.Extensions.GenericAttributes;
 using Markdig.Helpers;
 using Markdig.Parsers;
+using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
-using System.Collections.Generic;
 using System;
-using Markdig.Renderers;
+using System.Collections.Generic;
 
 namespace Wherlog.Layout
 {
@@ -34,7 +34,7 @@ namespace Wherlog.Layout
 
             if (_blocksAsDiv is not null && obj is FencedCodeBlock { Info: string info } && _blocksAsDiv.Contains(info))
             {
-                var infoPrefix = (obj.Parser as FencedCodeBlockParser)?.InfoPrefix ??
+                string infoPrefix = (obj.Parser as FencedCodeBlockParser)?.InfoPrefix ??
                                  FencedCodeBlockParser.DefaultInfoPrefix;
 
                 // We are replacing the HTML attribute `language-mylang` by `mylang` only for a div block
@@ -104,27 +104,27 @@ namespace Wherlog.Layout
 
             WriteElementAttributes(renderer, orig, codeGenericAttributes);
         }
-        static private void WriteElementAttributes(HtmlRenderer renderer, HtmlAttributes fromCodeBlock, string genericAttributes)
+        private static void WriteElementAttributes(HtmlRenderer renderer, HtmlAttributes fromCodeBlock, string genericAttributes)
         {
             // origin code block had no attributes
             fromCodeBlock ??= new HtmlAttributes();
 
             // append if any additional attributes provided
-            var ss = new StringSlice(genericAttributes);
-            if (!ss.IsEmpty && GenericAttributesParser.TryParse(ref ss, out var attributes))
+            StringSlice ss = new(genericAttributes);
+            if (!ss.IsEmpty && GenericAttributesParser.TryParse(ref ss, out HtmlAttributes attributes))
             {
                 if (fromCodeBlock != null)
                 {
                     if (attributes.Classes != null)
                     {
-                        foreach (var a in attributes.Classes)
+                        foreach (string a in attributes.Classes)
                         {
                             fromCodeBlock.AddClass(a);
                         }
                     }
                     if (attributes.Properties != null)
                     {
-                        foreach (var pr in attributes.Properties)
+                        foreach (KeyValuePair<string, string> pr in attributes.Properties)
                         {
                             fromCodeBlock.AddProperty(pr.Key, pr.Value!);
                         }
