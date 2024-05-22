@@ -1,0 +1,48 @@
+﻿@page "/posts/{*path}"
+@using Wherlog.Helpers
+@using Wherlog.Models.Post
+@inject NavigationManager Navigation
+
+@if (post == null)
+{
+    <PageTitle>Post</PageTitle>
+
+    <h1>Post</h1>
+}
+else
+{
+    <PageTitle>@post.Title</PageTitle>
+
+    <div class="main-inner">
+        <h1 class="post-title">@post.Title</h1>
+        @(new MarkupString(post.Content))
+    </div>
+}
+
+@code {
+    private RequestHelper request = RequestHelper.Default;
+    private PostDetailModel post;
+
+    [Parameter]
+    public string Path { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Path.EndsWith('/'))
+        {
+            Path = Path[..^1];
+        }
+
+        if (!string.IsNullOrEmpty(Path))
+        {
+            try
+            {
+                post = await request.GetPostAsync(Path).ContinueWith(x => x.Result?.Data);
+            }
+            catch
+            {
+                Navigation.NavigateTo("/posts/404");
+            }
+        }
+    }
+}

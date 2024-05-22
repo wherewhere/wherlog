@@ -2,6 +2,7 @@
 @using Wherlog.Helpers
 @using Wherlog.Models
 @using Wherlog.Models.Post
+@inject NavigationManager Navigation
 
 <PageTitle>Home</PageTitle>
 
@@ -16,7 +17,7 @@ else
     <FluentStack Orientation="Orientation.Vertical">
         @foreach (PostModel post in postList)
         {
-            <FluentCard>
+            <FluentCard @onclick="() => OnClick(post.Url)">
                 <h3>@post.Title</h3>
                 @(new MarkupString(post.Excerpt))
             </FluentCard>
@@ -37,5 +38,10 @@ else
         {
             postList.AddRange(await request.GetAsync(index.Api, SourceGenerationContext.Default.EntryPostsIndexModel).ContinueWith(x => x.Result.Data.Posts));
         }
+    }
+
+    private void OnClick(string path)
+    {
+        Navigation.NavigateTo($"/posts/{path}");
     }
 }

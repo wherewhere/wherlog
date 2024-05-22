@@ -32,6 +32,9 @@ namespace Wherlog.Helpers
         public Task<Entry<PostsIndexModel>> GetPostsAsync(int index, CancellationToken cancellationToken = default) =>
             GetAsync($"api/posts/page.{index}.json", SourceGenerationContext.Default.EntryPostsIndexModel, cancellationToken);
 
+        public Task<Entry<PostDetailModel>> GetPostAsync(string path, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/posts/{path}.json", SourceGenerationContext.Default.EntryPostDetailModel, cancellationToken);
+
         public Task<Entry<PagesModel[]>> GetPagesAsync(CancellationToken cancellationToken = default) =>
             GetAsync("api/pages.json", SourceGenerationContext.Default.EntryPagesModelArray, cancellationToken);
 
@@ -42,6 +45,7 @@ namespace Wherlog.Helpers
     [JsonSerializable(typeof(Entry<SiteModel>))]
     [JsonSerializable(typeof(Entry<PostsModel>))]
     [JsonSerializable(typeof(Entry<PostsIndexModel>))]
+    [JsonSerializable(typeof(Entry<PostDetailModel>))]
     [JsonSerializable(typeof(Entry<PagesModel[]>))]
     [JsonSerializable(typeof(Entry<PageModel>))]
     public partial class SourceGenerationContext : JsonSerializerContext;

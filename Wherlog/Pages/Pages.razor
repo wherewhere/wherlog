@@ -26,20 +26,16 @@ else
     [Parameter]
     public string Path { get; set; }
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         Path = Path ?? "404";
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
         try
         {
             pageModel = await request.GetPageAsync(Path).ContinueWith(x => x.Result?.Data);
         }
         catch
         {
-            pageModel = await request.GetPageAsync("404").ContinueWith(x => x.Result?.Data);
+            Navigation.NavigateTo("/pages/404");
         }
     }
 }
