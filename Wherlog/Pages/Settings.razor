@@ -1,21 +1,28 @@
 ﻿@page "/settings"
+@inject NavigationManager Navigation
 
 <FluentDesignTheme
-    @bind-Mode="@Mode"
+    @bind-Mode="@mode"
     StorageName="theme" />
 
 <PageTitle>Settings</PageTitle>
 
 <h1>Settings</h1>
 
+<h4>Theme</h4>
+<FluentSelect
+    Width="250px"
+    Items="@(Enum.GetValues<DesignThemeModes>())"
+    @bind-SelectedOption="@mode" />
+
+<h4>Navigate</h4>
 <FluentStack>
-    <FluentSelect
-        Label="Theme"
-        Width="250px"
-        Items="@(Enum.GetValues<DesignThemeModes>())"
-        @bind-SelectedOption="@Mode" />
+    <FluentTextField @bind-Value="path" />
+    <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
 </FluentStack>
 
-@code {
-    public DesignThemeModes Mode { get; set; }
+@code
+{
+    private DesignThemeModes mode;
+    private string path;
 }

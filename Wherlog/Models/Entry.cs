@@ -2,12 +2,12 @@
 
 namespace Wherlog.Models
 {
-    public class Entry<T> : IApi
+    public sealed class Entry<T> : IApi
     {
         [JsonPropertyName("data")]
-        public T Data { get; set; }
+        public T Data { get; init; }
 
         [JsonPropertyName("api")]
-        public string Api { get; set; }
+        public string Api { get; init; }
     }
 }

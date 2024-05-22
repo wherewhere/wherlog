@@ -2,18 +2,18 @@
 
 namespace Wherlog.Models.Post
 {
-    public class PostsIndexModel
+    public sealed class PostsIndexModel
     {
         [JsonPropertyName("index")]
-        public int Index { get; set; }
+        public int Index { get; init; }
 
         [JsonPropertyName("total")]
-        public int Total { get; set; }
+        public int Total { get; init; }
 
         [JsonPropertyName("posts")]
-        public PostModel[] Posts { get; set; }
+        public PostModel[] Posts { get; init; }
 
         [JsonPropertyName("info")]
-        public InfoModel Info { get; set; }
+        public InfoModel Info { get; init; }
     }
 }

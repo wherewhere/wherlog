@@ -3,36 +3,36 @@ using System.Text.Json.Serialization;
 
 namespace Wherlog.Models.Page
 {
-    public class PageModel
+    public sealed class PageModel : IRaw
     {
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string Title { get; init; }
 
         [JsonPropertyName("date")]
-        public DateTimeOffset Date { get; set; }
+        public DateTimeOffset Date { get; init; }
 
         [JsonPropertyName("updated")]
-        public DateTimeOffset Updated { get; set; }
+        public DateTimeOffset Updated { get; init; }
 
         [JsonPropertyName("comments")]
-        public bool Comments { get; set; }
+        public bool Comments { get; init; }
 
         [JsonPropertyName("url")]
-        public string Url { get; set; }
+        public string Url { get; init; }
 
         [JsonPropertyName("excerpt")]
-        public string Excerpt { get; set; }
+        public string Excerpt { get; init; }
 
         [JsonPropertyName("cover")]
-        public string Cover { get; set; }
+        public string Cover { get; init; }
 
         [JsonPropertyName("images")]
-        public string[] Images { get; set; }
+        public string[] Images { get; init; }
 
         [JsonPropertyName("content")]
-        public string Content { get; set; }
+        public string Content { get; init; }
 
         [JsonPropertyName("raw")]
-        public string Raw { get; set; }
+        public string Raw { get; init; }
     }
 }

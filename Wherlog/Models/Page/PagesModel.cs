@@ -2,15 +2,15 @@
 
 namespace Wherlog.Models.Page
 {
-    public class PagesModel : IApi
+    public sealed class PagesModel : IApi
     {
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string Title { get; init; }
 
         [JsonPropertyName("url")]
-        public string Url { get; set; }
+        public string Url { get; init; }
 
         [JsonPropertyName("api")]
-        public string Api { get; set; }
+        public string Api { get; init; }
     }
 }

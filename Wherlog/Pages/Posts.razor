@@ -1,5 +1,6 @@
 ﻿@page "/posts/{*path}"
 @using Wherlog.Helpers
+@using Wherlog.Models
 @using Wherlog.Models.Post
 @inject NavigationManager Navigation
 
@@ -15,7 +16,7 @@ else
 
     <div class="main-inner">
         <h1 class="post-title">@post.Title</h1>
-        @(new MarkupString(post.Content))
+        <MarkdownSection Content="@((post as IRaw).GetContent())" />
     </div>
 }
 
@@ -41,7 +42,7 @@ else
             }
             catch
             {
-                Navigation.NavigateTo("/posts/404");
+                Navigation.NavigateTo("/pages/404");
             }
         }
     }

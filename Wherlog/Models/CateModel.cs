@@ -2,12 +2,12 @@
 
 namespace Wherlog.Models
 {
-    public class CateModel : IApi
+    public sealed class CateModel : IApi
     {
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         [JsonPropertyName("api")]
-        public string Api { get; set; }
+        public string Api { get; init; }
     }
 }
