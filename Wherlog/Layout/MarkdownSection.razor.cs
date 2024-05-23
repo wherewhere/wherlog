@@ -11,10 +11,10 @@ namespace Wherlog.Layout
     {
         private string _content;
         private bool _raiseContentConverted;
-        private IJSObjectReference _jsModule = default!;
+        private IJSObjectReference _jsModule = default;
 
         [Inject]
-        protected IJSRuntime JSRuntime { get; set; } = default!;
+        protected IJSRuntime JSRuntime { get; set; } = default;
 
         /// <summary>
         /// Gets or sets the Markdown content 

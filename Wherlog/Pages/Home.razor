@@ -16,10 +16,7 @@ else
     <FluentStack Orientation="Orientation.Vertical">
         @foreach (PostModel post in postList)
         {
-            <FluentCard @onclick="() => OnClick(post.Url)">
-                <h3>@post.Title</h3>
-                @(new MarkupString(post.Excerpt))
-            </FluentCard>
+            <PostCard Post="@post" />
         }
     </FluentStack>
 }

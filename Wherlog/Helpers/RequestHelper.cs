@@ -47,7 +47,6 @@ namespace Wherlog.Helpers
 
         public Task<Entry<PageModel>> GetPageAsync(string path, CancellationToken cancellationToken = default) =>
             GetAsync($"api/pages/{path}.json", SourceGenerationContext.Default.EntryPageModel, cancellationToken);
-    
     }
 
     public static class RequestExtensions
