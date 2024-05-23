@@ -2,7 +2,7 @@
 
 namespace Wherlog.Models
 {
-    public sealed class IndexModel<TInfo> : IApi where TInfo : IInfo
+    public sealed class IndexModel<TInfo> : IIndex<TInfo>, IApi where TInfo : IInfo
     {
         [JsonPropertyName("index")]
         public int Index { get; init; }

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Wherlog.Models
+namespace Wherlog.Models.Cate
 {
-    public sealed class CateModel : IApi
+    public class CateModel : IApi
     {
         [JsonPropertyName("name")]
         public string Name { get; init; }

@@ -6,6 +6,7 @@ using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Wherlog.Models;
+using Wherlog.Models.Cate;
 using Wherlog.Models.Page;
 using Wherlog.Models.Post;
 
@@ -26,6 +27,12 @@ namespace Wherlog.Helpers
         public Task<Entry<SiteModel>> GetSiteAsync(CancellationToken cancellationToken = default) =>
             GetAsync("api/site.json", SourceGenerationContext.Default.EntrySiteModel, cancellationToken);
 
+        public Task<Entry<CatesModel[]>> GetCatesAsync(CateType type, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/{type switch { CateType.Category => "categories", CateType.Tag => "tags", _ => throw new NotImplementedException() }}.json", SourceGenerationContext.Default.EntryCatesModelArray, cancellationToken);
+
+        public Task<Entry<CateDetailModel>> GetCateAsync(CateType type, string slug, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/{type switch { CateType.Category => "categories", CateType.Tag => "tags", _ => throw new NotImplementedException() }}/{slug}.json", SourceGenerationContext.Default.EntryCateDetailModel, cancellationToken);
+
         public Task<Entry<PostsModel>> GetPostsAsync(CancellationToken cancellationToken = default) =>
             GetAsync("api/posts.json", SourceGenerationContext.Default.EntryPostsModel, cancellationToken);
 
@@ -40,9 +47,17 @@ namespace Wherlog.Helpers
 
         public Task<Entry<PageModel>> GetPageAsync(string path, CancellationToken cancellationToken = default) =>
             GetAsync($"api/pages/{path}.json", SourceGenerationContext.Default.EntryPageModel, cancellationToken);
+    
+    }
+
+    public static class RequestExtensions
+    {
+        public static Task<T> GetResults<T>(this Task<Entry<T>> task) where T : class => task.ContinueWith(x => x.Result?.Data);
     }
 
     [JsonSerializable(typeof(Entry<SiteModel>))]
+    [JsonSerializable(typeof(Entry<CatesModel[]>))]
+    [JsonSerializable(typeof(Entry<CateDetailModel>))]
     [JsonSerializable(typeof(Entry<PostsModel>))]
     [JsonSerializable(typeof(Entry<PostsIndexModel>))]
     [JsonSerializable(typeof(Entry<PostDetailModel>))]

@@ -2,7 +2,7 @@
 
 namespace Wherlog.Models.Post
 {
-    public sealed class PostsModel
+    public sealed class PostsModel : ICount<InfoModel>
     {
         [JsonPropertyName("total")]
         public int Total { get; init; }

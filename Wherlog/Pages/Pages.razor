@@ -7,7 +7,6 @@
 @if (pageModel == null)
 {
     <PageTitle>Page</PageTitle>
-
     <h1>Page</h1>
 }
 else
@@ -32,11 +31,11 @@ else
         Path = Path ?? "404";
         try
         {
-            pageModel = await request.GetPageAsync(Path).ContinueWith(x => x.Result?.Data);
+            pageModel = await request.GetPageAsync(Path).GetResults();
         }
         catch
         {
-            Navigation.NavigateTo("/pages/404");
+            Navigation.NavigateTo("pages/404");
         }
     }
 }

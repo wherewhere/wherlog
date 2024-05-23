@@ -1,0 +1,68 @@
+﻿@page "/categories/{slug?}"
+@using Wherlog.Helpers
+@using Wherlog.Models.Cate
+@using Wherlog.Models.Post
+@inject NavigationManager Navigation
+
+@if (cate == null)
+{
+    <PageTitle>Category</PageTitle>
+    <h1>Category</h1>
+
+    @if (cates != null)
+    {
+        <FluentStack Orientation="Orientation.Vertical">
+            @foreach (var cate in cates)
+            {
+                <FluentCard @onclick="@(() => OnClick($"categories/{cate.Slug}"))">
+                    <h4>@cate.Name</h4>
+                </FluentCard>
+            }
+        </FluentStack>
+    }
+}
+else
+{
+    <PageTitle>Category: @cate.Info.Name</PageTitle>
+    <h1>Category: @cate.Info.Name</h1>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        @foreach (PostModel post in cate.Posts)
+        {
+            <FluentCard @onclick="@(() => OnClick($"posts/{post.Url}"))">
+                <h3>@post.Title</h3>
+                @(new MarkupString(post.Excerpt))
+            </FluentCard>
+        }
+    </FluentStack>
+}
+
+@code {
+    private RequestHelper request = RequestHelper.Default;
+    private CatesModel[] cates;
+    private CateDetailModel cate;
+
+    private bool HasSlug => !string.IsNullOrEmpty(Slug);
+
+    [Parameter]
+    public string Slug { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (HasSlug)
+        {
+            cates = null;
+            cate = await request.GetCateAsync(CateType.Category, Slug).GetResults();
+        }
+        else
+        {
+            cate = null;
+            cates = await request.GetCatesAsync(CateType.Category).GetResults();
+        }
+    }
+
+    private void OnClick(string path)
+    {
+        Navigation.NavigateTo(path);
+    }
+}

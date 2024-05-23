@@ -33,6 +33,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        site = await request.GetSiteAsync().ContinueWith(x => x.Result?.Data);
+        site = await request.GetSiteAsync().GetResults();
     }
 }

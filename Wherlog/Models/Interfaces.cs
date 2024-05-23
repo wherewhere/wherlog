@@ -8,6 +8,24 @@ namespace Wherlog.Models
         string Api { get; }
     }
 
+    public interface IInfo<out TInfo> where TInfo : IInfo
+    {
+        [JsonPropertyName("info")]
+        TInfo Info { get; }
+    }
+
+    public interface IIndex<out TInfo> : IInfo<TInfo> where TInfo : IInfo
+    {
+        [JsonPropertyName("index")]
+        public int Index { get; }
+    }
+
+    public interface ICount<out TInfo> : IInfo<TInfo> where TInfo : IInfo
+    {
+        [JsonPropertyName("count")]
+        public int Count { get; }
+    }
+
     public interface IRaw
     {
         [JsonPropertyName("raw")]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using Wherlog.Models.Cate;
 
 namespace Wherlog.Models.Post
 {

@@ -7,7 +7,6 @@
 @if (post == null)
 {
     <PageTitle>Post</PageTitle>
-
     <h1>Post</h1>
 }
 else
@@ -38,11 +37,11 @@ else
         {
             try
             {
-                post = await request.GetPostAsync(Path).ContinueWith(x => x.Result?.Data);
+                post = await request.GetPostAsync(Path).GetResults();
             }
             catch
             {
-                Navigation.NavigateTo("/pages/404");
+                Navigation.NavigateTo("pages/404");
             }
         }
     }
