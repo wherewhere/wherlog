@@ -61,3 +61,12 @@
     ::deep .hljs-copy-wrapper:hover .hljs-copy, .hljs-copy:focus {
         transform: translateX(0);
     }
+
+::deep figcaption {
+    color: var(--neutral-foreground-hint);
+    font-size: 0.875em;
+    font-weight: bold;
+    line-height: 1;
+    margin: auto auto 15px;
+    text-align: center;
+}

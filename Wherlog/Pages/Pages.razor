@@ -16,6 +16,14 @@ else
     <div class="main-inner">
         <h1 class="post-title">@pageModel.Title</h1>
         <MarkdownSection Content="@((pageModel as IRaw).GetContent())" />
+        @if (Path == "api")
+        {
+            <style>
+                hgroup.main {
+                    display: unset;
+                }
+            </style>
+        }
     </div>
 }
 

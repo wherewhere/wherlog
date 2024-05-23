@@ -27,3 +27,7 @@
     margin-bottom: 0px;
     tab-size: 2em;
 }
+
+::deep figcaption {
+    color: var(--neutral-foreground-hint);
+}

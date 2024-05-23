@@ -20,9 +20,6 @@ namespace Wherlog.Models.Page
         [JsonPropertyName("url")]
         public string Url { get; init; }
 
-        [JsonPropertyName("excerpt")]
-        public string Excerpt { get; init; }
-
         [JsonPropertyName("cover")]
         public string Cover { get; init; }
 
