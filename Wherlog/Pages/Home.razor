@@ -16,7 +16,9 @@ else
     <FluentStack Orientation="Orientation.Vertical">
         @foreach (PostModel post in postList)
         {
-            <PostCard Post="@post" />
+            <FluentCard>
+                <PostLayout Post="@post" />
+            </FluentCard>
         }
     </FluentStack>
 }

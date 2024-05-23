@@ -1,0 +1,29 @@
+﻿::deep img.emoji {
+    height: 18px;
+    margin-bottom: -3px;
+}
+
+::deep img[data-src] {
+    visibility: collapse;
+}
+
+::deep figure.hljs-highlight table {
+    display: block;
+    border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-rest);
+    border-radius: calc(var(--control-corner-radius) * 1px);
+    background-color: var(--neutral-layer-2);
+    overflow: auto;
+}
+
+::deep td.hljs-gutter {
+    visibility: collapse;
+}
+
+::deep td.hljs-code {
+    padding: 0px 5px 0px 0px;
+}
+
+::deep td.hljs-code pre {
+    margin-bottom: 0px;
+    tab-size: 2em;
+}

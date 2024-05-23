@@ -4,22 +4,10 @@
 
 @if (Post != null)
 {
-    <FluentCard @onclick="() => OnClick(Post.Url)">
+    <div @onclick="() => OnClick(Post.Url)">
         <h3>@Post.Title</h3>
         @(new MarkupString(Post.Excerpt))
-        <style>
-            img.emoji {
-                height: 18px;
-                margin-bottom: -3px;
-            }
-            img[data-src] {
-                visibility: collapse;
-            }
-            td.hljs-gutter {
-                visibility: collapse;
-            }
-        </style>
-    </FluentCard>
+    </div>
 }
 
 @code

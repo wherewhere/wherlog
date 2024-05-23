@@ -29,7 +29,9 @@ else
     <FluentStack Orientation="Orientation.Vertical">
         @foreach (PostModel post in cate.Posts)
         {
-            <PostCard Post="@post" />
+            <FluentCard>
+                <PostLayout Post="@post" />
+            </FluentCard>
         }
     </FluentStack>
 }
