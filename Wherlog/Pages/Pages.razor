@@ -8,6 +8,7 @@
 {
     <PageTitle>Page</PageTitle>
     <h1>Page</h1>
+    <FluentProgressRing />
 }
 else
 {
@@ -30,7 +31,7 @@ else
 @code
 {
     private RequestHelper request = RequestHelper.Default;
-    private PageModel pageModel;
+    private PageDetailModel pageModel;
 
     [Parameter]
     public string Path { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Wherlog.Models.Post
 {
-    public sealed class PostsIndexModel : IIndex<InfoModel>
+    public sealed class PostsIndexModel : IIndex<InfoModel>, IPost<InfoModel>
     {
         [JsonPropertyName("index")]
         public int Index { get; init; }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Wherlog.Models
 {
@@ -66,6 +67,33 @@ namespace Wherlog.Models
             }
             return Raw;
         }
+    }
+
+    public interface IDetail : IRaw
+    {
+        [JsonPropertyName("title")]
+        public string Title { get; }
+
+        [JsonPropertyName("date")]
+        public DateTimeOffset Date { get; }
+
+        [JsonPropertyName("updated")]
+        public DateTimeOffset Updated { get; }
+
+        [JsonPropertyName("comments")]
+        public bool Comments { get; }
+
+        [JsonPropertyName("url")]
+        public string Url { get; }
+
+        [JsonPropertyName("cover")]
+        public string Cover { get; }
+
+        [JsonPropertyName("images")]
+        public string[] Images { get; }
+
+        [JsonPropertyName("content")]
+        public string Content { get; }
     }
 
     public interface IInfo

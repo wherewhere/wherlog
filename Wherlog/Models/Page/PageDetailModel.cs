@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using Wherlog.Models.Cate;
 
-namespace Wherlog.Models.Post
+namespace Wherlog.Models.Page
 {
-    public sealed class PostDetailModel : IPost, IApi, IDetail
+    public sealed class PageDetailModel : IDetail
     {
         [JsonPropertyName("title")]
         public string Title { get; init; }
-
-        [JsonPropertyName("slug")]
-        public string Slug { get; init; }
 
         [JsonPropertyName("date")]
         public DateTimeOffset Date { get; init; }
@@ -35,14 +31,5 @@ namespace Wherlog.Models.Post
 
         [JsonPropertyName("raw")]
         public string Raw { get; init; }
-
-        [JsonPropertyName("categories")]
-        public CateModel[] Categories { get; init; }
-
-        [JsonPropertyName("tags")]
-        public CateModel[] Tags { get; init; }
-
-        [JsonPropertyName("api")]
-        public string Api { get; init; }
     }
 }

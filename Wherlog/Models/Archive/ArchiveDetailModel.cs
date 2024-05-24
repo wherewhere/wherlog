@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 using Wherlog.Models.Post;
 
-namespace Wherlog.Models.Cate
+namespace Wherlog.Models.Archive
 {
-    public sealed class CateDetailModel : ICount<CateInfoModel>, IPost<CateInfoModel>
+    public sealed class ArchiveDetailModel<TInfo> : IArchiveDetail<TInfo> where TInfo : InfoModel
     {
         [JsonPropertyName("count")]
         public int Count { get; init; }
@@ -12,6 +12,6 @@ namespace Wherlog.Models.Cate
         public PostModel[] Posts { get; init; }
 
         [JsonPropertyName("info")]
-        public CateInfoModel Info { get; init; }
+        public TInfo Info { get; init; }
     }
 }

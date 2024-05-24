@@ -2,7 +2,7 @@
 
 namespace Wherlog.Models.Cate
 {
-    public sealed class CatesModel : CateModel
+    public sealed class CateIndexModel : CateModel
     {
         [JsonPropertyName("slug")]
         public string Slug { get; init; }

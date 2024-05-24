@@ -1,0 +1,139 @@
+﻿@page "/archives/{year:int?}/{month:int?}"
+@using Wherlog.Helpers
+@using Wherlog.Models
+@using Wherlog.Models.Archive
+@using Wherlog.Models.Post
+@inject NavigationManager Navigation
+
+<PageTitle>Archive</PageTitle>
+<h1>Archive</h1>
+
+@if (archives != null)
+{
+    <FluentCalendar
+        View="@view"
+        Value="@date"
+        DisabledDateFunc="DisableDateTime"
+        ValueChanged="OnValueChanged" />
+}
+
+@if (archive == null)
+{
+    @if (view != CalendarViews.Years)
+    {
+        <FluentProgressRing />
+    }
+}
+else
+{
+    <FluentStack Orientation="Orientation.Vertical">
+        @foreach (PostModel post in archive.Posts)
+        {
+            <FluentCard>
+                <PostLayout Post="@post" />
+            </FluentCard>
+        }
+    </FluentStack>
+}
+
+@code
+{
+    private RequestHelper request = RequestHelper.Default;
+    private static ArchivesModel archives;
+    private IArchiveDetail<InfoModel> archive;
+    private CalendarViews view = CalendarViews.Years;
+    private DateTime? date = null;
+    private bool isLoading = true;
+
+    [Parameter]
+    public int? Year { get; set; }
+
+    [Parameter]
+    public int? Month { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+
+        if (archives == null)
+        {
+            archives = await request.GetArchivesAsync().GetResults();
+        }
+
+        archive = null;
+        if (Year is int year)
+        {
+            if (Array.Find(archives, x => x.Year == year) is YearModel yearModel)
+            {
+                if (Month is int month)
+                {
+                    if (Array.Find(yearModel.Data, x => x.Month == month) is MonthModel monthModel)
+                    {
+                        archive = await request.GetAsync(monthModel.Api, SourceGenerationContext.Default.EntryArchiveDetailModelMonthInfo).GetResults();
+                        view = CalendarViews.Days;
+                    }
+                    else
+                    {
+                        Navigation.NavigateTo($"archives/{year}");
+                    }
+                }
+                else
+                {
+                    archive = await request.GetAsync(yearModel.Api, SourceGenerationContext.Default.EntryArchiveDetailModelYearInfo).GetResults();
+                    view = CalendarViews.Months;
+                }
+            }
+            else
+            {
+                Navigation.NavigateTo("archives");
+            }
+        }
+
+        isLoading = false;
+    }
+
+    private bool DisableDateTime(DateTime date)
+    {
+        if (archives != null)
+        {
+            if (Array.Find(archives, x => x.Year == date.Year) is YearModel yearModel)
+            {
+                if (view != CalendarViews.Years)
+                {
+                    if (Array.Find(yearModel.Data, x => x.Month == date.Month) is MonthModel monthModel)
+                    {
+                        if (view != CalendarViews.Months && archive != null)
+                        {
+                            if (Array.Exists(archive.Posts, x => x.Date.Day == date.Day))
+                            {
+                                return false;
+                            }
+                            return true;
+                        }
+                        return false;
+                    }
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void OnValueChanged(DateTime? date)
+    {
+        if (!isLoading && date is DateTime dateTime)
+        {
+            switch (view)
+            {
+                case CalendarViews.Years:
+                    Navigation.NavigateTo($"archives/{dateTime.Year}");
+                    break;
+                case CalendarViews.Months:
+                    Navigation.NavigateTo($"archives/{dateTime.Year}/{dateTime.Month:D2}");
+                    break;
+            }
+        }
+    }
+}

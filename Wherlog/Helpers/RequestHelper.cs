@@ -27,8 +27,8 @@ namespace Wherlog.Helpers
         public Task<Entry<SiteModel>> GetSiteAsync(CancellationToken cancellationToken = default) =>
             GetAsync("api/site.json", SourceGenerationContext.Default.EntrySiteModel, cancellationToken);
 
-        public Task<Entry<CatesModel[]>> GetCatesAsync(CateType type, CancellationToken cancellationToken = default) =>
-            GetAsync($"api/{type switch { CateType.Category => "categories", CateType.Tag => "tags", _ => throw new NotImplementedException() }}.json", SourceGenerationContext.Default.EntryCatesModelArray, cancellationToken);
+        public Task<Entry<CatesModel>> GetCatesAsync(CateType type, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/{type switch { CateType.Category => "categories", CateType.Tag => "tags", _ => throw new NotImplementedException() }}.json", SourceGenerationContext.Default.EntryCateIndexModelArray, cancellationToken);
 
         public Task<Entry<CateDetailModel>> GetCateAsync(CateType type, string slug, CancellationToken cancellationToken = default) =>
             GetAsync($"api/{type switch { CateType.Category => "categories", CateType.Tag => "tags", _ => throw new NotImplementedException() }}/{slug}.json", SourceGenerationContext.Default.EntryCateDetailModel, cancellationToken);
@@ -42,11 +42,20 @@ namespace Wherlog.Helpers
         public Task<Entry<PostDetailModel>> GetPostAsync(string path, CancellationToken cancellationToken = default) =>
             GetAsync($"api/posts/{path}.json", SourceGenerationContext.Default.EntryPostDetailModel, cancellationToken);
 
-        public Task<Entry<PagesModel[]>> GetPagesAsync(CancellationToken cancellationToken = default) =>
-            GetAsync("api/pages.json", SourceGenerationContext.Default.EntryPagesModelArray, cancellationToken);
+        public Task<Entry<ArchivesModel>> GetArchivesAsync(CancellationToken cancellationToken = default) =>
+            GetAsync("api/archives.json", SourceGenerationContext.Default.EntryYearModelArray, cancellationToken);
 
-        public Task<Entry<PageModel>> GetPageAsync(string path, CancellationToken cancellationToken = default) =>
-            GetAsync($"api/pages/{path}.json", SourceGenerationContext.Default.EntryPageModel, cancellationToken);
+        public Task<Entry<YearDetailModel>> GetArchivesAsync(int year, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/archives/{year}.json", SourceGenerationContext.Default.EntryArchiveDetailModelYearInfo, cancellationToken);
+
+        public Task<Entry<MonthDetailModel>> GetArchivesAsync(int year, int month, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/archives/{year}/{month:D2}.json", SourceGenerationContext.Default.EntryArchiveDetailModelMonthInfo, cancellationToken);
+
+        public Task<Entry<PagesModel>> GetPagesAsync(CancellationToken cancellationToken = default) =>
+            GetAsync("api/pages.json", SourceGenerationContext.Default.EntryPageModelArray, cancellationToken);
+
+        public Task<Entry<PageDetailModel>> GetPageAsync(string path, CancellationToken cancellationToken = default) =>
+            GetAsync($"api/pages/{path}.json", SourceGenerationContext.Default.EntryPageDetailModel, cancellationToken);
     }
 
     public static class RequestExtensions
@@ -55,12 +64,15 @@ namespace Wherlog.Helpers
     }
 
     [JsonSerializable(typeof(Entry<SiteModel>))]
-    [JsonSerializable(typeof(Entry<CatesModel[]>))]
+    [JsonSerializable(typeof(Entry<CatesModel>))]
     [JsonSerializable(typeof(Entry<CateDetailModel>))]
     [JsonSerializable(typeof(Entry<PostsModel>))]
     [JsonSerializable(typeof(Entry<PostsIndexModel>))]
     [JsonSerializable(typeof(Entry<PostDetailModel>))]
-    [JsonSerializable(typeof(Entry<PagesModel[]>))]
-    [JsonSerializable(typeof(Entry<PageModel>))]
+    [JsonSerializable(typeof(Entry<ArchivesModel>))]
+    [JsonSerializable(typeof(Entry<YearDetailModel>))]
+    [JsonSerializable(typeof(Entry<MonthDetailModel>))]
+    [JsonSerializable(typeof(Entry<PagesModel>))]
+    [JsonSerializable(typeof(Entry<PageDetailModel>))]
     public partial class SourceGenerationContext : JsonSerializerContext;
 }

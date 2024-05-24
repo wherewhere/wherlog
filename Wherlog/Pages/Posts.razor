@@ -8,6 +8,7 @@
 {
     <PageTitle>Post</PageTitle>
     <h1>Post</h1>
+    <FluentProgressRing />
 }
 else
 {
@@ -42,8 +43,12 @@ else
             }
             catch
             {
-                Navigation.NavigateTo("pages/404");
+                Navigation.NavigateTo("posts");
             }
+        }
+        else
+        {
+            Navigation.NavigateTo("posts");
         }
     }
 }

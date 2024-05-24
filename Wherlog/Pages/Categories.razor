@@ -9,16 +9,20 @@
     <PageTitle>Category</PageTitle>
     <h1>Category</h1>
 
-    @if (cates != null)
+    @if (!HasSlug && cates != null)
     {
         <FluentStack Orientation="Orientation.Vertical">
             @foreach (var cate in cates)
             {
-                <FluentCard @onclick="@(() => OnClick($"categories/{cate.Slug}"))">
+                <FluentCard @onclick="() => OnClick(cate.Slug)">
                     <h4>@cate.Name</h4>
                 </FluentCard>
             }
         </FluentStack>
+    }
+    else
+    {
+        <FluentProgressRing />
     }
 }
 else
@@ -39,7 +43,7 @@ else
 @code
 {
     private RequestHelper request = RequestHelper.Default;
-    private CatesModel[] cates;
+    private static CatesModel cates;
     private CateDetailModel cate;
 
     private bool HasSlug => !string.IsNullOrEmpty(Slug);
@@ -51,18 +55,24 @@ else
     {
         if (HasSlug)
         {
-            cates = null;
-            cate = await request.GetCateAsync(CateType.Category, Slug).GetResults();
+            if (Array.Find(cates, x => x.Slug.Equals(Slug, StringComparison.OrdinalIgnoreCase) || x.Name.Equals(Slug, StringComparison.OrdinalIgnoreCase)) is CateIndexModel cateIndex)
+            {
+                cate = await request.GetAsync(cateIndex.Api, SourceGenerationContext.Default.EntryCateDetailModel).GetResults();
+            }
+            else
+            {
+                Navigation.NavigateTo($"categories");
+            }
         }
         else
         {
             cate = null;
-            cates = await request.GetCatesAsync(CateType.Category).GetResults();
+            cates ??= await request.GetCatesAsync(CateType.Category).GetResults();
         }
     }
 
     private void OnClick(string path)
     {
-        Navigation.NavigateTo(path);
+        Navigation.NavigateTo($"categories/{path}");
     }
 }

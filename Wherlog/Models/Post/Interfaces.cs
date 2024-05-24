@@ -36,4 +36,10 @@ namespace Wherlog.Models.Post
         [JsonPropertyName("api")]
         public string Api { get; }
     }
+
+    public interface IPost<out TInfo> : IInfo<TInfo> where TInfo : IInfo
+    {
+        [JsonPropertyName("posts")]
+        PostModel[] Posts { get; }
+    }
 }
