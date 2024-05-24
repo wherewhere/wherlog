@@ -45,7 +45,7 @@ namespace Wherlog.Controls
         {
             if (Content == null)
             {
-                throw new ArgumentNullException(nameof(Content),"You need to provide either Content or FromAsset parameter");
+                throw new ArgumentNullException(nameof(Content), "You need to provide either Content or FromAsset parameter");
             }
 
             InternalContent = Content;

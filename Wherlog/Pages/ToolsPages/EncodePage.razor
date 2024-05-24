@@ -1,0 +1,49 @@
+﻿@page "/tools/encode"
+@page "/tools/decode"
+@using System.Net
+@using System.Text
+@using System.Text.RegularExpressions
+
+<PageTitle>Encode</PageTitle>
+<h1>Encode</h1>
+
+<FluentTextArea @bind-Value="encodeText" style="width: 100%;"></FluentTextArea>
+
+<FluentStack>
+    <FluentButton OnClick="() => decodeText = DecodeBase64(encodeText)">Base64 Decode</FluentButton>
+    <FluentButton OnClick="() => decodeText = WebUtility.UrlDecode(encodeText)">Url Decode</FluentButton>
+    <FluentButton OnClick="() => decodeText = WebUtility.HtmlDecode(encodeText)">Html Decode</FluentButton>
+    <FluentButton OnClick="() => decodeText = Regex.Unescape(encodeText)">Unicode Decode</FluentButton>
+</FluentStack>
+
+<FluentStack>
+    <FluentButton OnClick="() => encodeText = Convert.ToBase64String(Encoding.UTF8.GetBytes(decodeText))">Base64 Encode</FluentButton>
+    <FluentButton OnClick="() => encodeText = WebUtility.UrlEncode(decodeText)">Url Encode</FluentButton>
+    <FluentButton OnClick="() => encodeText = WebUtility.HtmlEncode(decodeText)">Html Encode</FluentButton>
+    <FluentButton OnClick="() => encodeText = EncodeUnicode(decodeText)">Unicode Encode</FluentButton>
+</FluentStack>
+
+<FluentTextArea @bind-Value="decodeText" style="width: 100%;"></FluentTextArea>
+
+@code
+{
+    private string encodeText;
+    private string decodeText;
+
+    private static string DecodeBase64(string text)
+    {
+        int index = text.Length % 4;
+        byte[] bytes = Convert.FromBase64String(index == 0 ? text : $"{text}{new string(System.Linq.Enumerable.Repeat('=', 4 - index).ToArray())}");
+        return Encoding.UTF8.GetString(bytes);
+    }
+
+    private static string EncodeUnicode(string text)
+    {
+        StringBuilder builder = new StringBuilder();
+        foreach (char c in text)
+        {
+            _ = builder.AppendFormat("\\u{0:x4}", (ushort)c);
+        }
+        return builder.ToString();
+    }
+}
