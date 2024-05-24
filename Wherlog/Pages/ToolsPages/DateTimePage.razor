@@ -1,0 +1,58 @@
+﻿@page "/tools/datetime"
+@page "/tools/timestamp"
+
+<PageTitle>DateTime</PageTitle>
+<h1>DateTime</h1>
+
+<FluentStack>
+    <FluentNumberField @bind-Value="timeStamp" />
+    <FluentButton OnClick="ConvertTimeStamp">转换时间戳</FluentButton>
+</FluentStack>
+
+<FluentStack>
+    <FluentDatePicker @bind-Value="@dateTime" />
+    <FluentTimePicker @bind-Value="@dateTime" />
+    <FluentButton OnClick="ConvertDateTime">转换时间</FluentButton>
+</FluentStack>
+
+<FluentStack>
+    <FluentTextField @bind-Value="timeString" Placeholder="2022-02-22T22:22:22+08:00" />
+    <FluentButton OnClick="ConvertTimeString">转换字符串</FluentButton>
+</FluentStack>
+
+<FluentButton OnClick="SetDateTimeNow">当前时间</FluentButton>
+
+@code
+{
+    private DateTime? dateTime = DateTime.Now;
+    private long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    private string timeString = DateTime.Now.ToString("s");
+
+    private void ConvertTimeStamp()
+    {
+        dateTime = DateTimeOffset.FromUnixTimeSeconds(timeStamp).LocalDateTime;
+        timeString = dateTime?.ToString("s");
+    }
+
+    private void ConvertDateTime()
+    {
+        timeStamp = ((DateTimeOffset)(dateTime)).ToUnixTimeSeconds();
+        timeString = dateTime?.ToString("s");
+    }
+
+    private void ConvertTimeString()
+    {
+        if (DateTimeOffset.TryParse(timeString, out DateTimeOffset dateTimeOffset))
+        {
+            dateTime = dateTimeOffset.LocalDateTime;
+            timeStamp = dateTimeOffset.ToUnixTimeSeconds();
+        }
+    }
+
+    private void SetDateTimeNow()
+    {
+        dateTime = DateTime.Now;
+        timeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        timeString = DateTime.Now.ToString("s");
+    }
+}
