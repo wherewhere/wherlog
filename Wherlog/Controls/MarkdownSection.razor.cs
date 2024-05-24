@@ -5,16 +5,13 @@ using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
 
-namespace Wherlog.Layout
+namespace Wherlog.Controls
 {
     public partial class MarkdownSection : FluentComponentBase
     {
         private string _content;
         private bool _raiseContentConverted;
         private IJSObjectReference _jsModule = default;
-
-        [Inject]
-        protected IJSRuntime JSRuntime { get; set; } = default;
 
         /// <summary>
         /// Gets or sets the Markdown content 
@@ -46,9 +43,9 @@ namespace Wherlog.Layout
 
         protected override void OnInitialized()
         {
-            if (Content is null)
+            if (Content == null)
             {
-                throw new ArgumentException("You need to provide either Content or FromAsset parameter");
+                throw new ArgumentNullException(nameof(Content),"You need to provide either Content or FromAsset parameter");
             }
 
             InternalContent = Content;
@@ -59,7 +56,7 @@ namespace Wherlog.Layout
             if (firstRender)
             {
                 // add highlight for any code blocks
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Layout/MarkdownSection.razor.js");
+                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Controls/MarkdownSection.razor.js");
                 await _jsModule.InvokeVoidAsync("highlight");
                 await _jsModule.InvokeVoidAsync("addCopyButton");
             }

@@ -1,4 +1,4 @@
-﻿namespace Wherlog.Layout
+﻿namespace Wherlog.Controls
 {
     /// <summary>
     /// Options for MarkdownSectionPreCodeRenderer

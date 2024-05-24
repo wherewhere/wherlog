@@ -2,7 +2,7 @@
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 
-namespace Wherlog.Layout
+namespace Wherlog.Controls
 {
     internal class MarkdownSectionPreCodeExtension : IMarkdownExtension
     {

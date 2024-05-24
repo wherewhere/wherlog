@@ -11,7 +11,7 @@ using Markdig.Syntax;
 using System;
 using System.Collections.Generic;
 
-namespace Wherlog.Layout
+namespace Wherlog.Controls
 {
     /// <summary>
     /// Modified version of original markdig CodeBlockRenderer

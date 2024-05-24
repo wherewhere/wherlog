@@ -1,4 +1,5 @@
 ﻿@page "/archives/{year:int?}/{month:int?}"
+@page "/posts/{year:int}/{month:int?}"
 @using Wherlog.Helpers
 @using Wherlog.Models
 @using Wherlog.Models.Archive
@@ -30,7 +31,7 @@ else
         @foreach (PostModel post in archive.Posts)
         {
             <FluentCard>
-                <PostLayout Post="@post" />
+                <PostCard Post="@post" />
             </FluentCard>
         }
     </FluentStack>

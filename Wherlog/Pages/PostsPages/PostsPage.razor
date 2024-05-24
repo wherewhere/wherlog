@@ -30,16 +30,11 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        if (Path.EndsWith('/'))
-        {
-            Path = Path[..^1];
-        }
-
         if (!string.IsNullOrEmpty(Path))
         {
             try
             {
-                post = await request.GetPostAsync(Path).GetResults();
+                post = await request.GetPostAsync(Path.TrimEnd('/')).GetResults();
             }
             catch
             {
