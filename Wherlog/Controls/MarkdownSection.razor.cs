@@ -9,9 +9,11 @@ namespace Wherlog.Controls
 {
     public partial class MarkdownSection : FluentComponentBase
     {
+        private const string JAVASCRIPT_FILE = $"./{nameof(Controls)}/{nameof(MarkdownSection)}.razor.js";
+
         private string _content;
         private bool _raiseContentConverted;
-        private IJSObjectReference _jsModule = default;
+        private IJSObjectReference _jsModule;
 
         /// <summary>
         /// Gets or sets the Markdown content 
@@ -56,7 +58,7 @@ namespace Wherlog.Controls
             if (firstRender)
             {
                 // add highlight for any code blocks
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Controls/MarkdownSection.razor.js");
+                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
                 await _jsModule.InvokeVoidAsync("highlight");
                 await _jsModule.InvokeVoidAsync("addCopyButton");
             }

@@ -1,0 +1,71 @@
+﻿div.main-inner {
+    display: flex;
+}
+
+::deep article {
+    padding: 1.5rem 1rem;
+    border-right: 1px solid var(--neutral-stroke-divider-rest);
+    margin: 0 0;
+    width: calc(100% - 18rem);
+}
+
+::deep aside {
+    padding: 1.5rem 1rem;
+    top: 0px;
+    height: 100vh;
+    position: sticky;
+    width: 18rem;
+}
+
+@media (max-width: 767px) {
+    div.main-inner {
+        flex-direction: column;
+    }
+
+    ::deep article {
+        padding-top: 0px;
+        width: 100%;
+    }
+
+    ::deep aside {
+        padding: 1em;
+        height: auto;
+        width: auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    ::deep aside {
+        padding: 1.5em 0.75em 1em 0.75em;
+        width: 12rem;
+    }
+
+    ::deep article {
+        padding-top: 0px;
+        width: calc(100% - 12rem);
+    }
+}
+
+/* Surface Duo specific styling */
+@media (horizontal-viewport-segments: 2) {
+    div.main-inner {
+        display: grid;
+        grid-template-columns: auto;
+    }
+
+    ::deep aside {
+        grid-area: 2 / 2 / 3 / 3;
+        padding: 1.5em 0.75em 1em 0.75em;
+        margin-inline-start: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0)); /* hinge width */
+        margin-inline-end: calc(100% - env(viewport-segment-left 1 0));
+        width: auto;
+    }
+
+    ::deep article {
+        grid-area: 1 / 2 / 2 / 3;
+        padding-top: 0px;
+        margin-inline-start: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0)); /* hinge width */
+        margin-inline-end: calc(100% - env(viewport-segment-left 1 0));
+        width: auto;
+    }
+}

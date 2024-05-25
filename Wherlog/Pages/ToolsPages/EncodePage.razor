@@ -7,23 +7,25 @@
 <PageTitle>Encode</PageTitle>
 <h1>Encode</h1>
 
-<FluentTextArea @bind-Value="encodeText" style="width: 100%;"></FluentTextArea>
+<FluentStack Orientation="Orientation.Vertical">
+    <FluentTextArea @bind-Value="encodeText" style="width: 100%;"></FluentTextArea>
 
-<FluentStack>
-    <FluentButton OnClick="() => decodeText = DecodeBase64(encodeText)">Base64 Decode</FluentButton>
-    <FluentButton OnClick="() => decodeText = WebUtility.UrlDecode(encodeText)">Url Decode</FluentButton>
-    <FluentButton OnClick="() => decodeText = WebUtility.HtmlDecode(encodeText)">Html Decode</FluentButton>
-    <FluentButton OnClick="() => decodeText = Regex.Unescape(encodeText)">Unicode Decode</FluentButton>
+    <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+        <FluentButton OnClick="() => decodeText = DecodeBase64(encodeText)">Base64 Decode</FluentButton>
+        <FluentButton OnClick="() => decodeText = WebUtility.UrlDecode(encodeText)">Url Decode</FluentButton>
+        <FluentButton OnClick="() => decodeText = WebUtility.HtmlDecode(encodeText)">Html Decode</FluentButton>
+        <FluentButton OnClick="() => decodeText = Regex.Unescape(encodeText)">Unicode Decode</FluentButton>
+    </FluentStack>
+
+    <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+        <FluentButton OnClick="() => encodeText = Convert.ToBase64String(Encoding.UTF8.GetBytes(decodeText))">Base64 Encode</FluentButton>
+        <FluentButton OnClick="() => encodeText = WebUtility.UrlEncode(decodeText)">Url Encode</FluentButton>
+        <FluentButton OnClick="() => encodeText = WebUtility.HtmlEncode(decodeText)">Html Encode</FluentButton>
+        <FluentButton OnClick="() => encodeText = EncodeUnicode(decodeText)">Unicode Encode</FluentButton>
+    </FluentStack>
+
+    <FluentTextArea @bind-Value="decodeText" style="width: 100%;"></FluentTextArea>
 </FluentStack>
-
-<FluentStack>
-    <FluentButton OnClick="() => encodeText = Convert.ToBase64String(Encoding.UTF8.GetBytes(decodeText))">Base64 Encode</FluentButton>
-    <FluentButton OnClick="() => encodeText = WebUtility.UrlEncode(decodeText)">Url Encode</FluentButton>
-    <FluentButton OnClick="() => encodeText = WebUtility.HtmlEncode(decodeText)">Html Encode</FluentButton>
-    <FluentButton OnClick="() => encodeText = EncodeUnicode(decodeText)">Unicode Encode</FluentButton>
-</FluentStack>
-
-<FluentTextArea @bind-Value="decodeText" style="width: 100%;"></FluentTextArea>
 
 @code
 {

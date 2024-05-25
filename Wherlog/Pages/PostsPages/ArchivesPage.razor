@@ -7,35 +7,43 @@
 @inject NavigationManager Navigation
 
 <PageTitle>Archive</PageTitle>
-<h1>Archive</h1>
 
-@if (archives != null)
-{
-    <FluentCalendar
-        View="@view"
-        Value="@date"
-        DisabledDateFunc="DisableDateTime"
-        ValueChanged="OnValueChanged" />
-}
-
-@if (archive == null)
-{
-    @if (view != CalendarViews.Years)
-    {
-        <FluentProgressRing />
-    }
-}
-else
-{
-    <FluentStack Orientation="Orientation.Vertical">
-        @foreach (PostModel post in archive.Posts)
+<div class="spilt">
+    <article>
+        <h1>Archive</h1>
+        @if (archive == null)
         {
-            <FluentCard>
-                <PostCard Post="@post" />
-            </FluentCard>
+            @if (view != CalendarViews.Years)
+            {
+                <FluentProgressRing />
+            }
         }
-    </FluentStack>
-}
+        else
+        {
+            <FluentStack Orientation="Orientation.Vertical">
+                @foreach (PostModel post in archive.Posts)
+                {
+                    <FluentCard>
+                        <PostCard Post="@post" />
+                    </FluentCard>
+                }
+            </FluentStack>
+        }
+    </article>
+
+    @if (archives != null)
+    {
+        <aside>
+            <FluentCard Height="auto" Width="auto">
+                <FluentCalendar
+                    View="@view"
+                    Value="@date"
+                    DisabledDateFunc="DisableDateTime"
+                    ValueChanged="OnValueChanged" />
+            </FluentCard>
+        </aside>
+    }
+</div>
 
 @code
 {

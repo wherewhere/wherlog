@@ -1,0 +1,26 @@
+﻿@using Wherlog.Models
+@using Wherlog.Models.Post
+
+<div class="main-inner">
+    <article id="article">
+        <h1 class="post-title">@Post.Title</h1>
+        <MarkdownSection OnContentConverted="OnRefreshTableOfContents" Content="@((Post as IRaw).GetContent())" />
+    </article>
+    <aside>
+        <TableOfContents @ref=_toc />
+    </aside>
+</div>
+
+@code
+{
+    private TableOfContents _toc;
+
+    private bool IsPost => Post is PostDetailModel;
+
+    [Parameter]
+    public IDetail Post { get; set; }
+
+    public EventCallback OnRefreshTableOfContents => EventCallback.Factory.Create(this, RefreshTableOfContentsAsync);
+
+    private async Task RefreshTableOfContentsAsync() => await _toc!.Refresh();
+}

@@ -13,12 +13,10 @@
 else
 {
     <PageTitle>@post.Title</PageTitle>
-
-    <div class="main-inner">
-        <h1 class="post-title">@post.Title</h1>
-        <MarkdownSection Content="@((post as IRaw).GetContent())" />
-    </div>
+    <PostDetailCard Post="post" />
 }
+
+
 
 @code
 {
