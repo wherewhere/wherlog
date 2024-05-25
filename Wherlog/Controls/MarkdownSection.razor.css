@@ -9,6 +9,7 @@
 }
 
 ::deep img {
+    max-width: 100%;
 }
 
 ::deep .snippet {

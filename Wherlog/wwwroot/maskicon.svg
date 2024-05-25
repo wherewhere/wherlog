@@ -1,0 +1,49 @@
+<svg width="auto" height="auto" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_6_133)">
+        <rect width="16" height="16" fill="#272424"/>
+        <path d="M3 9H0V0H4V1H3V9Z" fill="#484140" fill-opacity="0.05"/>
+        <path d="M13 1H12V0H16V9H13V1Z" fill="#484140" fill-opacity="0.05"/>
+        <rect x="3" y="1" width="1" height="8" fill="#484140" fill-opacity="0.2"/>
+        <rect x="4" width="8" height="1" fill="#484140" fill-opacity="0.2"/>
+        <rect x="12" y="1" width="1" height="8" fill="#484140" fill-opacity="0.2"/>
+        <rect x="4" y="1" width="8" height="8" fill="#FFCD96"/>
+        <rect x="10" y="6" width="1" height="1" fill="white"/>
+        <rect x="10" y="5" width="1" height="1" fill="#D7D7D6"/>
+        <rect x="9" y="5" width="1" height="2" fill="#141519"/>
+        <rect x="5" y="6" width="1" height="1" fill="white"/>
+        <rect x="5" y="5" width="1" height="1" fill="#D7D7D6"/>
+        <rect x="6" y="5" width="1" height="2" fill="#141519"/>
+        <path d="M5 6H4V5H5V4H7V5H5V6Z" fill="#2C1A1A"/>
+        <path d="M11 5H9V4H11V5Z" fill="#2C1A1A"/>
+        <path d="M5 4H4V1H12V6H11V4H8V3H5V4Z" fill="#2F1F0F"/>
+        <path d="M3 11V16H13V11H12V10H11V9H5V10H4V11H3Z" fill="#484140"/>
+        <path d="M10 10H6V11H7V12H9V11H10V10Z" fill="#A3192D"/>
+        <rect x="3" y="13" width="10" height="3" fill="#24201F"/>
+        <rect x="4" y="12" width="8" height="1" fill="#2D2827"/>
+        <path d="M3 16H2V11H3V10H4V9H5V10H4V11H3V16Z" fill="#484140" fill-opacity="0.75"/>
+        <path d="M11 10V9H12V10H13V11H14V16H13V11H12V10H11Z" fill="#484140" fill-opacity="0.75"/>
+        <rect x="10" y="13" width="1" height="1" fill="#C0B29C"/>
+        <rect x="5" y="9" width="1" height="1" fill="#201A17"/>
+        <rect x="6" y="9" width="1" height="1" fill="#F2D15D"/>
+        <rect x="14" y="11" width="1" height="1" fill="#F2D15D"/>
+        <rect x="14" y="10" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="15" y="11" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="14" y="12" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="13" y="11" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="12" y="2" width="1" height="1" fill="#F2D15D"/>
+        <rect x="12" y="1" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="13" y="2" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="12" y="3" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="11" y="2" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="2" y="8" width="1" height="1" fill="#F2D15D"/>
+        <rect x="2" y="7" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="3" y="8" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="2" y="9" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+        <rect x="1" y="8" width="1" height="1" fill="#F2D15D" fill-opacity="0.5"/>
+    </g>
+    <defs>
+        <clipPath id="clip0_6_133">
+            <rect width="16" height="16" rx="2" fill="white"/>
+        </clipPath>
+    </defs>
+</svg>

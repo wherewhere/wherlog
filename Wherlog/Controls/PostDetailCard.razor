@@ -1,7 +1,7 @@
 ﻿@using Wherlog.Models
 @using Wherlog.Models.Post
 
-<div class="main-inner">
+<div class="post-detail-card">
     <article id="article">
         <h1 class="post-title">@Post.Title</h1>
         <MarkdownSection OnContentConverted="OnRefreshTableOfContents" Content="@((Post as IRaw).GetContent())" />

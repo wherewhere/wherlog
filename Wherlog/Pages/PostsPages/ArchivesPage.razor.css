@@ -1,4 +1,4 @@
-﻿div.spilt {
+﻿div.archives-page {
     display: flex;
 }
 
@@ -18,12 +18,14 @@
 }
 
 @media (max-width: 767px) {
-    div.spilt {
+    div.archives-page {
         flex-direction: column;
     }
 
     ::deep article {
         padding-top: 0px;
+        border-right: unset;
+        border-bottom: 1px solid var(--neutral-stroke-divider-rest);
         width: 100%;
     }
 
@@ -48,7 +50,7 @@
 
 /* Surface Duo specific styling */
 @media (horizontal-viewport-segments: 2) {
-    div.spilt {
+    div.archives-page {
         display: grid;
         grid-template-columns: auto;
     }
