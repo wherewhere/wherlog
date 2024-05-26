@@ -3,6 +3,7 @@
 @using Wherlog.Helpers
 @using Wherlog.Models
 @using Wherlog.Models.Post
+@inject IStringLocalizer<HomePage> Loc
 @inject NavigationManager Navigation
 
 @if (Navigation.Uri.Contains("posts"))
@@ -12,8 +13,8 @@
 }
 else
 {
-    <PageTitle>Home</PageTitle>
-    <h1>Home</h1>
+    <PageTitle>@Loc["TileText"]</PageTitle>
+    <h1>@Loc["TileText"]</h1>
 }
 
 @if (postList == null)

@@ -4,18 +4,24 @@
     <Authors>wherewhere</Authors>
     <Copyright>Copyright © 2017 - 2024 wherewhere. All Rights Reserved.</Copyright>
     <Description>魔法薇ㄦ的书馆网页客户端</Description>
-    <LangVersion>latest</LangVersion>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/wherewhere/wherlog</RepositoryUrl>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-    <TargetFramework>net8.0</TargetFramework>
     <VersionPrefix>0.0.1</VersionPrefix>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+    <Language>zh-CN</Language>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.37.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.5" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.5" />
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.7.2" />
 	  <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.7.2" />
   </ItemGroup>

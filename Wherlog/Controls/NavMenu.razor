@@ -1,7 +1,9 @@
-﻿﻿<div class="nav-menu">
+﻿@inject IStringLocalizer<NavMenu> Loc
+
+<div class="nav-menu">
     <input
         type="checkbox"
-        title="Menu expand/collapse toggle"
+        title="@Loc["NavMenuToggleTitle"]"
         id="nav-menu-toggle"
         class="nav-menu-icon" />
     <label for="nav-menu-toggle" class="nav-menu-icon">
@@ -15,42 +17,42 @@
             Id="main-menu"
             Width="250"
             Collapsible="true"
-            Title="Navigation menu"
+            Title="@Loc["MainMenuTitle"]"
             @bind-Expanded="expanded">
             <FluentNavLink
                 Href="./"
                 Match="NavLinkMatch.All"
                 Icon="@(new Icons.Regular.Size20.Home())"
                 IconColor="Color.Accent">
-                Home
+                @Loc["HomeText"]
             </FluentNavLink>
             <FluentNavLink
                 Href="tags"
                 Match="NavLinkMatch.Prefix"
                 Icon="@(new Icons.Regular.Size20.Tag())"
                 IconColor="Color.Accent">
-                Tag
+                @Loc["TagText"]
             </FluentNavLink>
             <FluentNavLink
                 Href="categories"
                 Match="NavLinkMatch.Prefix"
                 Icon="@(new Icons.Regular.Size20.Grid())"
                 IconColor="Color.Accent">
-                Category
+                @Loc["CategoryText"]
             </FluentNavLink>
             <FluentNavLink
                 Href="archives"
                 Match="NavLinkMatch.Prefix"
                 Icon="@(new Icons.Regular.Size20.Archive())"
                 IconColor="Color.Accent">
-                Archive
+                @Loc["ArchiveText"]
             </FluentNavLink>
             <FluentNavLink
                 Href="settings"
                 Match="NavLinkMatch.Prefix"
                 Icon="@(new Icons.Regular.Size20.Settings())"
                 IconColor="Color.Accent">
-                Settings
+                @Loc["SettingsText"]
             </FluentNavLink>
         </FluentNavMenu>
     </nav>
