@@ -12,7 +12,7 @@
     border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-rest);
     border-radius: calc(var(--control-corner-radius) * 1px);
     background-color: var(--neutral-layer-2);
-    overflow: auto;
+    overflow-x: auto;
 }
 
 ::deep td.hljs-gutter {

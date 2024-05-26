@@ -22,5 +22,5 @@
 
     public EventCallback OnRefreshTableOfContents => EventCallback.Factory.Create(this, RefreshTableOfContentsAsync);
 
-    private async Task RefreshTableOfContentsAsync() => await _toc!.Refresh();
+    private Task RefreshTableOfContentsAsync() => _toc.Refresh();
 }

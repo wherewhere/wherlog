@@ -19,10 +19,7 @@
     [Parameter]
     public PostModel Post { get; set; }
 
-    private void OnClick(string path)
-    {
-        Navigation.NavigateTo($"posts/{path}");
-    }
+    private void OnClick(string path) => Navigation.NavigateTo($"posts/{path}");
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

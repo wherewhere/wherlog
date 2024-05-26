@@ -11,14 +11,16 @@
 
     @if (!HasSlug && cates != null)
     {
-        <FluentStack Orientation="Orientation.Vertical">
+        <FluentGrid Spacing="1">
             @foreach (var cate in cates)
             {
-                <FluentCard @onclick="() => OnClick(cate.Slug)">
-                    <h4>@cate.Name</h4>
-                </FluentCard>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard @onclick="() => OnClick(cate.Slug)">
+                        <h4>@cate.Name</h4>
+                    </FluentCard>
+                </FluentGridItem>
             }
-        </FluentStack>
+        </FluentGrid>
     }
     else
     {
@@ -73,8 +75,5 @@ else
         }
     }
 
-    private void OnClick(string path)
-    {
-        Navigation.NavigateTo($"tags/{path}");
-    }
+    private void OnClick(string path) => Navigation.NavigateTo($"tags/{path}");
 }
