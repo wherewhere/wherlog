@@ -58,7 +58,7 @@ namespace Wherlog.Controls
             if (firstRender)
             {
                 // add highlight for any code blocks
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+                _jsModule ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
                 await _jsModule.InvokeVoidAsync("highlight");
                 await _jsModule.InvokeVoidAsync("addCopyButton");
             }

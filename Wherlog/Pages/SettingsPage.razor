@@ -1,4 +1,7 @@
 ﻿@page "/settings"
+@using System.Globalization
+@using Wherlog.Helpers
+@inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 
 <FluentDesignTheme @bind-Mode="@mode" StorageName="theme" />
@@ -13,6 +16,12 @@
     Items="@(Enum.GetValues<DesignThemeModes>())"
     @bind-SelectedOption="@mode" />
 
+<h4>Language</h4>
+<FluentSelect
+    Width="250px"
+    Items="@(LanguageHelper.SupportCultures)"
+    @bind-SelectedOption="@SelectedLanguage" />
+
 <h4>Navigate</h4>
 <FluentStack>
     <FluentTextField @bind-Value="path" />
@@ -23,4 +32,35 @@
 {
     private DesignThemeModes mode;
     private string path;
+
+    private CultureInfo culture;
+    private CultureInfo SelectedLanguage
+    {
+        get => culture;
+        set
+        {
+            if (culture != value)
+            {
+                culture = value;
+                _ = SetLanguageAsync(value);
+            }
+        }
+    }
+
+    protected override void OnParametersSet() => culture = new CultureInfo(LanguageHelper.GetPrimaryLanguage());
+
+    private async Task SetLanguageAsync(CultureInfo culture)
+    {
+        if (culture.Name != LanguageHelper.GetCurrentLanguage())
+        {
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture = culture;
+            await App.SettingsHelper.SetAsync(SettingsHelper.CurrentLanguage, culture.Name);
+        }
+        else
+        {
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture = null;
+            await App.SettingsHelper.SetAsync(SettingsHelper.CurrentLanguage, LanguageHelper.AutoLanguageCode);
+        }
+        await LanguageHelper.SetLanguageCodeAsync(LanguageHelper.GetCurrentLanguage().ToLowerInvariant(), JSRuntime);
+    }
 }
