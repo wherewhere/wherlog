@@ -6,7 +6,6 @@
     <Description>魔法薇ㄦ的书馆网页客户端</Description>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/wherewhere/wherlog</RepositoryUrl>
-    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
     <VersionPrefix>0.0.1</VersionPrefix>
   </PropertyGroup>
 
@@ -14,6 +13,7 @@
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
     <Language>zh-CN</Language>
     <LangVersion>latest</LangVersion>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 

@@ -11,39 +11,75 @@
 <h1>@Loc["TitleText"]</h1>
 
 <FluentStack Orientation="Orientation.Vertical">
-    <div>
+    <div style="width: 100%;">
         <h4>Theme</h4>
-        <FluentSelect
-            Width="250px"
-            Items="@(Enum.GetValues<DesignThemeModes>())"
-            @bind-SelectedOption="@mode" />
+        <SettingsCard>
+            <Icon>
+                <FluentIcon Value="new Icons.Regular.Size20.Color()" />
+            </Icon>
+            <Header>App Theme</Header>
+            <Description>Set the theme of this App.</Description>
+            <ActionContent>
+                <FluentSelect
+                    Width="auto"
+                    Items="@(Enum.GetValues<DesignThemeModes>())"
+                    @bind-SelectedOption="@mode" />
+            </ActionContent>
+        </SettingsCard>
     </div>
 
-    <div>
+    <div style="width: 100%;">
         <h4>Language</h4>
-        <FluentSelect
-            Width="250px"
-            Items="@LanguageHelper.SupportCultures"
-            @bind-SelectedOption="SelectedLanguage">
-            <OptionTemplate>
-                @context.DisplayName
-            </OptionTemplate>
-        </FluentSelect>
+        <SettingsCard>
+            <Icon>
+                <FluentIcon Value="new Icons.Regular.Size20.LocalLanguage()" />
+            </Icon>
+            <Header>Language</Header>
+            <Description>Select language and restart to change language.</Description>
+            <ActionContent>
+                <FluentSelect
+                    Width="auto"
+                    Items="@LanguageHelper.SupportCultures"
+                    @bind-SelectedOption="SelectedLanguage">
+                    <OptionTemplate>
+                        @context.DisplayName
+                    </OptionTemplate>
+                </FluentSelect>
+            </ActionContent>
+        </SettingsCard>
     </div>
 
-    <div>
-        <h4>Navigate</h4>
-        <FluentStack>
-            <FluentTextField @bind-Value="path" />
-            <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
-        </FluentStack>
-    </div>
-
-    <div>
+    <div style="width: 100%;">
         <h4>Others</h4>
-        <FluentButton OnClick="ResetAsync">
-            Reset
-        </FluentButton>
+        <SettingsCard>
+            <Icon>
+                <FluentIcon Value="new Icons.Regular.Size20.Navigation()" />
+            </Icon>
+            <Header>Navigate</Header>
+            <Description>Navigate to target url.</Description>
+            <ActionContent>
+                <FluentStack Width="var(--settings-card-content-min-width)">
+                    <FluentTextField Placeholder="输入 URL" @bind-Value="path" />
+                    <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
+                </FluentStack>
+            </ActionContent>
+        </SettingsCard>
+    </div>
+
+    <div style="width: 100%;">
+        <h4>Others</h4>
+        <SettingsCard>
+            <Icon>
+                <FluentIcon Value="new Icons.Regular.Size20.ArrowReset()" />
+            </Icon>
+            <Header>Reset application</Header>
+            <Description>Reset settings of this application.</Description>
+            <ActionContent>
+                <FluentButton OnClick="ResetAsync">
+                    Reset
+                </FluentButton>
+            </ActionContent>
+        </SettingsCard>
     </div>
 </FluentStack>
 

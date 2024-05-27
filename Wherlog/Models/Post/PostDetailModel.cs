@@ -4,7 +4,7 @@ using Wherlog.Models.Cate;
 
 namespace Wherlog.Models.Post
 {
-    public sealed class PostDetailModel : IPost, IApi, IDetail
+    public sealed class PostDetailModel : IPost, IDetail
     {
         [JsonPropertyName("title")]
         public string Title { get; init; }
@@ -41,8 +41,5 @@ namespace Wherlog.Models.Post
 
         [JsonPropertyName("tags")]
         public CateModel[] Tags { get; init; }
-
-        [JsonPropertyName("api")]
-        public string Api { get; init; }
     }
 }

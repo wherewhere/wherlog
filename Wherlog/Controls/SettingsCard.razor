@@ -1,0 +1,18 @@
+﻿@inherits FluentComponentBase
+
+<div class="settings-card">
+    <FluentCard AreaRestricted="false" Style="padding: var(--settings-card-padding);">
+        <div class="root-grid">
+            <div style="display: flex; align-items: center;">
+                <div class="icon-holder">
+                    @Icon
+                </div>
+                <div class="header-panel">
+                    <span>@Header</span>
+                    <span class="description">@Description</span>
+                </div>
+            </div>
+            @ActionContent
+        </div>
+    </FluentCard>
+</div>

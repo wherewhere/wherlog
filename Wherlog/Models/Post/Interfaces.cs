@@ -32,9 +32,6 @@ namespace Wherlog.Models.Post
 
         [JsonPropertyName("tags")]
         public CateModel[] Tags { get; }
-
-        [JsonPropertyName("api")]
-        public string Api { get; }
     }
 
     public interface IPost<out TInfo> : IInfo<TInfo> where TInfo : IInfo
