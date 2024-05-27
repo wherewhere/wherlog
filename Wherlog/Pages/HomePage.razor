@@ -8,13 +8,13 @@
 
 @if (Navigation.Uri.Contains("posts"))
 {
-    <PageTitle>Posts</PageTitle>
-    <h1>Posts</h1>
+    <PageTitle>@Loc["PostsTitleText"]</PageTitle>
+    <h1>@Loc["PostsTitleText"]</h1>
 }
 else
 {
-    <PageTitle>@Loc["TileText"]</PageTitle>
-    <h1>@Loc["TileText"]</h1>
+    <PageTitle>@Loc["TitleText"]</PageTitle>
+    <h1>@Loc["TitleText"]</h1>
 }
 
 @if (postList == null)

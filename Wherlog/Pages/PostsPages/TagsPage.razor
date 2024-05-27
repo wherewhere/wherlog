@@ -2,12 +2,13 @@
 @using Wherlog.Helpers
 @using Wherlog.Models.Cate
 @using Wherlog.Models.Post
+@inject IStringLocalizer<TagsPage> Loc
 @inject NavigationManager Navigation
 
 @if (cate == null)
 {
-    <PageTitle>Tag</PageTitle>
-    <h1>Tag</h1>
+    <PageTitle>@Loc["TitleText"]</PageTitle>
+    <h1>@Loc["TitleText"]</h1>
 
     @if (!HasSlug && cates != null)
     {
@@ -29,8 +30,8 @@
 }
 else
 {
-    <PageTitle>Tag: @cate.Info.Name</PageTitle>
-    <h1>Tag: @cate.Info.Name</h1>
+    <PageTitle>@string.Format(Loc["TitleTextFormat"], cate.Info.Name)</PageTitle>
+    <h1>@string.Format(Loc["TitleTextFormat"], cate.Info.Name)</h1>
 
     <FluentStack Orientation="Orientation.Vertical">
         @foreach (PostModel post in cate.Posts)

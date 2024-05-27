@@ -1,0 +1,4 @@
+﻿::deep .alert {
+    border: 1px dashed var(--accent-fill-rest);
+    padding: 5px;
+}

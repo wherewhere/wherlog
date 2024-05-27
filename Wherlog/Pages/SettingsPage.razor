@@ -2,13 +2,13 @@
 @using System.Globalization
 @using Wherlog.Helpers
 @inject IJSRuntime JSRuntime
+@inject IStringLocalizer<SettingsPage> Loc
 @inject NavigationManager Navigation
 
 <FluentDesignTheme @bind-Mode="@mode" StorageName="theme" />
 
-<PageTitle>Settings</PageTitle>
-
-<h1>Settings</h1>
+<PageTitle>@Loc["TitleText"]</PageTitle>
+<h1>@Loc["TitleText"]</h1>
 
 <FluentStack Orientation="Orientation.Vertical">
     <div>
@@ -24,7 +24,11 @@
         <FluentSelect
             Width="250px"
             Items="@LanguageHelper.SupportCultures"
-            @bind-SelectedOption="SelectedLanguage" />
+            @bind-SelectedOption="SelectedLanguage">
+            <OptionTemplate>
+                @context.DisplayName
+            </OptionTemplate>
+        </FluentSelect>
     </div>
 
     <div>

@@ -35,11 +35,6 @@ footer {
             text-decoration: underline;
         }
 
-.alert {
-    border: 1px dashed var(--accent-fill-rest);
-    padding: 5px;
-}
-
 #blazor-error-ui {
     color: white;
     background: var(--error);

@@ -4,13 +4,23 @@
 @using Wherlog.Models
 @using Wherlog.Models.Archive
 @using Wherlog.Models.Post
+@inject IStringLocalizer<ArchivesPage> Loc
 @inject NavigationManager Navigation
 
-<PageTitle>Archive</PageTitle>
+<PageTitle>@Loc["TitleText"]</PageTitle>
 
 <div class="archives-page">
     <article>
-        <h1>Archive</h1>
+        <h1>
+            @if (Year == null)
+            {
+                @Loc["TitleText"]
+            }
+            else
+            {
+                @string.Format(Loc["TitleTextFormat"], $"{Year}{(Month == null ? string.Empty : $".{Month}")}")
+            }
+        </h1>
         @if (archive == null)
         {
             @if (view != CalendarViews.Years)
@@ -34,7 +44,10 @@
     @if (archives != null)
     {
         <aside>
-            <FluentCard Height="auto" Width="auto">
+            <FluentCard
+                Height="auto"
+                Width="auto"
+                Style="display: flex; align-items: center; justify-content: center;">
                 <FluentCalendar
                     View="@view"
                     Value="@date"

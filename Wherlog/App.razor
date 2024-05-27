@@ -1,12 +1,14 @@
-﻿<div class="app-root">
+﻿@inject IStringLocalizer<App> Loc
+
+<div class="app-root">
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         </Found>
         <NotFound>
-            <PageTitle>Not found</PageTitle>
+            <PageTitle>@Loc["NotFoundTitle"]</PageTitle>
             <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
+                <p role="alert">@Loc["NotFoundDescription"]</p>
             </LayoutView>
         </NotFound>
     </Router>
