@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Wherlog.Controls
 {
-    public partial class MarkdownSection : FluentComponentBase
+    public partial class MarkdownSection : FluentComponentBase, IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./{nameof(Controls)}/{nameof(MarkdownSection)}.razor.js";
 
@@ -92,6 +92,26 @@ namespace Wherlog.Controls
             }
 
             return new MarkupString();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            try
+            {
+                if (_jsModule != null)
+                {
+                    await _jsModule.DisposeAsync();
+                    _jsModule = null;
+                }
+
+                GC.SuppressFinalize(this);
+            }
+            catch (Exception ex) when (ex is JSDisconnectedException or
+                                       OperationCanceledException)
+            {
+                // The JSRuntime side may routinely be gone already if the reason we're disposing is that
+                // the client disconnected. This is not an error.
+            }
         }
     }
 }

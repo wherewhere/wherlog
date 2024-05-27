@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Globalization;
 using System.Threading.Tasks;
 using Wherlog.Helpers;
@@ -12,7 +13,7 @@ namespace Wherlog
     {
         public static SettingsHelper SettingsHelper { get; private set; }
 
-        public static Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
@@ -22,14 +23,12 @@ namespace Wherlog
                    .AddLocalization()
                    .AddFluentUIComponents();
 
-            return builder.Build().RunAsync();
-        }
+            WebAssemblyHost host = builder.Build();
+            IJSRuntime jsRuntime = host.Services.GetRequiredService<IJSRuntime>();
 
-        protected override async Task OnInitializedAsync()
-        {
             if (SettingsHelper == null)
             {
-                SettingsHelper = new SettingsHelper(JSRuntime);
+                SettingsHelper = new SettingsHelper(jsRuntime);
                 await SettingsHelper.SetDefaultSettingsAsync();
             }
 
@@ -39,7 +38,9 @@ namespace Wherlog
                 CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(language);
             }
 
-            await LanguageHelper.SetLanguageCodeAsync(LanguageHelper.GetCurrentLanguage().ToLowerInvariant(), JSRuntime);
+            await LanguageHelper.SetLanguageCodeAsync(LanguageHelper.GetCurrentLanguage().ToLowerInvariant(), jsRuntime);
+
+            await host.RunAsync();
         }
     }
 }

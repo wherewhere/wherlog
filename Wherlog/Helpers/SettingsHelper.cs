@@ -1,10 +1,11 @@
 ﻿using Microsoft.JSInterop;
+using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Wherlog.Helpers
 {
-    public class SettingsHelper(IJSRuntime jsRuntime)
+    public sealed class SettingsHelper(IJSRuntime jsRuntime) : IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./js/settings-helper.js";
 
@@ -34,7 +35,7 @@ namespace Wherlog.Helpers
             await _jsModule.InvokeVoidAsync("setValue", key, result);
         }
 
-        public async ValueTask ResetAsync<Type>()
+        public async ValueTask ResetAsync()
         {
             _jsModule ??= await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
             await _jsModule.InvokeVoidAsync("clear");
@@ -54,6 +55,26 @@ namespace Wherlog.Helpers
             if (!await IsExistsAsync(CurrentLanguage))
             {
                 await SetAsync(CurrentLanguage, LanguageHelper.AutoLanguageCode);
+            }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            try
+            {
+                if (_jsModule != null)
+                {
+                    await _jsModule.DisposeAsync();
+                    _jsModule = null;
+                }
+
+                GC.SuppressFinalize(this);
+            }
+            catch (Exception ex) when (ex is JSDisconnectedException or
+                                       OperationCanceledException)
+            {
+                // The JSRuntime side may routinely be gone already if the reason we're disposing is that
+                // the client disconnected. This is not an error.
             }
         }
     }

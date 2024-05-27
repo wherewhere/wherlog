@@ -1,5 +1,6 @@
 ﻿@implements IAsyncDisposable
 @inject IJSRuntime JSRuntime
+@inject IStringLocalizer<TableOfContents> Loc
 @inject NavigationManager NavigationManager
 
 <div class="table-of-contents">
@@ -15,7 +16,6 @@
                 Slot="start" />
             @GetTocItems(_anchors)
         </FluentAccordionItem>
-
     </FluentAccordion>
 
     @if (ShowBackButton)
@@ -24,8 +24,8 @@
             Appearance=Appearance.Accent
             @onclick="BackToTopAsync"
             Id="backtotop"
-            title="Go to top of page">
-            Back to top
+            Title="@Loc["BackToTopTitle"]">
+            @Loc["BackToTopContent"]
         </FluentButton>
     }
 </div>

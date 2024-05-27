@@ -10,22 +10,37 @@
 
 <h1>Settings</h1>
 
-<h4>Theme</h4>
-<FluentSelect
-    Width="250px"
-    Items="@(Enum.GetValues<DesignThemeModes>())"
-    @bind-SelectedOption="@mode" />
+<FluentStack Orientation="Orientation.Vertical">
+    <div>
+        <h4>Theme</h4>
+        <FluentSelect
+            Width="250px"
+            Items="@(Enum.GetValues<DesignThemeModes>())"
+            @bind-SelectedOption="@mode" />
+    </div>
 
-<h4>Language</h4>
-<FluentSelect
-    Width="250px"
-    Items="@(LanguageHelper.SupportCultures)"
-    @bind-SelectedOption="@SelectedLanguage" />
+    <div>
+        <h4>Language</h4>
+        <FluentSelect
+            Width="250px"
+            Items="@LanguageHelper.SupportCultures"
+            @bind-SelectedOption="SelectedLanguage" />
+    </div>
 
-<h4>Navigate</h4>
-<FluentStack>
-    <FluentTextField @bind-Value="path" />
-    <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
+    <div>
+        <h4>Navigate</h4>
+        <FluentStack>
+            <FluentTextField @bind-Value="path" />
+            <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
+        </FluentStack>
+    </div>
+
+    <div>
+        <h4>Others</h4>
+        <FluentButton OnClick="ResetAsync">
+            Reset
+        </FluentButton>
+    </div>
 </FluentStack>
 
 @code
@@ -47,20 +62,29 @@
         }
     }
 
-    protected override void OnParametersSet() => culture = new CultureInfo(LanguageHelper.GetPrimaryLanguage());
+    protected override async Task OnParametersSetAsync()
+    {
+        string lang = await App.SettingsHelper.GetAsync<string>(SettingsHelper.CurrentLanguage);
+        if (lang == LanguageHelper.AutoLanguageCode)
+        {
+            lang = LanguageHelper.GetCurrentLanguage();
+        }
+        culture = new CultureInfo(lang);
+    }
 
     private async Task SetLanguageAsync(CultureInfo culture)
     {
-        if (culture.Name != LanguageHelper.GetCurrentLanguage())
+        if (culture?.Name.Equals(await LanguageHelper.GetLanguageCodeAsync(JSRuntime), StringComparison.OrdinalIgnoreCase) == false)
         {
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture = culture;
             await App.SettingsHelper.SetAsync(SettingsHelper.CurrentLanguage, culture.Name);
+            await LanguageHelper.SetLanguageCodeAsync(LanguageHelper.GetCurrentLanguage().ToLowerInvariant(), JSRuntime);
         }
-        else
-        {
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture = null;
-            await App.SettingsHelper.SetAsync(SettingsHelper.CurrentLanguage, LanguageHelper.AutoLanguageCode);
-        }
-        await LanguageHelper.SetLanguageCodeAsync(LanguageHelper.GetCurrentLanguage().ToLowerInvariant(), JSRuntime);
+    }
+
+    private async Task ResetAsync()
+    {
+        await App.SettingsHelper.ResetAsync();
+        await App.SettingsHelper.SetDefaultSettingsAsync();
     }
 }

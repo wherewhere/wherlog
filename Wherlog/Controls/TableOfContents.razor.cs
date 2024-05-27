@@ -188,9 +188,10 @@ namespace Wherlog.Controls
                 // Unsubscribe from the event when our component is disposed
                 NavigationManager.LocationChanged -= LocationChanged;
 
-                if (_jsModule is not null)
+                if (_jsModule != null)
                 {
                     await _jsModule.DisposeAsync();
+                    _jsModule = null;
                 }
 
                 GC.SuppressFinalize(this);

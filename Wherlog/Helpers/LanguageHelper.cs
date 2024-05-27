@@ -29,30 +29,29 @@ namespace Wherlog.Helpers
 
         public static int FindIndexFromSupportLanguageCodes(string language) => Array.FindIndex(SupportLanguageCodes, code => code.Split(',', ' ').Any(x => x.Equals(language, StringComparison.OrdinalIgnoreCase)));
 
-        public static string GetCurrentLanguage()
+        public static string GetLanguageCodeFromSupportLanguages(string language)
         {
-            CultureInfo language = CultureInfo.CurrentCulture;
-            int temp = FindIndexFromSupportLanguageCodes(language.Name);
+            int temp = FindIndexFromSupportLanguageCodes(language);
             return temp != -1 ? SupportLanguages[temp] : FallbackLanguageCode;
         }
+
+        public static string GetCurrentLanguage() => GetLanguageCodeFromSupportLanguages(CultureInfo.CurrentCulture.Name);
 
         public static string GetPrimaryLanguage()
         {
             CultureInfo language = CultureInfo.DefaultThreadCurrentCulture;
-            if (language == null) { return GetCurrentLanguage(); }
-            int temp = FindIndexFromSupportLanguageCodes(language.Name);
-            return temp == -1 ? FallbackLanguageCode : SupportLanguages[temp];
+            return language == null ? GetCurrentLanguage() : GetLanguageCodeFromSupportLanguages(language.Name);
         }
 
-        public static async ValueTask<string> GetLanguageCodeAsync(string code, IJSRuntime jsRuntime)
+        public static async ValueTask<string> GetLanguageCodeAsync(IJSRuntime jsRuntime)
         {
-            IJSObjectReference _jsModule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-            return await _jsModule.InvokeAsync<string>("getLanguageCode", code);
+            await using IJSObjectReference _jsModule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+            return await _jsModule.InvokeAsync<string>("getLanguageCode");
         }
 
         public static async ValueTask SetLanguageCodeAsync(string code, IJSRuntime jsRuntime)
         {
-            IJSObjectReference _jsModule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+            await using IJSObjectReference _jsModule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
             await _jsModule.InvokeVoidAsync("setLanguageCode", code);
         }
     }

@@ -1,13 +1,14 @@
 ﻿@using Wherlog.Models
 @using Wherlog.Models.Post
+@inject IStringLocalizer<PostDetailCard> Loc
 
 <div class="post-detail-card">
     <article id="article">
         <h1 class="post-title">@Post.Title</h1>
-        <MarkdownSection OnContentConverted="OnRefreshTableOfContents" Content="@((Post as IRaw).GetContent())" />
+        <MarkdownSection OnContentConverted="RefreshTableOfContentsAsync" Content="@((Post as IRaw).GetContent())" />
     </article>
     <aside>
-        <TableOfContents @ref=_toc />
+        <TableOfContents Heading="@Loc["TableOfContentsHeading"]" @ref=_toc />
     </aside>
 </div>
 
@@ -20,7 +21,5 @@
     [Parameter]
     public IDetail Post { get; set; }
 
-    public EventCallback OnRefreshTableOfContents => EventCallback.Factory.Create(this, RefreshTableOfContentsAsync);
-
-    private Task RefreshTableOfContentsAsync() => _toc.Refresh();
+    private Task RefreshTableOfContentsAsync() => _toc?.Refresh() ?? Task.CompletedTask;
 }

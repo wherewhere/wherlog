@@ -12,7 +12,7 @@ using Wherlog.Models.Post;
 
 namespace Wherlog.Helpers
 {
-    public class RequestHelper(string baseUrl)
+    public sealed class RequestHelper(string baseUrl)
     {
         public static RequestHelper Default { get; } = new RequestHelper("https://wherewhere.github.io");
 
