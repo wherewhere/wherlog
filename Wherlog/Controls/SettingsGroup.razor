@@ -1,0 +1,26 @@
+﻿@inherits FluentComponentBase
+
+<div class="settings-group" style="@Style">
+    @if (Header != null)
+    {
+        <div class="header-presenter">@Header</div>
+    }
+    <div class="items-presenter">
+        @Children
+    </div>
+</div>
+
+@code
+{
+    /// <summary>
+    /// Gets or sets the Header.
+    /// </summary>
+    [Parameter]
+    public RenderFragment Header { get; set; }
+
+    /// <summary>
+    /// Gets or sets the collection of child elements of the panel.
+    /// </summary>
+    [Parameter]
+    public RenderFragment Children { get; set; }
+}

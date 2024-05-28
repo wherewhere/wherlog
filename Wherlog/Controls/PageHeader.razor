@@ -1,0 +1,16 @@
+﻿<div class="page-header">
+    <div>
+        <PageTitle>@Title</PageTitle>
+        <h1>@Title</h1>
+    </div>
+    @CustomContent
+</div>
+
+@code
+{
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment CustomContent { get; set; }
+}

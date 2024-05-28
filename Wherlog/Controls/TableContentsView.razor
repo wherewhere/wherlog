@@ -1,0 +1,38 @@
+﻿<div class="table-contents-view">
+    <article id="article">
+        @Content
+    </article>
+    <aside>
+        <TableOfContents
+            Heading="@Heading"
+            ShowBackButton="ShowBackButton"
+            @ref=_toc />
+    </aside>
+</div>
+
+@code
+{
+    private TableOfContents _toc;
+
+    /// <summary>
+    /// Gets or sets the heading for the ToC
+    /// Defaults to 'In this article'
+    /// </summary>
+    [Parameter]
+    public string Heading { get; set; } = "In this article";
+
+    /// <summary>
+    /// Gets or sets a value indicating whether a 'Back to top' button should be rendered.
+    /// Defaults to true
+    /// </summary>
+    [Parameter]
+    public bool ShowBackButton { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the content of a ContentControl.
+    /// </summary>
+    [Parameter]
+    public RenderFragment Content { get; set; }
+
+    public Task RefreshTableOfContentsAsync() => _toc?.Refresh() ?? Task.CompletedTask;
+}

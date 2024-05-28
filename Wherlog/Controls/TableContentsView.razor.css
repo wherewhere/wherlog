@@ -1,4 +1,4 @@
-﻿div.post-detail-card {
+﻿div.table-contents-view {
     display: flex;
 }
 
@@ -18,19 +18,19 @@
 }
 
 @media (max-width: 767px) {
-    div.post-detail-card {
+    div.table-contents-view {
         flex-direction: column;
     }
 
     ::deep article {
-        padding-top: 0px;
+        padding: 0rem 0rem 1rem 0rem;
         border-right: unset;
         border-bottom: 1px solid var(--neutral-stroke-divider-rest);
         width: 100%;
     }
 
     ::deep aside {
-        padding: 1em;
+        padding: 0em;
         height: auto;
         width: auto;
     }
@@ -50,7 +50,7 @@
 
 /* Surface Duo specific styling */
 @media (horizontal-viewport-segments: 2) {
-    div.post-detail-card {
+    div.table-contents-view {
         display: grid;
         grid-template-columns: auto;
     }

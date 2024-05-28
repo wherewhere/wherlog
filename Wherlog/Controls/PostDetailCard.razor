@@ -2,24 +2,19 @@
 @using Wherlog.Models.Post
 @inject IStringLocalizer<PostDetailCard> Loc
 
-<div class="post-detail-card">
-    <article id="article">
+<TableContentsView Heading="@Loc["TableOfContentsHeading"]" @ref=_toc>
+    <Content>
         <h1 class="post-title">@Post.Title</h1>
-        <MarkdownSection OnContentConverted="RefreshTableOfContentsAsync" Content="@((Post as IRaw).GetContent())" />
-    </article>
-    <aside>
-        <TableOfContents Heading="@Loc["TableOfContentsHeading"]" @ref=_toc />
-    </aside>
-</div>
+        <MarkdownSection OnContentConverted="_toc.RefreshTableOfContentsAsync" Content="@((Post as IRaw).GetContent())" />
+    </Content>
+</TableContentsView>
 
 @code
 {
-    private TableOfContents _toc;
+    private TableContentsView _toc;
 
     private bool IsPost => Post is PostDetailModel;
 
     [Parameter]
     public IDetail Post { get; set; }
-
-    private Task RefreshTableOfContentsAsync() => _toc?.Refresh() ?? Task.CompletedTask;
 }

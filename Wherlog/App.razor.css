@@ -2,3 +2,17 @@
     border: 1px dashed var(--accent-fill-rest);
     padding: 5px;
 }
+
+::deep h6.unset,
+::deep h5.unset,
+::deep h4.unset,
+::deep h3.unset,
+::deep h2.unset,
+::deep h1.unset {
+    margin-top: unset;
+    margin-bottom: unset;
+    font-weight: unset;
+    font-family: unset;
+    font-size: unset;
+    line-height: unset;
+}

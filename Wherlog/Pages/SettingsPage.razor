@@ -1,87 +1,143 @@
 ﻿@page "/settings"
 @using System.Globalization
+@using System.Runtime.InteropServices
 @using Wherlog.Helpers
 @inject IJSRuntime JSRuntime
 @inject IStringLocalizer<SettingsPage> Loc
 @inject NavigationManager Navigation
 
-<FluentDesignTheme @bind-Mode="@mode" StorageName="theme" />
+<TableContentsView>
+    <Content>
+        <PageHeader Title="@Loc["TitleText"]" />
 
-<PageTitle>@Loc["TitleText"]</PageTitle>
-<h1>@Loc["TitleText"]</h1>
+        <FluentStack Orientation="Orientation.Vertical">
+            <SettingsGroup>
+                <Header>
+                    <h2 class="unset">Theme</h2>
+                </Header>
+                <Children>
+                    <SettingsCard>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.Color()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">App Theme</h3>
+                        </Header>
+                        <Description>Set the theme of this App.</Description>
+                        <ActionContent>
+                            <FluentDesignTheme @bind-Mode="@mode" StorageName="theme" />
+                            <FluentSelect
+                                Width="auto"
+                                Items="@(Enum.GetValues<DesignThemeModes>())"
+                                @bind-SelectedOption="@mode" />
+                        </ActionContent>
+                    </SettingsCard>
 
-<FluentStack Orientation="Orientation.Vertical">
-    <div style="width: 100%;">
-        <h4>Theme</h4>
-        <SettingsCard>
-            <Icon>
-                <FluentIcon Value="new Icons.Regular.Size20.Color()" />
-            </Icon>
-            <Header>App Theme</Header>
-            <Description>Set the theme of this App.</Description>
-            <ActionContent>
-                <FluentSelect
-                    Width="auto"
-                    Items="@(Enum.GetValues<DesignThemeModes>())"
-                    @bind-SelectedOption="@mode" />
-            </ActionContent>
-        </SettingsCard>
-    </div>
+                    <SettingsCard>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.LocalLanguage()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">Language</h3>
+                        </Header>
+                        <Description>Select language and restart to change language.</Description>
+                        <ActionContent>
+                            <FluentSelect
+                                Width="auto"
+                                Items="@LanguageHelper.SupportCultures"
+                                @bind-SelectedOption="SelectedLanguage">
+                                <OptionTemplate>
+                                    @context.DisplayName
+                                </OptionTemplate>
+                            </FluentSelect>
+                        </ActionContent>
+                    </SettingsCard>
+                </Children>
+            </SettingsGroup>
 
-    <div style="width: 100%;">
-        <h4>Language</h4>
-        <SettingsCard>
-            <Icon>
-                <FluentIcon Value="new Icons.Regular.Size20.LocalLanguage()" />
-            </Icon>
-            <Header>Language</Header>
-            <Description>Select language and restart to change language.</Description>
-            <ActionContent>
-                <FluentSelect
-                    Width="auto"
-                    Items="@LanguageHelper.SupportCultures"
-                    @bind-SelectedOption="SelectedLanguage">
-                    <OptionTemplate>
-                        @context.DisplayName
-                    </OptionTemplate>
-                </FluentSelect>
-            </ActionContent>
-        </SettingsCard>
-    </div>
+            <SettingsGroup>
+                <Header>
+                    <h2 class="unset">Configs</h2>
+                </Header>
+                <Children>
+                    <SettingsCard>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.ArrowReset()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">Reset application</h3>
+                        </Header>
+                        <Description>Reset settings of this application.</Description>
+                        <ActionContent>
+                            <FluentButton OnClick="ResetAsync">
+                                Reset
+                            </FluentButton>
+                        </ActionContent>
+                    </SettingsCard>
 
-    <div style="width: 100%;">
-        <h4>Others</h4>
-        <SettingsCard>
-            <Icon>
-                <FluentIcon Value="new Icons.Regular.Size20.Navigation()" />
-            </Icon>
-            <Header>Navigate</Header>
-            <Description>Navigate to target url.</Description>
-            <ActionContent>
-                <FluentStack Width="var(--settings-card-content-min-width)">
-                    <FluentTextField Placeholder="输入 URL" @bind-Value="path" />
-                    <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
-                </FluentStack>
-            </ActionContent>
-        </SettingsCard>
-    </div>
+                    <SettingsExpander>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.Info()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">Framework Information</h3>
+                        </Header>
+                        <Description>Information about the frameworks of this app.</Description>
+                        <Content>
+                            <div class="setting-expander-content-grid">
+                                <table class="info-table">
+                                    <tr>
+                                        <td>Framework</td>
+                                        <td class="info-table-description">@RuntimeInformation.FrameworkDescription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Blazor</td>
+                                        <td class="info-table-description">@typeof(ComponentBase).Assembly.GetName().Version.ToString(3)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fluent UI</td>
+                                        <td class="info-table-description">@typeof(FluentComponentBase).Assembly.GetName().Version</td>
+                                    </tr>
+                                    <tr>
+                                        <td>OS Platform</td>
+                                        <td class="info-table-description">@RuntimeInformation.OSDescription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>OS Architecture</td>
+                                        <td class="info-table-description">@RuntimeInformation.OSArchitecture</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </Content>
+                    </SettingsExpander>
+                </Children>
+            </SettingsGroup>
 
-    <div style="width: 100%;">
-        <h4>Others</h4>
-        <SettingsCard>
-            <Icon>
-                <FluentIcon Value="new Icons.Regular.Size20.ArrowReset()" />
-            </Icon>
-            <Header>Reset application</Header>
-            <Description>Reset settings of this application.</Description>
-            <ActionContent>
-                <FluentButton OnClick="ResetAsync">
-                    Reset
-                </FluentButton>
-            </ActionContent>
-        </SettingsCard>
-    </div>
-</FluentStack>
+            <SettingsGroup>
+                <Header>
+                    <h2 class="unset">Others</h2>
+                </Header>
+                <Children>
+                    <SettingsCard>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.Navigation()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">Navigate</h3>
+                        </Header>
+                        <Description>Navigate to target url.</Description>
+                        <ActionContent>
+                            <FluentStack Width="var(--settings-card-content-min-width)">
+                                <FluentTextField Placeholder="输入 URL" @bind-Value="path" />
+                                <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
+                            </FluentStack>
+                        </ActionContent>
+                    </SettingsCard>
+                </Children>
+            </SettingsGroup>
+        </FluentStack>
+    </Content>
+</TableContentsView>
 
 @code
 {

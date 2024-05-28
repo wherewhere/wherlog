@@ -1,0 +1,25 @@
+﻿@inherits FluentComponentBase
+
+<div class="settings-card" style="@Style">
+    <FluentAccordion>
+        <FluentAccordionItem>
+            <HeadingTemplate>
+                <div class="root-grid">
+                    <div style="display: flex; align-items: center;">
+                        <div class="icon-holder">
+                            @Icon
+                        </div>
+                        <div class="header-panel">
+                            <span>@Header</span>
+                            <span class="description">@Description</span>
+                        </div>
+                    </div>
+                    @ActionContent
+                </div>
+            </HeadingTemplate>
+            <ChildContent>
+                @Content
+            </ChildContent>
+        </FluentAccordionItem>
+    </FluentAccordion>
+</div>

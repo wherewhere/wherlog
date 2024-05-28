@@ -1,0 +1,36 @@
+﻿* {
+    --settings-card-description-font-size: 12px;
+    --settings-card-header-icon-max-size: 20px;
+    --settings-card-content-min-width: 240px;
+    --settings-card-header-icon-margin: 0px 20px 0px 2px;
+    --settings-expander-header-padding: 4px 0px 4px 8px;
+    --settings-expander-item-padding: 0px 36px 0px 50px;
+}
+
+::deep div.root-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--settings-expander-header-padding);
+}
+
+::deep div.icon-holder {
+    max-width: var(--settings-card-header-icon-max-size);
+    max-height: var(--settings-card-header-icon-max-size);
+    margin: var(--settings-card-header-icon-margin);
+}
+
+::deep div.header-panel {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 24px 0px 0px;
+}
+
+::deep span.description {
+    font-size: var(--settings-card-description-font-size);
+    color: var(--neutral-fill-strong-hover);
+}
+
+::deep div.setting-expander-content-grid {
+    padding: var(--settings-expander-item-padding);
+}
