@@ -2,17 +2,12 @@
 
 <div class="settings-card" style="@Style">
     <FluentCard AreaRestricted="false" Style="padding: var(--settings-card-padding);">
-        <div class="root-grid">
-            <div style="display: flex; align-items: center;">
-                <div class="icon-holder">
-                    @Icon
-                </div>
-                <div class="header-panel">
-                    <span>@Header</span>
-                    <span class="description">@Description</span>
-                </div>
-            </div>
-            @ActionContent
-        </div>
+        <SettingsPresenter
+            Icon="@Icon"
+            Header="@Header"
+            Description="@Description"
+            ActionContent="@ActionContent"
+            ActionIcon="@ActionIcon"
+            ActionIconToolTip="@ActionIconToolTip"/>
     </FluentCard>
 </div>

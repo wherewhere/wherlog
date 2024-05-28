@@ -1,6 +1,7 @@
 ﻿@page "/settings"
 @using System.Globalization
 @using System.Runtime.InteropServices
+@using System.Reflection
 @using Wherlog.Helpers
 @inject IJSRuntime JSRuntime
 @inject IStringLocalizer<SettingsPage> Loc
@@ -13,7 +14,7 @@
         <FluentStack Orientation="Orientation.Vertical">
             <SettingsGroup>
                 <Header>
-                    <h2 class="unset">Theme</h2>
+                    <h2 class="unset">Display</h2>
                 </Header>
                 <Children>
                     <SettingsCard>
@@ -65,7 +66,7 @@
                             <FluentIcon Value="new Icons.Regular.Size20.ArrowReset()" />
                         </Icon>
                         <Header>
-                            <h3 class="unset">Reset application</h3>
+                            <h3 class="unset">Reset Application</h3>
                         </Header>
                         <Description>Reset settings of this application.</Description>
                         <ActionContent>
@@ -77,7 +78,7 @@
 
                     <SettingsExpander>
                         <Icon>
-                            <FluentIcon Value="new Icons.Regular.Size20.Info()" />
+                            <FluentIcon Value="new Icons.Regular.Size20.DeveloperBoard()" />
                         </Icon>
                         <Header>
                             <h3 class="unset">Framework Information</h3>
@@ -115,6 +116,95 @@
 
             <SettingsGroup>
                 <Header>
+                    <h2 class="unset">About</h2>
+                </Header>
+                <Children>
+                    <SettingsExpander>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.Info()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">@(typeof(App).Assembly?.GetName() is AssemblyName name ? $"{name.Name} v{name.Version.ToString(3)}" : "Wherlog")</h3>
+                        </Header>
+                        <Description>
+                            <FluentStack Orientation="Orientation.Vertical" VerticalGap="0">
+                                <span>魔法薇ㄦ的书馆网页客户端</span>
+                                <FluentStack HorizontalGap="4" Style="overflow-x: auto">
+                                    <a class="text-button" href="https://github.com/wherewhere/wherlog/issues">Feedback</a>
+                                    <a class="text-button" href="https://github.com/wherewhere/wherlog/discussions">Discussions</a>
+                                    <a class="text-button" href="https://wherewhere.github.io">魔法薇ㄦ的书馆</a>
+                                </FluentStack>
+                            </FluentStack>
+                        </Description>
+                        <Content>
+                            <div class="setting-expander-content-grid">
+                                <h4>欢迎使用 Wherlog！</h4>
+                                <h5>声明</h5>
+                                <ol>
+                                    <li>本程序是 <a href="https://github.com/wherewhere/wherewhere.github.io">魔法薇ㄦ的书馆</a> 的网页客户端，禁止用于商业用途。</li>
+                                    <li>本程序是开源软件，因此，在使用时请确保程序是来自<a href="https://github.com/wherewhere/wherlog">本 Github 仓库</a>，以确保您的数据安全。</li>
+                                    <li>若程序来源无异常，程序运行过程中您的所有数据都仅用于与 <a href="https://wherewhere.github.io">魔法薇ㄦ的书馆</a> 的服务器交流或储存于本地，开发者不会窃取您的任何数据。但即便如此，也请注意使用环境的安全性。</li>
+                                </ol>
+                                <h5>参与人员</h5>
+                                <p>
+                                    <a href="https://github.com/Coolapk-UWP/Coolapk-Lite/graphs/contributors" title="Contributors">
+                                        <img src="https://contrib.rocks/image?repo=Coolapk-UWP/Coolapk-Lite" alt="Contributors">
+                                    </a>
+                                </p>
+                                <h5>引用及参考</h5>
+                                <ul>
+                                    <li><a href="https://github.com/xoofx/markdig" title="Markdig">Markdig</a></li>
+                                    <li><a href="https://github.com/microsoft/fluentui-blazor" title="Fluent UI Blazor">Fluent UI Blazor</a></li>
+                                </ul>
+                            </div>
+                        </Content>
+                    </SettingsExpander>
+
+                    <SettingsCard>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.ContactCard()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">Contact Me</h3>
+                        </Header>
+                        <Description>
+                            <FluentStack Orientation="Orientation.Vertical" VerticalGap="0">
+                                <span>在社交软件上关注我来获取最新开发动向。如果你发现了什么 Bug，请通过私信告诉我。我会尽最大可能来解决这些问题。如果你有电报账号，欢迎来铺路根据地群组聊天😊!</span>
+                                <FluentStack HorizontalGap="4" Style="overflow-x: auto">
+                                    <a class="text-button" href="https://github.com/wherewhere">GitHub</a>
+                                    <a class="text-button" href="http://www.coolapk.com/u/536381">Coolapk</a>
+                                    <a class="text-button" href="https://twitter.com/wherewhere7">Twitter</a>
+                                    <a class="text-button" href="https://space.bilibili.com/266112738">哔哩哔哩</a>
+                                </FluentStack>
+                            </FluentStack>
+                        </Description>
+                        <ActionContent>
+                            <FluentAnchor Href="https://t.me/PavingBase">电报</FluentAnchor>
+                        </ActionContent>
+                    </SettingsCard>
+
+                    <SettingsCard>
+                        <Icon>
+                            <FluentIcon Value="new Icons.Regular.Size20.Heart()" />
+                        </Icon>
+                        <Header>
+                            <h3 class="unset">Supports</h3>
+                        </Header>
+                        <Description>
+                            <FluentStack Orientation="Orientation.Vertical" VerticalGap="0">
+                                <span>Wherlog 是一个为爱发电的开源软件。如果你喜欢这个应用，不要忘了在商店里打上好评哦，当然如果可以捐赠一点点就更好了。感谢大家的支持💕！</span>
+                                <FluentStack HorizontalGap="4" Style="overflow-x: auto">
+                                    <a class="text-button" href="@("https://afdian.net/@wherewhere")">爱发电</a>
+                                    <a class="text-button" href="https://patreon.com/wherewhere">Patreon</a>
+                                </FluentStack>
+                            </FluentStack>
+                        </Description>
+                    </SettingsCard>
+                </Children>
+            </SettingsGroup>
+
+            <SettingsGroup>
+                <Header>
                     <h2 class="unset">Others</h2>
                 </Header>
                 <Children>
@@ -127,8 +217,8 @@
                         </Header>
                         <Description>Navigate to target url.</Description>
                         <ActionContent>
-                            <FluentStack Width="var(--settings-card-content-min-width)">
-                                <FluentTextField Placeholder="输入 URL" @bind-Value="path" />
+                            <FluentStack Width="var(--settings-card-content-min-width)" HorizontalAlignment="HorizontalAlignment.Right">
+                                <FluentTextField Placeholder="输入 URL" Style="width: 100%;" @bind-Value="path" />
                                 <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
                             </FluentStack>
                         </ActionContent>

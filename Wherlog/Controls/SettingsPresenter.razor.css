@@ -1,0 +1,65 @@
+﻿* {
+    --settings-card-description-font-size: 12px;
+    --settings-card-header-icon-max-size: 20px;
+    --settings-card-content-min-width: 240px;
+    --settings-card-header-icon-margin: 0px 20px 0px 2px;
+    --settings-card-vertical-header-content-spacing: 8px 0px 0px 0px;
+}
+
+div.settings-presenter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+::deep div.header-root {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+::deep div.icon-holder {
+    max-width: var(--settings-card-header-icon-max-size);
+    max-height: var(--settings-card-header-icon-max-size);
+    margin: var(--settings-card-header-icon-margin);
+}
+
+::deep div.header-panel {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 24px 0px 0px;
+}
+
+::deep span.description {
+    font-size: var(--settings-card-description-font-size);
+    color: var(--neutral-fill-strong-hover);
+}
+
+::deep div.content-presenter {
+    display: grid;
+}
+
+::deep a.text-button {
+    font-weight: bold;
+    text-decoration: unset;
+}
+
+@media (max-width: 600px) {
+    * {
+        --settings-card-content-min-width: auto;
+    }
+
+    div.settings-presenter {
+        flex-flow: column;
+        justify-content: unset;
+        align-items: unset;
+    }
+
+    ::deep div.header-panel {
+        margin: unset;
+    }
+
+    ::deep div.content-presenter {
+        margin: var(--settings-card-vertical-header-content-spacing);
+    }
+}
