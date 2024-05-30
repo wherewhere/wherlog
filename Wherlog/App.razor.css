@@ -3,6 +3,21 @@
     padding: 5px;
 }
 
+::deep code {
+    padding: 0.10rem 0.25rem;
+    background: var(--neutral-stroke-layer-rest);
+    border-radius: 0.25rem;
+}
+
+::deep kbd {
+    padding: 0.10rem 0.25rem;
+    font-size: 0.875em;
+    color: var(--neutral-foreground-rest);
+    background-color: var(--neutral-fill-secondary-rest);
+    border-radius: 0.25rem;
+    border: 1px solid var(--accent-fill-rest);
+}
+
 ::deep h6.unset,
 ::deep h5.unset,
 ::deep h4.unset,
