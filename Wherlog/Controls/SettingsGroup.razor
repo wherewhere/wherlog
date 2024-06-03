@@ -1,6 +1,7 @@
-﻿@inherits FluentComponentBase
+﻿@using Microsoft.FluentUI.AspNetCore.Components.Utilities
+@inherits FluentComponentBase
 
-<div class="settings-group" style="@Style">
+<div class="@ClassValue" style="@Style">
     @if (Header != null)
     {
         <div class="header-presenter">@Header</div>
@@ -12,6 +13,10 @@
 
 @code
 {
+    private string ClassValue => new CssBuilder(Class)
+        .AddClass("settings-group")
+        .Build();
+
     /// <summary>
     /// Gets or sets the Header.
     /// </summary>

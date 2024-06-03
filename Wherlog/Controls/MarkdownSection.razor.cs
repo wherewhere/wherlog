@@ -1,6 +1,7 @@
 ﻿using Markdig;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components.Utilities;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace Wherlog.Controls
         private string _content;
         private bool _raiseContentConverted;
         private IJSObjectReference _jsModule;
+
+        private string ClassValue => new CssBuilder(Class)
+            .AddClass("markdown-section")
+            .Build();
 
         /// <summary>
         /// Gets or sets the Markdown content 

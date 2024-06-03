@@ -218,7 +218,10 @@
                         <Description>Navigate to target url.</Description>
                         <ActionContent>
                             <FluentStack Width="var(--settings-card-content-min-width)" HorizontalAlignment="HorizontalAlignment.Right">
-                                <FluentTextField Placeholder="输入 URL" Style="width: 100%;" @bind-Value="path" />
+                                <FluentTextField
+                                    Placeholder="输入 URL"
+                                    Style="width: 100%;"
+                                    @bind-Value="path" />
                                 <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
                             </FluentStack>
                         </ActionContent>

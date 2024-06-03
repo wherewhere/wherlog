@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components.Utilities;
 
 namespace Wherlog.Controls
 {
     public partial class SettingsCard : FluentComponentBase
     {
+        private string ClassValue => new CssBuilder(Class)
+            .AddClass("settings-card")
+            .Build();
+
         /// <summary>
         /// Gets or sets the Header.
         /// </summary>
