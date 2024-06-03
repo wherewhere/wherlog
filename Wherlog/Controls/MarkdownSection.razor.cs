@@ -53,24 +53,26 @@ namespace Wherlog.Controls
             InternalContent = Content;
         }
 
+        protected override void OnParametersSet() => InternalContent = Content;
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
                 // add highlight for any code blocks
                 _jsModule ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-                await _jsModule.InvokeVoidAsync("highlight");
-                await _jsModule.InvokeVoidAsync("addCopyButton");
             }
 
             if (_raiseContentConverted)
             {
+                await _jsModule.InvokeVoidAsync("highlight");
+                await _jsModule.InvokeVoidAsync("addCopyButton");
+
                 _raiseContentConverted = false;
                 if (OnContentConverted.HasDelegate)
                 {
                     await OnContentConverted.InvokeAsync();
                 }
-
             }
         }
 
