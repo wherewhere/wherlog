@@ -34,29 +34,26 @@ namespace Wherlog.Controls
             get => _content;
             set
             {
-                _content = value;
-                HtmlContent = ConvertToMarkupString(_content);
-
-                if (OnContentConverted.HasDelegate)
+                if (_content != value)
                 {
-                    OnContentConverted.InvokeAsync();
+                    _content = value;
+
+                    HtmlContent = string.IsNullOrWhiteSpace(value)
+                        ? new MarkupString(value)
+                        : ConvertToMarkupString(_content);
+
+                    if (OnContentConverted.HasDelegate)
+                    {
+                        OnContentConverted.InvokeAsync();
+                    }
+
+                    _raiseContentConverted = true;
+                    StateHasChanged();
                 }
-                _raiseContentConverted = true;
-                StateHasChanged();
             }
         }
 
         public MarkupString HtmlContent { get; private set; }
-
-        protected override void OnInitialized()
-        {
-            if (Content == null)
-            {
-                throw new ArgumentNullException(nameof(Content), "You need to provide either Content or FromAsset parameter");
-            }
-
-            InternalContent = Content;
-        }
 
         protected override void OnParametersSet() => InternalContent = Content;
 

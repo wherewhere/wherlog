@@ -45,8 +45,8 @@
     private string id;
     private string url;
     private string json;
-    private string imageProxy = "https://images.weserv.nl/?url=";
-    private string example = string.Empty;
+    private string imageProxy;
+    private string example;
 
     private string ID
     {
@@ -81,31 +81,34 @@
             JsonDocument token = JsonDocument.Parse(json);
             if (token.RootElement.TryGetProperty("data", out JsonElement data))
             {
-                List<string> attributes = new(9)
+                StringBuilder builder =
+                    new StringBuilder("<bilibili-card")
+                        .Append(" vid=\"").Append(data.GetProperty("bvid").GetString()).Append('"')
+                        .Append(" title=\"").Append(data.GetProperty("title").GetString()).Append('"')
+                        .Append(" author=\"").Append(data.GetProperty("owner").GetProperty("name").GetString()).Append('"')
+                        .Append(" cover=\"").Append(data.GetProperty("pic").GetString()).Append('"')
+                        .Append(" duration=\"").Append(FormatSecondsToTime(data.GetProperty("duration").GetInt64())).Append('"');
+
+                if (data.TryGetProperty("stat", out JsonElement stat))
                 {
-                    "bilibili-card",
-                    $"vid=\"{data.GetProperty("bvid").GetString()}\"",
-                    $"title=\"{data.GetProperty("title").GetString()}\"",
-                    $"author=\"{data.GetProperty("owner").GetProperty("name").GetString()}\"",
-                    $"cover=\"{data.GetProperty("pic").GetString()}\"",
-                    $"duration=\"{FormatSecondsToTime(data.GetProperty("duration").GetInt64())}\"",
-                };
-                JsonElement stat = data.GetProperty("stat");
-                attributes.Add($"views=\"{FormatLargeNumber(stat.GetProperty("view").GetInt64())}\"");
-                attributes.Add($"danmakus=\"{FormatLargeNumber(stat.GetProperty("danmaku").GetInt64())}\"");
+                    _ = builder.Append(" views=\"").Append(FormatLargeNumber(stat.GetProperty("view").GetInt64())).Append('"')
+                               .Append(" danmakus=\"").Append(FormatLargeNumber(stat.GetProperty("danmaku").GetInt64())).Append('"');
+                }
+
                 if (!string.IsNullOrEmpty(imageProxy))
                 {
-                    attributes.Add($"views=\"{imageProxy}\"");
+                    _ = builder.Append(" image-proxy=\"").Append(imageProxy).Append('"');
                 }
-                string element = $"<{string.Join(" ", attributes)}></bilibili-card>";
+
+                string element = builder.Append("></bilibili-card>").ToString();
                 const string script = "<script src=\"https://unpkg.com/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.js\"></script>";
                 example = new StringBuilder()
-                                .AppendLine(script)
-                                .AppendLine(element)
-                                .AppendLine("```html")
-                                .AppendLine(element)
-                                .Append("```")
-                                .ToString();
+                    .AppendLine(script)
+                    .AppendLine(element)
+                    .AppendLine("```html")
+                    .AppendLine(element)
+                    .Append("```")
+                    .ToString();
             }
         }
     }
@@ -133,28 +136,27 @@
         }
     }
 
+
     private static string FormatLargeNumber(long num)
     {
         return (num >= 100000000)
-            ? $"{num / 100000000:F1}亿"
+            ? $"{num / 100000000d:F1}亿"
             : (num >= 10000)
-                ? $"{num / 10000:F1}万"
+                ? $"{num / 10000d:F1}万"
                 : num.ToString();
     }
 
     private static string FormatSecondsToTime(long second)
     {
         TimeSpan time = TimeSpan.FromSeconds(second);
-        int sec = time.Seconds;
-        int min = time.Minutes;
-        int hour = time.Hours;
-        List<int> times = new(3);
+        StringBuilder builder = new();
+        ulong hour = (ulong)time.TotalHours;
         if (hour > 0)
         {
-            times.Add(hour);
+            _ = builder.Append(hour.ToString("D2")).Append(':');
         }
-        times.Add(min);
-        times.Add(sec);
-        return string.Join(":", times.Select(n => n.ToString("D2")));
+        _ = builder.Append(time.Minutes.ToString("D2")).Append(':')
+                   .Append(time.Seconds.ToString("D2"));
+        return builder.ToString();
     }
 }

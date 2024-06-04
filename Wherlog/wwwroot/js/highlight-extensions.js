@@ -16,9 +16,9 @@ highlight.onload = () => {
     // Switch highlight Dark/Light theme
     const theme = document.querySelector('fluent-design-theme');
     if (theme != null) {
-        theme.addEventListener('onchange', (e) => {
+        theme.addEventListener('onchange', e => {
             if (e.detail.name == 'mode') {
-                if (e.detail.newValue === 'undefined') return;
+                if (e.detail.newValue === 'undefined') { return; }
                 const isDark = e.detail.newValue.includes('dark');
                 hljs_ColorSwitcher(isDark);
             }
@@ -27,7 +27,7 @@ highlight.onload = () => {
 
     // Detect system theme changing
     window.matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', (e) => {
+        .addEventListener('change', _ => {
             hljs_ColorSystem();
         });
 

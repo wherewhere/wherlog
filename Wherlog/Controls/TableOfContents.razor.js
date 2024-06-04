@@ -2,7 +2,7 @@
     const article = document.getElementById('article');
     const headings = article.querySelectorAll("h2, h3, h4");
 
-    let tocArray = new Array()
+    const tocArray = [];
     let chapter = null;
     let subchapter = null;
 
@@ -17,7 +17,7 @@
                 "level": element.nodeName,
                 "text": element.innerText,
                 "href": "#" + element.id,
-                "anchors": new Array()
+                "anchors": []
             };
 
             if ("H3" === element.nodeName) {
@@ -34,14 +34,13 @@
             else {
                 chapter = anchor;
                 tocArray.push(chapter);
-
             }
         }
     }
     return tocArray;
 }
 
-let backToTopButton = document.getElementById("backtotop");
+const backToTopButton = document.getElementById("backtotop");
 
 // When the user scrolls down 20px from the top of the document, show the button
 let bodycontent = document.getElementById('body-content');
@@ -49,17 +48,13 @@ if (!bodycontent) {
     bodycontent = document.body;
 }
 
-bodycontent.onscroll = function () {
-    scrollFunction()
-};
-
-function scrollFunction() {
+bodycontent.onscroll = () => {
     if (document.body.scrollTop > 20 || document.getElementById('body-content').scrollTop > 20 || document.documentElement.scrollTop > 20) {
         backToTopButton.style.display = "flex";
     } else {
         backToTopButton.style.display = "none";
     }
-}
+};
 
 // When the user clicks on the button, scroll to the top of the document
 export function backToTop() {

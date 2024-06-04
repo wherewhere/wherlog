@@ -3,7 +3,6 @@
 // When it is, we'll remove this invisibility from the body.
 
 class LoadingTheme extends HTMLElement {
-
     className = "hidden-body";
     defaultDarkColor = "#272727";
     defaultLightColor = "#fbfbfb";
@@ -17,7 +16,6 @@ class LoadingTheme extends HTMLElement {
 
     // Custom element added to page.
     connectedCallback() {
-
         // If LocalStorage is not available, do nothing.
         if (localStorage == null) {
             return;
@@ -49,7 +47,7 @@ class LoadingTheme extends HTMLElement {
 
         // Create a ".hidden-unstyled-body" class
         // where the background-color is dark or light.
-        var css = `.${this.className} { visibility: hidden; background-color: ${bgColor}; }`;
+        const css = `.${this.className} { visibility: hidden; background-color: ${bgColor}; }`;
 
         // Add a <style> element to the <head> element
         const head = document.head || document.getElementsByTagName('head')[0];
@@ -59,7 +57,6 @@ class LoadingTheme extends HTMLElement {
         style.appendChild(document.createTextNode(css));
 
         document.body.classList.add(this.className);
-
 
         // Add a <fluent-design-theme mode="dark|light" /> sub-element
         // Do not add the "storage-name"" to avoid unwanted local storage.
@@ -76,9 +73,9 @@ class LoadingTheme extends HTMLElement {
     }
 
     // Attributes has changed.
-    attributeChangedCallback(name, oldValue, newValue) {
-
-    }
+    attributeChangedCallback(name, oldValue, newValue) { }
 }
 
-customElements.define("loading-theme", LoadingTheme);
+if (!customElements.get("loading-theme")) {
+    customElements.define("loading-theme", LoadingTheme);
+}
