@@ -1,4 +1,5 @@
-﻿@inherits FluentComponentBase
+﻿@using Microsoft.FluentUI.AspNetCore.Components.Utilities
+@inherits SettingsCardBase
 
 <div class="@ClassValue" style="@Style">
     <div class="header-root">
@@ -26,3 +27,10 @@
         </div>
     }
 </div>
+
+@code
+{
+    protected override string ClassValue => new CssBuilder(Class)
+        .AddClass("settings-presenter")
+        .Build();
+}

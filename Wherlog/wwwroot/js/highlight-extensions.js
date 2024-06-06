@@ -27,13 +27,12 @@ highlight.onload = () => {
 
     // Detect system theme changing
     window.matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', _ => {
-            hljs_ColorSystem();
-        });
+          .addEventListener('change', _ => hljs_ColorSystem());
 
     // First/default theme
     hljs_ColorSystem();
 }
+
 function hljs_ColorSystem() {
     const theme = document.querySelector('fluent-design-theme');
     if (theme != null) {

@@ -5,12 +5,12 @@
         setElements(elements[i]);
     }
     function setElements(element) {
-        if (typeof element === 'undefined' || element === null) {
+        if (!(element instanceof Element)) {
             return;
         }
-        if (element?.className) {
-            element.className = 'hljs-' + element.className;
-        }
+        const className = [];
+        element.classList.forEach(x => className.push('hljs-' + x));
+        element.className = className.join(' ');
         const numberOfElements = +element?.children.length;
         for (let i = 0; i < numberOfElements; i++) {
             setElements(element.children[i]);

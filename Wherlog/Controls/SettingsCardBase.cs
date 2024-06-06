@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
-using Microsoft.FluentUI.AspNetCore.Components.Utilities;
 
 namespace Wherlog.Controls
 {
-    public partial class SettingsPresenter : FluentComponentBase
+    public abstract class SettingsCardBase : FluentComponentBase
     {
-        private string ClassValue => new CssBuilder(Class)
-            .AddClass("settings-presenter")
-            .Build();
+        protected abstract string ClassValue { get; }
 
         /// <summary>
         /// Gets or sets the Header.
@@ -29,21 +26,9 @@ namespace Wherlog.Controls
         public RenderFragment Icon { get; set; }
 
         /// <summary>
-        /// Gets or sets the icon that is shown when IsClickEnabled is set to true.
-        /// </summary>
-        [Parameter]
-        public RenderFragment ActionIcon { get; set; }
-
-        /// <summary>
         /// Gets or sets the content of a ContentControl.
         /// </summary>
         [Parameter]
         public RenderFragment ActionContent { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tooltip of the ActionIcon.
-        /// </summary>
-        [Parameter]
-        public string ActionIconToolTip { get; set; } = "More";
     }
 }

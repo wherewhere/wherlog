@@ -1,8 +1,44 @@
 ﻿@page "/tools"
+@inject NavigationManager Navigation
 
 <PageTitle>Tools</PageTitle>
 <h1>Tools</h1>
 
-<FluentAnchor Href="tools/datetime">DateTime</FluentAnchor>
-<FluentAnchor Href="tools/encode">Encode</FluentAnchor>
-<FluentAnchor Href="tools/bilibili-card">BiliBili Card</FluentAnchor>
+<FluentStack Orientation="Orientation.Vertical">
+    <SettingsGroup>
+        <Children>
+            <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/datetime"))">
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.CalendarDate()" />
+                </Icon>
+                <Header>DateTime</Header>
+                <Description>Convert between Unix timestamp and human-readable date time.</Description>
+                <ActionIcon>
+                    <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
+                </ActionIcon>
+            </SettingsButton>
+
+            <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/encode"))">
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.CodeText()" />
+                </Icon>
+                <Header>Encode & Decode</Header>
+                <Description>Encode and decode text using Base64, URL, HTML and so on.</Description>
+                <ActionIcon>
+                    <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
+                </ActionIcon>
+            </SettingsButton>
+
+            <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/bilibili-card"))">
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.Video()" />
+                </Icon>
+                <Header>BiliBili Card</Header>
+                <Description>Create BiliBili video card by <a href="https://github.com/wherewhere/hexo-tag-bilibili-card" target="_blank">bilibili-card</a>.</Description>
+                <ActionIcon>
+                    <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
+                </ActionIcon>
+            </SettingsButton>
+        </Children>
+    </SettingsGroup>
+</FluentStack>

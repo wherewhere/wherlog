@@ -63,6 +63,12 @@
         transform: translateX(0);
     }
 
+::deep pre code {
+    display: block;
+    overflow-x: auto;
+    padding: 1em;
+}
+
 ::deep figcaption {
     color: var(--neutral-foreground-hint);
     font-size: 0.875em;

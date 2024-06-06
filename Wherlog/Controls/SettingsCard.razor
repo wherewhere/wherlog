@@ -1,4 +1,5 @@
-﻿@inherits FluentComponentBase
+﻿@using Microsoft.FluentUI.AspNetCore.Components.Utilities
+@inherits SettingsCardBase
 
 <div class="@ClassValue" style="@Style">
     <FluentCard AreaRestricted="false" Style="padding: var(--settings-card-padding);">
@@ -6,8 +7,13 @@
             Icon="@Icon"
             Header="@Header"
             Description="@Description"
-            ActionContent="@ActionContent"
-            ActionIcon="@ActionIcon"
-            ActionIconToolTip="@ActionIconToolTip"/>
+            ActionContent="@ActionContent"/>
     </FluentCard>
 </div>
+
+@code
+{
+    protected override string ClassValue => new CssBuilder(Class)
+        .AddClass("settings-card")
+        .Build();
+}
