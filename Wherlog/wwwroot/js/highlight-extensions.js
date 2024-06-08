@@ -11,6 +11,12 @@ hljs_addInlineStylesheet(`pre[class~="snippet"] {
 // Add Scripts
 const highlight = hljs_addJavaScript('https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js');
 
+// Add languages
+hljs_addLanguages(
+    'dos',
+    'powershell'
+);
+
 // Add custom code
 highlight.onload = () => {
     // Switch highlight Dark/Light theme
@@ -55,6 +61,10 @@ function hljs_ColorSwitcher(isDark) {
         lightCss.removeAttribute("disabled");
         darkCss.setAttribute("disabled", "disabled");
     }
+}
+
+function hljs_addLanguages(...langs) {
+    langs.forEach(lang => hljs_addJavaScript(`https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/languages/${lang}.min.js`));
 }
 
 // Add a <script> to the <body> element
