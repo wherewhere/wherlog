@@ -11,29 +11,49 @@
         <FluentTab Label="Auto">
             <FluentStack Orientation="Orientation.Vertical">
                 <FluentTextField
-                    Label="BiliBili Video ID"
+                    Label="BiliBili Media ID"
                     Placeholder="BV1y54y1a768"
                     @bind-Value="ID" />
+                <FluentCombobox
+                    Width="auto"
+                    Label="Card Type"
+                    Items="types"
+                    Placeholder="video"
+                    @bind-Value="Type" />
                 <FluentTextField
                     Label="Image Proxy"
                     Placeholder="https://images.weserv.nl/?url="
                     @bind-Value="imageProxy" />
-                <FluentButton OnClick="@(() => CreateCardAsync(id))">Create Card</FluentButton>
+                <FluentTextField
+                    Label="Info Types"
+                    Placeholder="views danmakus"
+                    @bind-Value="infoTypes" />
+                <FluentButton OnClick="@(() => CreateCardAsync(imageProxy, id, type, infoTypes).ContinueWith(x => UpdateExample(x.Result)))">Create Card</FluentButton>
             </FluentStack>
         </FluentTab>
         <FluentTab Label="Manual">
             <FluentStack Orientation="Orientation.Vertical">
                 <FluentTextField
-                    Label="BiliBili Video ID"
+                    Label="BiliBili Media ID"
                     Placeholder="BV1y54y1a768"
                     @bind-Value="ID" />
+                <FluentCombobox
+                    Width="auto"
+                    Label="Card Type"
+                    Items="types"
+                    Placeholder="video"
+                    @bind-Value="Type" />
                 <FluentAnchor Href="@url" Target="_blank">Get JSON</FluentAnchor>
                 <FluentTextArea Label="Input JSON" @bind-Value="json" />
                 <FluentTextField
                     Label="Image Proxy"
                     Placeholder="https://images.weserv.nl/?url="
                     @bind-Value="imageProxy" />
-                <FluentButton OnClick="@(() => CreateCard(json))">Create Card</FluentButton>
+                <FluentTextField
+                    Label="Info Types"
+                    Placeholder="views danmakus"
+                    @bind-Value="infoTypes" />
+                <FluentButton OnClick="@(() => UpdateExample(CreateCard(JsonDocument.Parse(json).RootElement, imageProxy, id, type, infoTypes)))">Create Card</FluentButton>
             </FluentStack>
         </FluentTab>
     </FluentTabs>
@@ -43,10 +63,13 @@
 @code
 {
     private string id;
+    private string type;
     private string url;
     private string json;
     private string imageProxy;
+    private string infoTypes;
     private string example;
+    private readonly string[] types = ["video", "article", "user", "live", "bangumi", "audio", "dynamic", "favorite", "album"];
 
     private string ID
     {
@@ -56,107 +79,47 @@
             if (id != value)
             {
                 this.id = value;
-                if (string.IsNullOrWhiteSpace(this.id)) { url = null; }
-                (string id, string type) = GetVid(this.id);
-                url = $"https://api.bilibili.com/x/web-interface/view?{type}={id}";
+                UpdateApiUrl();
             }
         }
     }
 
-    private async Task CreateCardAsync(string id)
+    private string Type
     {
-        if (string.IsNullOrWhiteSpace(url)) { return; }
-        string result;
-        using (HttpClient client = new())
+        get => type;
+        set
         {
-            result = await client.GetStringAsync(url);
-        }
-        CreateCard(result);
-    }
-
-    private void CreateCard(string json)
-    {
-        if (!string.IsNullOrEmpty(json))
-        {
-            JsonDocument token = JsonDocument.Parse(json);
-            if (token.RootElement.TryGetProperty("data", out JsonElement data))
+            if (type != value)
             {
-                StringBuilder builder =
-                    new StringBuilder("<bilibili-card")
-                        .Append(" vid=\"").Append(data.GetProperty("bvid").GetString()).Append('"')
-                        .Append(" title=\"").Append(data.GetProperty("title").GetString()).Append('"')
-                        .Append(" author=\"").Append(data.GetProperty("owner").GetProperty("name").GetString()).Append('"')
-                        .Append(" cover=\"").Append(data.GetProperty("pic").GetString()).Append('"')
-                        .Append(" duration=\"").Append(FormatSecondsToTime(data.GetProperty("duration").GetInt64())).Append('"');
-
-                if (data.TryGetProperty("stat", out JsonElement stat))
-                {
-                    _ = builder.Append(" views=\"").Append(FormatLargeNumber(stat.GetProperty("view").GetInt64())).Append('"')
-                               .Append(" danmakus=\"").Append(FormatLargeNumber(stat.GetProperty("danmaku").GetInt64())).Append('"');
-                }
-
-                if (!string.IsNullOrEmpty(imageProxy))
-                {
-                    _ = builder.Append(" image-proxy=\"").Append(imageProxy).Append('"');
-                }
-
-                string element = builder.Append("></bilibili-card>").ToString();
-                const string script = "<script src=\"https://unpkg.com/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.js\"></script>";
-                example = new StringBuilder()
-                    .AppendLine(script)
-                    .AppendLine(element)
-                    .AppendLine("```html")
-                    .AppendLine(element)
-                    .Append("```")
-                    .ToString();
+                this.type = value;
+                UpdateApiUrl();
             }
         }
     }
 
-    private static (string Id, string Type) GetVid(string id)
+    private void UpdateApiUrl()
     {
-        if (id.StartsWith("BV", StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrWhiteSpace(id)) { url = null; }
+        else { url = GetApi(id, type); }
+    }
+
+
+    private void UpdateExample(string element)
+    {
+        if (string.IsNullOrEmpty(element))
         {
-            return (id, "bvid");
-        }
-        else if (id.StartsWith("av", StringComparison.OrdinalIgnoreCase))
-        {
-            return (id[2..], "aid");
+            example = string.Empty;
         }
         else
         {
-            if (ulong.TryParse(id, out ulong num))
-            {
-                return (num.ToString(), "aid");
-            }
-            else
-            {
-                return ($"BV{id}", "bvid");
-            }
+            const string script = "<script src=\"https://unpkg.com/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.js\"></script>";
+            example = new StringBuilder()
+                .AppendLine(script)
+                .AppendLine(element)
+                .AppendLine("```html")
+                .AppendLine(element)
+                .Append("```")
+                .ToString();
         }
-    }
-
-
-    private static string FormatLargeNumber(long num)
-    {
-        return (num >= 100000000)
-            ? $"{num / 100000000d:F1}亿"
-            : (num >= 10000)
-                ? $"{num / 10000d:F1}万"
-                : num.ToString();
-    }
-
-    private static string FormatSecondsToTime(long second)
-    {
-        TimeSpan time = TimeSpan.FromSeconds(second);
-        StringBuilder builder = new();
-        ulong hour = (ulong)time.TotalHours;
-        if (hour > 0)
-        {
-            _ = builder.Append(hour.ToString("D2")).Append(':');
-        }
-        _ = builder.Append(time.Minutes.ToString("D2")).Append(':')
-                   .Append(time.Seconds.ToString("D2"));
-        return builder.ToString();
     }
 }

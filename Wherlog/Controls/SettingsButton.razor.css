@@ -2,6 +2,10 @@
     --settings-button-padding: 16px 0 16px 16px;
 }
 
+div.settings-button {
+    cursor: pointer;
+}
+
 ::deep div.content-grid {
     display: flex;
     justify-content: space-between;

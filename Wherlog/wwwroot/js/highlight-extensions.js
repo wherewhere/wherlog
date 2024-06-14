@@ -11,14 +11,14 @@ hljs_addInlineStylesheet(`pre[class~="snippet"] {
 // Add Scripts
 const highlight = hljs_addJavaScript('https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js');
 
-// Add languages
-hljs_addLanguages(
-    'dos',
-    'powershell'
-);
-
 // Add custom code
 highlight.onload = () => {
+    // Add languages
+    hljs_addLanguages(
+        'dos',
+        'powershell'
+    );
+
     // Switch highlight Dark/Light theme
     const theme = document.querySelector('fluent-design-theme');
     if (theme != null) {
