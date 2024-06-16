@@ -18,6 +18,7 @@ highlight.onload = () => {
         'dos',
         'powershell'
     );
+    hljs_addJavaScript('js/highlight-msil.js');
 
     // Switch highlight Dark/Light theme
     const theme = document.querySelector('fluent-design-theme');
