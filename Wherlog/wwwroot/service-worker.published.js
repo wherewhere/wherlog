@@ -16,7 +16,7 @@ const base = "/";
 const baseUrl = new URL(base, self.origin);
 const manifestUrlList = self.assetsManifest.assets.map(asset => new URL(asset.url, baseUrl).href);
 
-async function onInstall(event) {
+async function onInstall(_) {
     console.info('Service worker: Install');
 
     // Fetch and cache all matching items from the assets manifest
@@ -27,7 +27,7 @@ async function onInstall(event) {
     await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
 }
 
-async function onActivate(event) {
+async function onActivate(_) {
     console.info('Service worker: Activate');
 
     // Delete unused caches

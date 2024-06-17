@@ -35,8 +35,12 @@ jobs:
         run: dotnet publish -c:Release -o:public
 
       # Changes the base-tag in index.html to match GitHub Pages repository subdirectory
-      - name: Change base-tag
+      - name: Change index.html base-tag
         run: sed -i 's/<base href="\/" \/>/<base href="\/wherlog\/" \/>/g' public/wwwroot/index.html
+
+      # Changes the base in service-worker.js to match GitHub Pages repository subdirectory
+      - name: Change service-worker.js base
+        run: sed -i 's/const base = "\/";/const base = "\/wherlog\/";/g' public/wwwroot/service-worker.js
 
       # Copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
