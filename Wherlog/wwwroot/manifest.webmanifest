@@ -1,22 +1,63 @@
 {
-  "name": "Wherlog",
-  "short_name": "Wherlog",
+  "name": "wherlog",
+  "short_name": "wherlog",
+  "description": "魔法薇ㄦ的书馆网页客户端",
+  "categories": [
+    "blogs",
+    "news",
+    "tools"
+  ],
   "id": "./",
   "start_url": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#03173d",
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "img/icon-mask.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     },
     {
-      "src": "icon-192.png",
+      "src": "img/icon-mask-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icon-mask-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icon-mask-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "img/icon-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "img/icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "img/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }

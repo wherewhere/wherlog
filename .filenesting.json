@@ -15,6 +15,31 @@
             ".resx"
           ]
         }
+      },
+      "fileToFile": {
+        "add": {
+          "icon.ico": [
+            "icon.svg"
+          ],
+          "icon-144.png": [
+            "icon.svg"
+          ],
+          "icon-192.png": [
+            "icon.svg"
+          ],
+          "icon-512.png": [
+            "icon.svg"
+          ],
+          "icon-mask-144.png": [
+            "icon-mask.svg"
+          ],
+          "icon-mask-192.png": [
+            "icon-mask.svg"
+          ],
+          "icon-mask-512.png": [
+            "icon-mask.svg"
+          ]
+        }
       }
     }
   }
