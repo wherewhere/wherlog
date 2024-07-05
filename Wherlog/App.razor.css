@@ -1,4 +1,8 @@
-﻿::deep .alert {
+﻿::deep * {
+    --font-monospace: "Cascadia Code NF", "Cascadia Code PL", "Cascadia Code", Consolas, "Courier New", "Liberation Mono", SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+::deep .alert {
     border: 1px dashed var(--accent-fill-rest);
     padding: 5px;
 }
