@@ -1,29 +1,38 @@
 ﻿@page "/tools/datetime"
 @page "/tools/timestamp"
 
-<PageTitle>DateTime</PageTitle>
-<h1>DateTime</h1>
+<ContentsView>
+    <Content>
+        <PageHeader Title="DateTime" />
 
-<FluentStack Orientation="Orientation.Vertical">
-    <FluentStack>
-        <FluentNumberField @bind-Value="timeStamp" />
-        <FluentButton OnClick="ConvertTimeStamp">转换时间戳</FluentButton>
-    </FluentStack>
+        <FluentCard Style="height: auto; padding: 16px">
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+                    <FluentNumberField @bind-Value="timeStamp" Style="flex: 1;" />
+                    <FluentButton OnClick="ConvertTimeStamp">转换时间戳</FluentButton>
+                </FluentStack>
 
-    <FluentStack>
-        <FluentDatePicker @bind-Value="@dateTime" />
-        <FluentTimePicker @bind-Value="@dateTime" />
-        <FluentButton OnClick="ConvertDateTime">转换时间</FluentButton>
-    </FluentStack>
+                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+                    <FluentDatePicker @bind-Value="@dateTime" Style="flex: 1;" />
+                    <FluentTimePicker @bind-Value="@dateTime" />
+                    <FluentButton OnClick="ConvertDateTime">转换时间</FluentButton>
+                </FluentStack>
 
-    <FluentStack>
-        <FluentTextField @bind-Value="timeString" Placeholder="2022-02-22T22:22:22+08:00" />
-        <FluentButton OnClick="ConvertTimeString">转换字符串</FluentButton>
-    </FluentStack>
+                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+                    <FluentTextField @bind-Value="timeString"
+                                     Placeholder="2022-02-22T22:22:22+08:00"
+                                     Style="flex: 1;" />
+                    <FluentButton OnClick="ConvertTimeString">转换字符串</FluentButton>
+                </FluentStack>
 
-    <FluentButton OnClick="SetDateTimeNow">当前时间</FluentButton>
-    <FluentSwitch @bind-Value="isMillisecond">时间戳是否为毫秒</FluentSwitch>
-</FluentStack>
+                <FluentStack HorizontalAlignment="HorizontalAlignment.Center" Style="justify-content: space-between;">
+                    <FluentButton OnClick="SetDateTimeNow">当前时间</FluentButton>
+                    <FluentSwitch @bind-Value="isMillisecond">时间戳是否为毫秒</FluentSwitch>
+                </FluentStack>
+            </FluentStack>
+        </FluentCard>
+    </Content>
+</ContentsView>
 
 @code
 {
@@ -34,7 +43,7 @@
 
     private void ConvertTimeStamp()
     {
-        dateTime = isMillisecond 
+        dateTime = isMillisecond
             ? DateTimeOffset.FromUnixTimeMilliseconds(timeStamp).LocalDateTime
             : DateTimeOffset.FromUnixTimeSeconds(timeStamp).LocalDateTime;
         timeString = dateTime?.ToString("s");

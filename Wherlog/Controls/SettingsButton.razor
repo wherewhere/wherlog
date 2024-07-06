@@ -1,16 +1,14 @@
 ﻿@inherits SettingsCardBase
 
 <div class="@ClassValue" style="@Style">
-    <FluentCard
-        onclick="@OnClick"
-        AreaRestricted="false"
-        Style="padding: var(--settings-button-padding);">
+    <FluentCard onclick="@OnClick"
+                AreaRestricted="false"
+                Style="padding: var(--settings-button-padding);">
         <div class="content-grid">
-            <SettingsPresenter
-                Icon="@Icon"
-                Header="@Header"
-                Description="@Description"
-                ActionContent="@ActionContent" />
+            <SettingsPresenter Icon="@Icon"
+                               Header="@Header"
+                               Description="@Description"
+                               ActionContent="@ActionContent" />
             @if (ActionIcon != null)
             {
                 <div class="action-icon-holder">

@@ -27,10 +27,9 @@
                         <Description>Set the theme of this App.</Description>
                         <ActionContent>
                             <FluentDesignTheme @bind-Mode="@mode" StorageName="theme" />
-                            <FluentSelect
-                                Width="auto"
-                                Items="@(Enum.GetValues<DesignThemeModes>())"
-                                @bind-SelectedOption="@mode" />
+                            <FluentSelect Width="auto"
+                                          Items="@(Enum.GetValues<DesignThemeModes>())"
+                                          @bind-SelectedOption="@mode" />
                         </ActionContent>
                     </SettingsCard>
 
@@ -43,10 +42,9 @@
                         </Header>
                         <Description>Select language and restart to change language.</Description>
                         <ActionContent>
-                            <FluentSelect
-                                Width="auto"
-                                Items="@LanguageHelper.SupportCultures"
-                                @bind-SelectedOption="SelectedLanguage">
+                            <FluentSelect Width="auto"
+                                          Items="@LanguageHelper.SupportCultures"
+                                          @bind-SelectedOption="SelectedLanguage">
                                 <OptionTemplate>
                                     @context.DisplayName
                                 </OptionTemplate>
@@ -131,7 +129,7 @@
                                 <span>魔法薇ㄦ的书馆网页客户端</span>
                                 <FluentStack HorizontalGap="4" Style="overflow-x: auto">
                                     <a class="text-button" href="https://github.com/wherewhere/wherlog/issues" target="_blank">Feedback</a>
-                                    <a class="text-button" href="https://github.com/wherewhere/wherlog/discussions target="_blank"">Discussions</a>
+                                    <a class="text-button" href="https://github.com/wherewhere/wherlog/discussions target=" _blank"">Discussions</a>
                                     <a class="text-button" href="https://wherewhere.github.io" target="_blank">魔法薇ㄦ的书馆</a>
                                 </FluentStack>
                             </FluentStack>
@@ -179,7 +177,9 @@
                             </FluentStack>
                         </Description>
                         <ActionContent>
-                            <FluentAnchor Href="https://t.me/PavingBase">电报</FluentAnchor>
+                            <FluentAnchor Href="https://t.me/PavingBase">
+                                电报
+                            </FluentAnchor>
                         </ActionContent>
                     </SettingsCard>
 
@@ -228,12 +228,13 @@
                         </Header>
                         <Description>Navigate to target url.</Description>
                         <ActionContent>
-                            <FluentStack Width="var(--settings-card-content-min-width)" HorizontalAlignment="HorizontalAlignment.Right">
-                                <FluentTextField
-                                    Placeholder="输入 URL"
-                                    Style="width: 100%;"
-                                    @bind-Value="path" />
-                                <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">前往</FluentButton>
+                            <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
+                                <FluentTextField Placeholder="输入 URL"
+                                                 Style="flex: 1"
+                                                 @bind-Value="path" />
+                                <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">
+                                    前往
+                                </FluentButton>
                             </FluentStack>
                         </ActionContent>
                     </SettingsCard>

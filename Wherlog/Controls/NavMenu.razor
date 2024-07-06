@@ -1,57 +1,49 @@
 ﻿@inject IStringLocalizer<NavMenu> Loc
 
 <div class="nav-menu">
-    <input
-        type="checkbox"
-        title="@Loc["NavMenuToggleTitle"]"
-        id="nav-menu-toggle"
-        class="nav-menu-icon" />
+    <input type="checkbox"
+           title="@Loc["NavMenuToggleTitle"]"
+           id="nav-menu-toggle"
+           class="nav-menu-icon" />
     <label for="nav-menu-toggle" class="nav-menu-icon">
         <FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Color.Fill" />
     </label>
-    <nav
-        class="sitenav"
-        aria-labelledby="main-menu"
-        onclick="document.getElementById('nav-menu-toggle').click();">
-        <FluentNavMenu
-            Id="main-menu"
-            Width="250"
-            Collapsible="true"
-            Title="@Loc["MainMenuTitle"]"
-            @bind-Expanded="expanded">
-            <FluentNavLink
-                Href="./"
-                Match="NavLinkMatch.All"
-                Icon="@(new Icons.Regular.Size20.Home())"
-                IconColor="Color.Accent">
+    <nav class="sitenav"
+         aria-labelledby="main-menu"
+         onclick="document.getElementById('nav-menu-toggle').click();">
+        <FluentNavMenu Id="main-menu"
+                       Width="250"
+                       Collapsible="true"
+                       Title="@Loc["MainMenuTitle"]"
+                       @bind-Expanded="expanded">
+            <FluentNavLink Href="./"
+                           Match="NavLinkMatch.All"
+                           Icon="@(new Icons.Regular.Size20.Home())"
+                           IconColor="Color.Accent">
                 @Loc["HomeText"]
             </FluentNavLink>
-            <FluentNavLink
-                Href="tags"
-                Match="NavLinkMatch.Prefix"
-                Icon="@(new Icons.Regular.Size20.Tag())"
-                IconColor="Color.Accent">
+            <FluentNavLink Href="tags"
+                           Match="NavLinkMatch.Prefix"
+                           Icon="@(new Icons.Regular.Size20.Tag())"
+                           IconColor="Color.Accent">
                 @Loc["TagText"]
             </FluentNavLink>
-            <FluentNavLink
-                Href="categories"
-                Match="NavLinkMatch.Prefix"
-                Icon="@(new Icons.Regular.Size20.Grid())"
-                IconColor="Color.Accent">
+            <FluentNavLink Href="categories"
+                           Match="NavLinkMatch.Prefix"
+                           Icon="@(new Icons.Regular.Size20.Grid())"
+                           IconColor="Color.Accent">
                 @Loc["CategoryText"]
             </FluentNavLink>
-            <FluentNavLink
-                Href="archives"
-                Match="NavLinkMatch.Prefix"
-                Icon="@(new Icons.Regular.Size20.Archive())"
-                IconColor="Color.Accent">
+            <FluentNavLink Href="archives"
+                           Match="NavLinkMatch.Prefix"
+                           Icon="@(new Icons.Regular.Size20.Archive())"
+                           IconColor="Color.Accent">
                 @Loc["ArchiveText"]
             </FluentNavLink>
-            <FluentNavLink
-                Href="settings"
-                Match="NavLinkMatch.Prefix"
-                Icon="@(new Icons.Regular.Size20.Settings())"
-                IconColor="Color.Accent">
+            <FluentNavLink Href="settings"
+                           Match="NavLinkMatch.Prefix"
+                           Icon="@(new Icons.Regular.Size20.Settings())"
+                           IconColor="Color.Accent">
                 @Loc["SettingsText"]
             </FluentNavLink>
         </FluentNavMenu>

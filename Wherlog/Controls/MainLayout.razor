@@ -5,10 +5,9 @@
 <div class="main-layout">
     <FluentLayout>
         <FluentHeader>@(site?.Title ?? "wherlog")</FluentHeader>
-        <FluentStack
-            Class="main-split"
-            Width="100%"
-            Style="align-items: stretch;">
+        <FluentStack Class="main-split"
+                     Width="100%"
+                     Style="align-items: stretch;">
             <div class="nav-div">
                 <NavMenu />
             </div>
@@ -21,10 +20,9 @@
                         <div class="blazor-error-root">
                             <div class="blazor-error-boundary">@ex.Message</div>
                             <FluentButton OnClick="OnParametersSet" BackgroundColor="transparent">
-                                <FluentIcon
-                                    Value="@(new Icons.Regular.Size20.Dismiss())"
-                                    Color="Color.Custom"
-                                    CustomColor="white"/>
+                                <FluentIcon Value="@(new Icons.Regular.Size20.Dismiss())"
+                                            Color="Color.Custom"
+                                            CustomColor="white" />
                             </FluentButton>
                         </div>
                     </ErrorContent>

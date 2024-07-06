@@ -6,38 +6,34 @@
 @inject IStringLocalizer<HomePage> Loc
 @inject NavigationManager Navigation
 
-@if (Navigation.Uri.Contains("posts"))
-{
-    <PageTitle>@Loc["PostsTitleText"]</PageTitle>
-    <h1>@Loc["PostsTitleText"]</h1>
-}
-else
-{
-    <PageTitle>@Loc["TitleText"]</PageTitle>
-    <h1>@Loc["TitleText"]</h1>
-}
-
-@if (postList == null)
-{
-    <FluentProgressRing />
-}
-else
-{
-    <FluentStack Orientation="Orientation.Vertical">
-        @foreach (PostModel post in postList)
+<ContentsView>
+    <Content>
+        <PageHeader Title="@Title" />
+        @if (postList == null)
         {
-            <FluentCard>
-                <PostCard Post="@post" />
-            </FluentCard>
+            <FluentProgressRing />
         }
-    </FluentStack>
-}
+        else
+        {
+            <FluentStack Orientation="Orientation.Vertical">
+                @foreach (PostModel post in postList)
+                {
+                    <FluentCard>
+                        <PostCard Post="@post" />
+                    </FluentCard>
+                }
+            </FluentStack>
+        }
+    </Content>
+</ContentsView>
 
 @code
 {
     private RequestHelper request = RequestHelper.Default;
     private static PostsModel postsIndex;
     private static List<PostModel> postList;
+
+    private string Title => Navigation.Uri.Contains("posts") ? Loc["PostsTitleText"] : Loc["TitleText"];
 
     protected override async Task OnInitializedAsync()
     {

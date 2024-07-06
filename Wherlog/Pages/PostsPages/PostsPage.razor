@@ -7,9 +7,12 @@
 
 @if (post == null)
 {
-    <PageTitle>@Loc["TitleText"]</PageTitle>
-    <h1>@Loc["TitleText"]</h1>
-    <FluentProgressRing />
+    <ContentsView>
+        <Content>
+            <PageHeader Title="@Loc["TitleText"]" />
+            <FluentProgressRing />
+        </Content>
+    </ContentsView>
 }
 else
 {

@@ -1,0 +1,19 @@
+﻿<div class="contents-view">
+    @Content
+</div>
+
+@code
+{
+    /// <summary>
+    /// Gets or sets a value indicating whether a 'Back to top' button should be rendered.
+    /// Defaults to true
+    /// </summary>
+    [Parameter]
+    public bool ShowBackButton { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the content of a ContentControl.
+    /// </summary>
+    [Parameter]
+    public RenderFragment Content { get; set; }
+}

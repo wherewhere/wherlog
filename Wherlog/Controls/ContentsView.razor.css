@@ -1,0 +1,15 @@
+﻿div.contents-view {
+    padding: 1.5rem 1rem;
+}
+
+@media (max-width: 600px) {
+    div.contents-view {
+        padding: 0 0 1rem 0;
+    }
+}
+
+@media (max-width: 767px) {
+    div.contents-view {
+        padding: 1rem 0 1rem 0;
+    }
+}

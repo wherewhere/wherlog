@@ -5,43 +5,43 @@
 @inject IStringLocalizer<TagsPage> Loc
 @inject NavigationManager Navigation
 
-@if (cate == null)
-{
-    <PageTitle>@Loc["TitleText"]</PageTitle>
-    <h1>@Loc["TitleText"]</h1>
-
-    @if (!HasSlug && cates != null)
-    {
-        <FluentGrid Spacing="1">
-            @foreach (var cate in cates)
-            {
-                <FluentGridItem xs="6" sm="3">
-                    <FluentCard @onclick="() => OnClick(cate.Slug)">
-                        <h4>@cate.Name</h4>
-                    </FluentCard>
-                </FluentGridItem>
-            }
-        </FluentGrid>
-    }
-    else
-    {
-        <FluentProgressRing />
-    }
-}
-else
-{
-    <PageTitle>@string.Format(Loc["TitleTextFormat"], cate.Info.Name)</PageTitle>
-    <h1>@string.Format(Loc["TitleTextFormat"], cate.Info.Name)</h1>
-
-    <FluentStack Orientation="Orientation.Vertical">
-        @foreach (PostModel post in cate.Posts)
+<ContentsView>
+    <Content>
+        @if (cate == null)
         {
-            <FluentCard>
-                <PostCard Post="@post" />
-            </FluentCard>
+            <PageHeader Title="@Loc["TitleText"]" />
+            @if (!HasSlug && cates != null)
+            {
+                <FluentGrid Spacing="1">
+                    @foreach (var cate in cates)
+                    {
+                        <FluentGridItem xs="6" sm="3">
+                            <FluentCard @onclick="() => OnClick(cate.Slug)" Style="cursor: pointer;">
+                                <h4>@cate.Name</h4>
+                            </FluentCard>
+                        </FluentGridItem>
+                    }
+                </FluentGrid>
+            }
+            else
+            {
+                <FluentProgressRing />
+            }
         }
-    </FluentStack>
-}
+        else
+        {
+            <PageHeader Title="@string.Format(Loc["TitleTextFormat"], cate.Info.Name)" />
+            <FluentStack Orientation="Orientation.Vertical">
+                @foreach (PostModel post in cate.Posts)
+                {
+                    <FluentCard>
+                        <PostCard Post="@post" />
+                    </FluentCard>
+                }
+            </FluentStack>
+        }
+    </Content>
+</ContentsView>
 
 @code
 {

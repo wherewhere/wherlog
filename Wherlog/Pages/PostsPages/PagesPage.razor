@@ -7,24 +7,26 @@
 
 @if (pageModel == null)
 {
-    <PageTitle>@Loc["TitleText"]</PageTitle>
-    <h1>@Loc["TitleText"]</h1>
-
-    @if (HasPath)
-    {
-        <FluentProgressRing />
-    }
-    else if (pages != null)
-    {
-        <FluentStack Orientation="Orientation.Vertical">
-            @foreach (PageModel model in pages)
+    <ContentsView>
+        <Content>
+            <PageHeader Title="@Loc["TitleText"]" />
+            @if (HasPath)
             {
-                <FluentCard @onclick="() => OnClick(model.Url)">
-                    <h4>@model.Title</h4>
-                </FluentCard>
+                <FluentProgressRing />
             }
-        </FluentStack>
-    }
+            else if (pages != null)
+            {
+                <FluentStack Orientation="Orientation.Vertical">
+                    @foreach (PageModel model in pages)
+                    {
+                        <FluentCard @onclick="() => OnClick(model.Url)" Style="cursor: pointer;">
+                            <h4>@model.Title</h4>
+                        </FluentCard>
+                    }
+                </FluentStack>
+            }
+        </Content>
+    </ContentsView>
 }
 else
 {
@@ -69,5 +71,5 @@ else
         }
     }
 
-    private void OnClick(string path) => Navigation.NavigateTo($"pages/{path}");
+    private void OnClick(string path) => Navigation.NavigateTo($"pages/{path.Replace("/index.html", string.Empty).TrimStart('/')}");
 }

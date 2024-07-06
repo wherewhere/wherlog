@@ -11,10 +11,20 @@
 
 ::deep aside {
     padding: 1.5rem 1rem;
-    top: 0px;
+    top: 0;
     height: 100vh;
     position: sticky;
     width: 19rem;
+}
+
+@media (max-width: 600px) {
+    ::deep article {
+        padding: 0 0 1rem 0;
+    }
+
+    ::deep aside {
+        padding: 0 0 1rem 0;
+    }
 }
 
 @media (max-width: 767px) {
@@ -23,7 +33,7 @@
     }
 
     ::deep article {
-        padding-top: 0px;
+        padding: 1rem 0 1rem 0;
         border-right: unset;
         border-bottom: 1px solid var(--neutral-stroke-divider-rest);
         width: 100%;

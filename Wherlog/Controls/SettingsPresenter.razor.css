@@ -15,7 +15,7 @@ div.settings-presenter {
 ::deep div.header-root {
     display: flex;
     align-items: center;
-    width: 100%;
+    flex: 1;
 }
 
 ::deep div.icon-holder {
