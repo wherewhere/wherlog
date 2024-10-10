@@ -1,9 +1,9 @@
 ﻿* {
-    --settings-card-description-font-size: 12px;
-    --settings-card-header-icon-max-size: 20px;
+    --settings-card-description-font-size: var(--type-ramp-minus-1-font-size);
+    --settings-card-header-icon-max-size: var(--type-ramp-base-line-height);
     --settings-card-content-min-width: 240px;
-    --settings-card-header-icon-margin: 0px 20px 0px 2px;
-    --settings-card-vertical-header-content-spacing: 8px 0px 0px 0px;
+    --settings-card-header-icon-margin: 0 calc((var(--base-horizontal-spacing-multiplier) * 6 + var(--design-unit) * 0.5) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 6 - var(--design-unit) * 4) * 1px);
+    --settings-card-vertical-header-content-spacing: calc(var(--design-unit) * 2px) 0 0 0;
 }
 
 div.settings-presenter {
@@ -27,7 +27,7 @@ div.settings-presenter {
 ::deep div.header-panel {
     display: flex;
     flex-direction: column;
-    margin: 0px 24px 0px 0px;
+    margin: 0 calc(var(--design-unit) * 6px) 0 0;
 }
 
 ::deep span.description {

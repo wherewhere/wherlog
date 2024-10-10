@@ -6,11 +6,6 @@ div.settings-group {
     width: 100%;
 }
 
-::deep div.settings-group {
-    display: flex;
-    flex-direction: column;
-}
-
 ::deep div.header-presenter {
     margin: 1rem 0px 6px 1px;
     font-size: var(--body-strong-text-block-font-size);

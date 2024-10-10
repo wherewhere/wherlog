@@ -42,7 +42,9 @@
                                         Placeholder="video"
                                         @bind-Value="Type" />
                         <FluentAnchor Href="@url" Target="_blank">Get JSON</FluentAnchor>
-                        <FluentTextArea Label="Input JSON" @bind-Value="json" />
+                        <FluentTextArea Label="Input JSON"
+                                        Resize="TextAreaResize.Both"
+                                        @bind-Value="json" />
                         <FluentTextField Label="Image Proxy"
                                          Placeholder="https://images.weserv.nl/?url="
                                          @bind-Value="imageProxy" />

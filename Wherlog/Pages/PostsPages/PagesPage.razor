@@ -19,7 +19,10 @@
                 <FluentStack Orientation="Orientation.Vertical">
                     @foreach (PageModel model in pages)
                     {
-                        <FluentCard @onclick="() => OnClick(model.Url)" Style="cursor: pointer;">
+                        <FluentCard Class="clickable-card"
+                                    MinimalStyle="true"
+                                    @onclick="() => OnClick(model.Url)"
+                                    Style="cursor: pointer;">
                             <h4>@model.Title</h4>
                         </FluentCard>
                     }

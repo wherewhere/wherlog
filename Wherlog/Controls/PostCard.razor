@@ -5,9 +5,7 @@
 
 @if (Post != null)
 {
-    <div class="post-card"
-         @onclick="() => OnClick(Post.Url)"
-         style="cursor: pointer;">
+    <div class="post-card" @onclick="() => OnClick(Post.Url)">
         <h3>@Post.Title</h3>
         @(new MarkupString(Post.Excerpt))
     </div>

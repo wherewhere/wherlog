@@ -23,10 +23,10 @@
     padding: 0px 5px 0px 0px;
 }
 
-::deep td.hljs-code pre {
-    margin-bottom: 0px;
-    tab-size: 2em;
-}
+    ::deep td.hljs-code pre {
+        margin-bottom: 0px;
+        tab-size: 2em;
+    }
 
 ::deep figcaption {
     color: var(--neutral-foreground-hint);

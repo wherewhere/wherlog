@@ -33,7 +33,7 @@
             <FluentStack Orientation="Orientation.Vertical">
                 @foreach (PostModel post in archive.Posts)
                 {
-                    <FluentCard>
+                    <FluentCard Class="clickable-card" MinimalStyle="true">
                         <PostCard Post="@post" />
                     </FluentCard>
                 }

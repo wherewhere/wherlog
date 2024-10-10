@@ -16,7 +16,10 @@
                     @foreach (var cate in cates)
                     {
                         <FluentGridItem xs="6" sm="3">
-                            <FluentCard @onclick="() => OnClick(cate.Slug)" Style="cursor: pointer;">
+                            <FluentCard Class="clickable-card"
+                                        MinimalStyle="true"
+                                        @onclick="() => OnClick(cate.Slug)"
+                                        Style="cursor: pointer;">
                                 <h4>@cate.Name</h4>
                             </FluentCard>
                         </FluentGridItem>
