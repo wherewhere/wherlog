@@ -42,7 +42,7 @@
         top: 15px;
         left: unset;
         right: 20px;
-        right: calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0) + 20px);
+        right: calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px) + 20px);
         width: 20px;
         height: 20px;
         border: none;
@@ -51,7 +51,7 @@
 
     ::deep [dir="rtl"] .nav-menu-icon {
         left: 20px;
-        left: calc(env(titlebar-area-x, 0) + 20px);
+        left: calc(env(titlebar-area-x, 0px) + 20px);
         right: unset;
     }
 }

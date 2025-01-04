@@ -1,5 +1,15 @@
 @import '../_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css';
 
+:root {
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
 body {
     --body-font: "Segoe UI Variable", "Segoe UI", sans-serif;
     font-family: var(--body-font);
