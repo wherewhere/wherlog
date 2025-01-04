@@ -12,8 +12,9 @@
   "display": "standalone",
   "orientation": "any",
   "background_color": "#ffffff",
-  "theme_color": "#03173d",
+  "theme_color": "#036ac4",
   "prefer_related_applications": false,
+  "display_override": [ "window-controls-overlay" ],
   "icons": [
     {
       "src": "img/icon-mask.svg",

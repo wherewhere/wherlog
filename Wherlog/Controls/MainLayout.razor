@@ -4,7 +4,7 @@
 
 <div class="main-layout">
     <FluentLayout>
-        <FluentHeader>@(site?.Title ?? "wherlog")</FluentHeader>
+        <FluentHeader Style="padding: env(titlebar-area-y, 0) calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0)) 0 env(titlebar-area-x, 0); -webkit-app-region: drag;">@(site?.Title ?? "wherlog")</FluentHeader>
         <FluentStack Class="main-split"
                      Width="100%"
                      Style="align-items: stretch;">
@@ -30,7 +30,7 @@
             </FluentBodyContent>
         </FluentStack>
         <FluentFooter>
-            <span>Copyright © 2017 - 2024 wherewhere. All Rights Reserved</span>
+            <span>Copyright © 2017 - 2025 wherewhere. All Rights Reserved</span>
             <FluentSpacer />
             <a href="https://github.com/wherewhere/wherlog" target="_blank">Github</a>
         </FluentFooter>

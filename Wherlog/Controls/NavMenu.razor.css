@@ -5,7 +5,9 @@
 @media (max-width: 600px) {
     ::deep nav.sitenav {
         width: 100%;
-        height: 100%;
+        position: absolute;
+        z-index: 1;
+        background-color: var(--neutral-layer-1);
     }
 
     ::deep #main-menu {
@@ -40,13 +42,16 @@
         top: 15px;
         left: unset;
         right: 20px;
+        right: calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0) + 20px);
         width: 20px;
         height: 20px;
         border: none;
+        -webkit-app-region: no-drag;
     }
 
     ::deep [dir="rtl"] .nav-menu-icon {
         left: 20px;
+        left: calc(env(titlebar-area-x, 0) + 20px);
         right: unset;
     }
 }
