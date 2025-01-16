@@ -1,8 +1,5 @@
-﻿* {
+﻿div.settings-button {
     --settings-button-padding: calc(var(--design-unit) * 4px) 0 calc(var(--design-unit) * 4px) calc(var(--design-unit) * 4px);
-}
-
-div.settings-button {
     cursor: pointer;
 }
 
@@ -11,13 +8,13 @@ div.settings-button {
     border-radius: calc(var(--control-corner-radius) * 1px);
 }
 
-::deep div.content-grid {
+div.content-grid {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-::deep div.action-icon-holder {
+div.action-icon-holder {
     width: calc((var(--base-height-multiplier) + var(--density)) * var(--design-unit) * 1px);
     height: auto;
     display: flex;

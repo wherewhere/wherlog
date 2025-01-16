@@ -1,5 +1,6 @@
 ﻿@page "/"
 @page "/posts"
+@page "/index.html"
 @using Wherlog.Helpers
 @using Wherlog.Models
 @using Wherlog.Models.Post
@@ -7,24 +8,22 @@
 @inject NavigationManager Navigation
 
 <ContentsView>
-    <Content>
-        <PageHeader Title="@Title" />
-        @if (postList == null)
-        {
-            <FluentProgressRing />
-        }
-        else
-        {
-            <FluentStack Orientation="Orientation.Vertical">
-                @foreach (PostModel post in postList)
-                {
-                    <FluentCard Class="clickable-card" MinimalStyle="true">
-                        <PostCard Post="@post" />
-                    </FluentCard>
-                }
-            </FluentStack>
-        }
-    </Content>
+    <PageHeader Title="@Title" />
+    @if (postList == null)
+    {
+        <FluentProgressRing />
+    }
+    else
+    {
+        <FluentStack Orientation="Orientation.Vertical">
+            @foreach (PostModel post in postList)
+            {
+                <FluentCard Class="clickable-card" MinimalStyle="true">
+                    <PostCard Post="@post" />
+                </FluentCard>
+            }
+        </FluentStack>
+    }
 </ContentsView>
 
 @code

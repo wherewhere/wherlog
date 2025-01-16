@@ -4,38 +4,105 @@
 @using System.Text
 @using System.Text.RegularExpressions
 
-<ContentsView>
-    <Content>
-        <PageHeader Title="Encode & Decode" />
+<TableContentsView>
+    <PageHeader Title="Encode & Decode" />
 
-        <FluentStack Orientation="Orientation.Vertical">
-            <FluentTextArea @bind-Value="encodeText" style="width: 100%;"></FluentTextArea>
+    <FluentStack Orientation="Orientation.Vertical">
+        <SettingsGroup>
+            <Children>
+                <SettingsCard>
+                    <Icon>
+                        <FluentIcon Value="new Icons.Regular.Size20.SettingsCogMultiple()" />
+                    </Icon>
+                    <Header>
+                        <h3 class="unset">编码类型</h3>
+                    </Header>
+                    <Description>选择编码的类型。</Description>
+                    <ActionContent>
+                        <FluentSelect Width="auto"
+                        Items="@(Enum.GetValues<EncodeType>())"
+                        @bind-SelectedOption="@type" />
+                    </ActionContent>
+                </SettingsCard>
 
-            <FluentStack Orientation="Orientation.Vertical" Style="overflow-x: auto;">
-                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
-                    <FluentButton OnClick="() => decodeText = DecodeBase64(encodeText)">Base64 Decode</FluentButton>
-                    <FluentButton OnClick="() => decodeText = WebUtility.UrlDecode(encodeText)">Url Decode</FluentButton>
-                    <FluentButton OnClick="() => decodeText = WebUtility.HtmlDecode(encodeText)">Html Decode</FluentButton>
-                    <FluentButton OnClick="() => decodeText = Regex.Unescape(encodeText)">Unicode Decode</FluentButton>
-                </FluentStack>
-
-                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
-                    <FluentButton OnClick="() => encodeText = Convert.ToBase64String(Encoding.UTF8.GetBytes(decodeText))">Base64 Encode</FluentButton>
-                    <FluentButton OnClick="() => encodeText = WebUtility.UrlEncode(decodeText)">Url Encode</FluentButton>
-                    <FluentButton OnClick="() => encodeText = WebUtility.HtmlEncode(decodeText)">Html Encode</FluentButton>
-                    <FluentButton OnClick="() => encodeText = EncodeUnicode(decodeText)">Unicode Encode</FluentButton>
-                </FluentStack>
-            </FluentStack>
-
-            <FluentTextArea @bind-Value="decodeText" style="width: 100%;"></FluentTextArea>
-        </FluentStack>
-    </Content>
-</ContentsView>
+                <FluentSplitter>
+                    <Panel1>
+                        <InputLabel Label="明文" Style="padding-right: 0.15rem">
+                            <ActionContent>
+                                <FluentButton OnClick="Encode">编码</FluentButton>
+                            </ActionContent>
+                            <ChildContent>
+                                <FluentTextArea @bind-Value="decode" Resize="TextAreaResize.Vertical" Style="width: 100%;" />
+                            </ChildContent>
+                        </InputLabel>
+                    </Panel1>
+                    <Panel2>
+                        <InputLabel Label="密文" Style="padding-left: 0.15rem">
+                            <ActionContent>
+                                <FluentButton OnClick="Decode">解码</FluentButton>
+                            </ActionContent>
+                            <ChildContent>
+                                <FluentTextArea @bind-Value="encode" Resize="TextAreaResize.Vertical" Style="width: 100%;" />
+                            </ChildContent>
+                        </InputLabel>
+                    </Panel2>
+                </FluentSplitter>
+            </Children>
+        </SettingsGroup>
+    </FluentStack>
+</TableContentsView>
 
 @code
 {
-    private string encodeText;
-    private string decodeText;
+    enum EncodeType
+    {
+        Base64,
+        URL,
+        HTML,
+        Unicode
+    }
+
+    private EncodeType type;
+    private string encode = "";
+    private string decode = "";
+
+    private void Encode()
+    {
+        switch (type)
+        {
+            case EncodeType.Base64:
+                encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(decode));
+                break;
+            case EncodeType.URL:
+                encode = WebUtility.UrlEncode(decode);
+                break;
+            case EncodeType.HTML:
+                encode = WebUtility.HtmlEncode(decode);
+                break;
+            case EncodeType.Unicode:
+                encode = EncodeUnicode(decode);
+                break;
+        }
+    }
+
+    private void Decode()
+    {
+        switch (type)
+        {
+            case EncodeType.Base64:
+                decode = DecodeBase64(encode);
+                break;
+            case EncodeType.URL:
+                decode = WebUtility.UrlDecode(encode);
+                break;
+            case EncodeType.HTML:
+                decode = WebUtility.HtmlDecode(encode);
+                break;
+            case EncodeType.Unicode:
+                decode = Regex.Unescape(encode);
+                break;
+        }
+    }
 
     private static string DecodeBase64(string text)
     {
@@ -49,7 +116,7 @@
         StringBuilder builder = new StringBuilder();
         foreach (char c in text)
         {
-            _ = builder.AppendFormat("\\u{0:x4}", (ushort)c);
+            _ = builder.Append($@"\u{(ushort)c:x4}");
         }
         return builder.ToString();
     }

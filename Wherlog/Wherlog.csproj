@@ -11,6 +11,7 @@
 
   <PropertyGroup>
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+    <CompressionEnabled>false</CompressionEnabled>
     <Language>zh-CN</Language>
     <LangVersion>latest</LangVersion>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
@@ -18,12 +19,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.39.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.0" />
-    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.11.0" />
-    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.11.0" />
+    <PackageReference Include="Markdig" Version="0.40.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.1" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.11.3" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.11.3" />
   </ItemGroup>
 
   <ItemGroup>

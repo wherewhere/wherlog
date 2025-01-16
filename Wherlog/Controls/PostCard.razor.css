@@ -1,10 +1,10 @@
-﻿::deep img.emoji {
-    height: 18px;
-    margin-bottom: -3px;
+﻿::deep img {
+    max-width: 100%;
 }
 
-::deep img[data-src] {
-    visibility: collapse;
+::deep img.emoji {
+    height: 18px;
+    margin-bottom: -3px;
 }
 
 ::deep figure.hljs-highlight table {
@@ -30,4 +30,9 @@
 
 ::deep figcaption {
     color: var(--neutral-foreground-hint);
+    font-size: 0.875em;
+    font-weight: bold;
+    line-height: 1;
+    margin: auto auto 15px;
+    text-align: center;
 }

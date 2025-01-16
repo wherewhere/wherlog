@@ -1,4 +1,4 @@
-﻿* {
+﻿div.settings-card {
     --settings-card-padding: calc(var(--design-unit) * 4px);
 }
 

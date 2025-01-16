@@ -3,7 +3,6 @@ hljs_addStylesheet('https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/styles/
 hljs_addStylesheet('https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/styles/vs2015.min.css', 'highlight-dark', 'disabled');
 
 hljs_addInlineStylesheet(`pre[class~="snippet"] {
-    --font-monospace: "courier";
     --type-ramp-base-font-variations: unset;
     font-weight: bold;
     }`);

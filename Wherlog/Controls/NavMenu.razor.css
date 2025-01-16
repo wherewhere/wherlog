@@ -1,9 +1,9 @@
-﻿::deep .nav-menu-icon {
+﻿.nav-menu-icon {
     display: none;
 }
 
 @media (max-width: 600px) {
-    ::deep nav.sitenav {
+    nav.sitenav {
         width: 100%;
         position: absolute;
         z-index: 1;
@@ -22,19 +22,19 @@
         width: 100%;
     }
 
-    ::deep #nav-menu-toggle {
+    #nav-menu-toggle {
         appearance: none;
     }
 
-        ::deep #nav-menu-toggle ~ nav {
+        #nav-menu-toggle ~ nav {
             display: none;
         }
 
-        ::deep #nav-menu-toggle:checked ~ nav {
+        #nav-menu-toggle:checked ~ nav {
             display: block;
         }
 
-    ::deep .nav-menu-icon {
+    .nav-menu-icon {
         cursor: pointer;
         z-index: 10;
         display: block;
@@ -49,7 +49,7 @@
         -webkit-app-region: no-drag;
     }
 
-    ::deep [dir="rtl"] .nav-menu-icon {
+    [dir="rtl"] .nav-menu-icon {
         left: 20px;
         left: calc(env(titlebar-area-x, 0px) + 20px);
         right: unset;

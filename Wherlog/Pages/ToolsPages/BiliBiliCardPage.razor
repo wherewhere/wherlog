@@ -4,62 +4,60 @@
 @using System.Text
 
 <ContentsView>
-    <Content>
-        <PageHeader Title="BiliBili Card" />
+    <PageHeader Title="BiliBili Card" />
 
-        <FluentStack Orientation="Orientation.Vertical">
-            <FluentTabs>
-                <FluentTab Label="Auto">
-                    <FluentStack Orientation="Orientation.Vertical">
-                        <FluentTextField Label="BiliBili Media ID"
-                                         Placeholder="BV1y54y1a768"
-                                         @bind-Value="ID" />
-                        <FluentCombobox Width="auto"
-                                        Label="Card Type"
-                                        Items="types"
-                                        Placeholder="video"
-                                        @bind-Value="Type" />
-                        <FluentTextField Label="Image Proxy"
-                                         Placeholder="https://images.weserv.nl/?url="
-                                         @bind-Value="imageProxy" />
-                        <FluentTextField Label="Info Types"
-                                         Placeholder="views danmakus"
-                                         @bind-Value="infoTypes" />
-                        <FluentButton OnClick="@(() => CreateCardAsync(imageProxy, id, type, infoTypes).ContinueWith(x => UpdateExample(x.Result)))">
-                            Create Card
-                        </FluentButton>
-                    </FluentStack>
-                </FluentTab>
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentTabs>
+            <FluentTab Label="Auto">
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentTextField Label="BiliBili Media ID"
+                                     Placeholder="BV1y54y1a768"
+                                     @bind-Value="ID" />
+                    <FluentCombobox Width="auto"
+                                    Label="Card Type"
+                                    Items="types"
+                                    Placeholder="video"
+                                    @bind-Value="Type" />
+                    <FluentTextField Label="Image Proxy"
+                                     Placeholder="https://images.weserv.nl/?url="
+                                     @bind-Value="imageProxy" />
+                    <FluentTextField Label="Info Types"
+                                     Placeholder="views danmakus"
+                                     @bind-Value="infoTypes" />
+                    <FluentButton OnClick="@(() => CreateCardAsync(imageProxy, id, type, infoTypes).ContinueWith(x => UpdateExample(x.Result)))">
+                        Create Card
+                    </FluentButton>
+                </FluentStack>
+            </FluentTab>
 
-                <FluentTab Label="Manual">
-                    <FluentStack Orientation="Orientation.Vertical">
-                        <FluentTextField Label="BiliBili Media ID"
-                                         Placeholder="BV1y54y1a768"
-                                         @bind-Value="ID" />
-                        <FluentCombobox Width="auto"
-                                        Label="Card Type"
-                                        Items="types"
-                                        Placeholder="video"
-                                        @bind-Value="Type" />
-                        <FluentAnchor Href="@url" Target="_blank">Get JSON</FluentAnchor>
-                        <FluentTextArea Label="Input JSON"
-                                        Resize="TextAreaResize.Both"
-                                        @bind-Value="json" />
-                        <FluentTextField Label="Image Proxy"
-                                         Placeholder="https://images.weserv.nl/?url="
-                                         @bind-Value="imageProxy" />
-                        <FluentTextField Label="Info Types"
-                                         Placeholder="views danmakus"
-                                         @bind-Value="infoTypes" />
-                        <FluentButton OnClick="@(() => UpdateExample(CreateCard(JsonDocument.Parse(json).RootElement, imageProxy, id, type, infoTypes)))">
-                            Create Card
-                        </FluentButton>
-                    </FluentStack>
-                </FluentTab>
-            </FluentTabs>
-            <MarkdownSection Content="@example" Style="max-width: 100%;" />
-        </FluentStack>
-    </Content>
+            <FluentTab Label="Manual">
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentTextField Label="BiliBili Media ID"
+                                     Placeholder="BV1y54y1a768"
+                                     @bind-Value="ID" />
+                    <FluentCombobox Width="auto"
+                                    Label="Card Type"
+                                    Items="types"
+                                    Placeholder="video"
+                                    @bind-Value="Type" />
+                    <FluentAnchor Href="@url" Target="_blank">Get JSON</FluentAnchor>
+                    <FluentTextArea Label="Input JSON"
+                                    Resize="TextAreaResize.Both"
+                                    @bind-Value="json" />
+                    <FluentTextField Label="Image Proxy"
+                                     Placeholder="https://images.weserv.nl/?url="
+                                     @bind-Value="imageProxy" />
+                    <FluentTextField Label="Info Types"
+                                     Placeholder="views danmakus"
+                                     @bind-Value="infoTypes" />
+                    <FluentButton OnClick="@(() => UpdateExample(CreateCard(JsonDocument.Parse(json).RootElement, imageProxy, id, type, infoTypes)))">
+                        Create Card
+                    </FluentButton>
+                </FluentStack>
+            </FluentTab>
+        </FluentTabs>
+        <MarkdownSection Content="@example" Style="max-width: 100%;" />
+    </FluentStack>
 </ContentsView>
 
 @code

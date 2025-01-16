@@ -1,9 +1,9 @@
-﻿::deep table.info-table {
+﻿table.info-table {
     margin: 0px -32px;
     border-collapse: separate;
     border-spacing: 32px 4px;
 }
 
-::deep td.info-table-description {
+td.info-table-description {
     color: var(--neutral-fill-strong-hover);
 }

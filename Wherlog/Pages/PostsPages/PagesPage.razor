@@ -8,27 +8,25 @@
 @if (pageModel == null)
 {
     <ContentsView>
-        <Content>
-            <PageHeader Title="@Loc["TitleText"]" />
-            @if (HasPath)
-            {
-                <FluentProgressRing />
-            }
-            else if (pages != null)
-            {
-                <FluentStack Orientation="Orientation.Vertical">
-                    @foreach (PageModel model in pages)
-                    {
-                        <FluentCard Class="clickable-card"
-                                    MinimalStyle="true"
-                                    @onclick="() => OnClick(model.Url)"
-                                    Style="cursor: pointer;">
-                            <h4>@model.Title</h4>
-                        </FluentCard>
-                    }
-                </FluentStack>
-            }
-        </Content>
+        <PageHeader Title="@Loc["TitleText"]" />
+        @if (HasPath)
+        {
+            <FluentProgressRing />
+        }
+        else if (pages != null)
+        {
+            <FluentStack Orientation="Orientation.Vertical">
+                @foreach (PageModel model in pages)
+                {
+                    <FluentCard Class="clickable-card"
+                                MinimalStyle="true"
+                                @onclick="() => OnClick(model.Url)"
+                                Style="cursor: pointer;">
+                        <h4>@model.Title</h4>
+                    </FluentCard>
+                }
+            </FluentStack>
+        }
     </ContentsView>
 }
 else

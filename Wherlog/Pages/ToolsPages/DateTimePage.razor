@@ -2,36 +2,34 @@
 @page "/tools/timestamp"
 
 <ContentsView>
-    <Content>
-        <PageHeader Title="DateTime" />
+    <PageHeader Title="DateTime" />
 
-        <FluentCard Style="height: auto; padding: 16px">
-            <FluentStack Orientation="Orientation.Vertical">
-                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
-                    <FluentNumberField @bind-Value="timeStamp" Style="flex: 1;" />
-                    <FluentButton OnClick="ConvertTimeStamp">转换时间戳</FluentButton>
-                </FluentStack>
-
-                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
-                    <FluentDatePicker @bind-Value="@dateTime" Style="flex: 1;" />
-                    <FluentTimePicker @bind-Value="@dateTime" />
-                    <FluentButton OnClick="ConvertDateTime">转换时间</FluentButton>
-                </FluentStack>
-
-                <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
-                    <FluentTextField @bind-Value="timeString"
-                                     Placeholder="2022-02-22T22:22:22+08:00"
-                                     Style="flex: 1;" />
-                    <FluentButton OnClick="ConvertTimeString">转换字符串</FluentButton>
-                </FluentStack>
-
-                <FluentStack HorizontalAlignment="HorizontalAlignment.Center" Style="justify-content: space-between;">
-                    <FluentButton OnClick="SetDateTimeNow">当前时间</FluentButton>
-                    <FluentSwitch @bind-Value="isMillisecond">时间戳是否为毫秒</FluentSwitch>
-                </FluentStack>
+    <FluentCard Style="height: auto; padding: 16px">
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+                <FluentNumberField @bind-Value="timeStamp" Style="flex: 1;" />
+                <FluentButton OnClick="ConvertTimeStamp">转换时间戳</FluentButton>
             </FluentStack>
-        </FluentCard>
-    </Content>
+
+            <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+                <FluentDatePicker @bind-Value="@dateTime" Style="flex: 1;" />
+                <FluentTimePicker @bind-Value="@dateTime" />
+                <FluentButton OnClick="ConvertDateTime">转换时间</FluentButton>
+            </FluentStack>
+
+            <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+                <FluentTextField @bind-Value="timeString"
+                                 Placeholder="2022-02-22T22:22:22+08:00"
+                                 Style="flex: 1;" />
+                <FluentButton OnClick="ConvertTimeString">转换字符串</FluentButton>
+            </FluentStack>
+
+            <FluentStack HorizontalAlignment="HorizontalAlignment.Center" Style="justify-content: space-between;">
+                <FluentButton OnClick="SetDateTimeNow">当前时间</FluentButton>
+                <FluentSwitch @bind-Value="isMillisecond">时间戳是否为毫秒</FluentSwitch>
+            </FluentStack>
+        </FluentStack>
+    </FluentCard>
 </ContentsView>
 
 @code

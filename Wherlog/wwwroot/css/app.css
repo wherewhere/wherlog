@@ -10,14 +10,6 @@
     }
 }
 
-body {
-    --body-font: "Segoe UI Variable", "Segoe UI", sans-serif;
-    font-family: var(--body-font);
-    font-size: var(--type-ramp-base-font-size);
-    line-height: var(--type-ramp-base-line-height);
-    margin: 0;
-}
-
 .main {
     min-height: calc(100dvh - 86px);
     color: var(--neutral-foreground-rest);

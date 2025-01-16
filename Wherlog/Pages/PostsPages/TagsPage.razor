@@ -6,44 +6,42 @@
 @inject NavigationManager Navigation
 
 <ContentsView>
-    <Content>
-        @if (cate == null)
+    @if (cate == null)
+    {
+        <PageHeader Title="@Loc["TitleText"]" />
+        @if (!HasSlug && cates != null)
         {
-            <PageHeader Title="@Loc["TitleText"]" />
-            @if (!HasSlug && cates != null)
-            {
-                <FluentGrid Spacing="1">
-                    @foreach (var cate in cates)
-                    {
-                        <FluentGridItem xs="6" sm="3">
-                            <FluentCard Class="clickable-card"
-                                        MinimalStyle="true"
-                                        @onclick="() => OnClick(cate.Slug)"
-                                        Style="cursor: pointer;">
-                                <h4>@cate.Name</h4>
-                            </FluentCard>
-                        </FluentGridItem>
-                    }
-                </FluentGrid>
-            }
-            else
-            {
-                <FluentProgressRing />
-            }
+            <FluentGrid Spacing="1">
+                @foreach (var cate in cates)
+                {
+                    <FluentGridItem xs="6" sm="3">
+                        <FluentCard Class="clickable-card"
+                                    MinimalStyle="true"
+                                    @onclick="() => OnClick(cate.Slug)"
+                                    Style="cursor: pointer;">
+                            <h4>@cate.Name</h4>
+                        </FluentCard>
+                    </FluentGridItem>
+                }
+            </FluentGrid>
         }
         else
         {
-            <PageHeader Title="@string.Format(Loc["TitleTextFormat"], cate.Info.Name)" />
-            <FluentStack Orientation="Orientation.Vertical">
-                @foreach (PostModel post in cate.Posts)
-                {
-                    <FluentCard>
-                        <PostCard Post="@post" />
-                    </FluentCard>
-                }
-            </FluentStack>
+            <FluentProgressRing />
         }
-    </Content>
+    }
+    else
+    {
+        <PageHeader Title="@string.Format(Loc["TitleTextFormat"], cate.Info.Name)" />
+        <FluentStack Orientation="Orientation.Vertical">
+            @foreach (PostModel post in cate.Posts)
+            {
+                <FluentCard>
+                    <PostCard Post="@post" />
+                </FluentCard>
+            }
+        </FluentStack>
+    }
 </ContentsView>
 
 @code
