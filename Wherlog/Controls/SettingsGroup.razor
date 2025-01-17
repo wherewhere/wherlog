@@ -7,7 +7,7 @@
         <div class="header-presenter">@Header</div>
     }
     <div class="items-presenter">
-        @Children
+        @ChildContent
     </div>
 </div>
 
@@ -27,5 +27,5 @@
     /// Gets or sets the collection of child elements of the panel.
     /// </summary>
     [Parameter]
-    public RenderFragment Children { get; set; }
+    public RenderFragment ChildContent { get; set; }
 }

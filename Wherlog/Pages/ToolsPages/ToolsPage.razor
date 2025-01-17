@@ -6,46 +6,50 @@
 
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>
-            <Children>
-                <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/datetime"))">
-                    <Icon>
-                        <FluentIcon Value="new Icons.Regular.Size20.CalendarDate()" />
-                    </Icon>
-                    <Header>
-                        <h3 class="unset">DateTime</h3>
-                    </Header>
-                    <Description>Convert between Unix timestamp and human-readable date time.</Description>
-                    <ActionIcon>
-                        <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
-                    </ActionIcon>
-                </SettingsButton>
+            <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/datetime"))">
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.CalendarDate()" />
+                </Icon>
+                <Header>
+                    <h3 id="convert-timestamp" class="unset">DateTime</h3>
+                </Header>
+                <Description>
+                    Convert between Unix timestamp and human-readable date time.
+                </Description>
+                <ActionIcon>
+                    <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
+                </ActionIcon>
+            </SettingsButton>
 
-                <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/encode"))">
-                    <Icon>
-                        <FluentIcon Value="new Icons.Regular.Size20.CodeText()" />
-                    </Icon>
-                    <Header>
-                        <h3 class="unset">Encode & Decode</h3>
-                    </Header>
-                    <Description>Encode and decode text using Base64, URL, HTML and so on.</Description>
-                    <ActionIcon>
-                        <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
-                    </ActionIcon>
-                </SettingsButton>
+            <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/encoding"))">
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.CodeText()" />
+                </Icon>
+                <Header>
+                    <h3 id="convert-encoding" class="unset">Encode & Decode</h3>
+                </Header>
+                <Description>
+                    Encode and decode text using Base64, URL, HTML and so on.
+                </Description>
+                <ActionIcon>
+                    <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
+                </ActionIcon>
+            </SettingsButton>
 
-                <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/bilibili-card"))">
-                    <Icon>
-                        <FluentIcon Value="new Icons.Regular.Size20.Video()" />
-                    </Icon>
-                    <Header>
-                        <h3 class="unset">BiliBili Card</h3>
-                    </Header>
-                    <Description>Create BiliBili video card by <a href="https://github.com/wherewhere/hexo-tag-bilibili-card" target="_blank">bilibili-card</a>.</Description>
-                    <ActionIcon>
-                        <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
-                    </ActionIcon>
-                </SettingsButton>
-            </Children>
+            <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools/bilibili-card"))">
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.Video()" />
+                </Icon>
+                <Header>
+                    <h3 id="render-bilibili-card" class="unset">BiliBili Card</h3>
+                </Header>
+                <Description>
+                    Create BiliBili video card by <a href="https://github.com/wherewhere/hexo-tag-bilibili-card" target="_blank">bilibili-card</a>.
+                </Description>
+                <ActionIcon>
+                    <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
+                </ActionIcon>
+            </SettingsButton>
         </SettingsGroup>
     </FluentStack>
 </TableContentsView>

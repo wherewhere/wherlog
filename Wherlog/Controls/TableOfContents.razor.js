@@ -8,25 +8,24 @@
 
     for (let element of headings) {
         if (!element.id) {
-            let anchorText = element.innerText;
-            let elementId = anchorText.replaceAll(" ", "-", "/", "\\", "#", "$", "@", ":", ",").toLowerCase();
+            const anchorText = element.innerText;
+            const elementId = anchorText.replaceAll(' ', '-', '/', '\\', '#', '$', '@', ':', ',').toLowerCase();
             element.id = elementId;
         }
         if (element.innerText) {
-            let anchor = {
-                "level": element.nodeName,
-                "text": element.innerText,
-                "href": "#" + element.id,
-                "anchors": []
+            const anchor = {
+                level: element.nodeName,
+                text: element.innerText,
+                href: '#' + element.id,
+                anchors: []
             };
 
-            if ("H3" === element.nodeName) {
+            if ('H3' === element.nodeName) {
                 if (chapter) {
                     subchapter = anchor;
                     chapter.anchors.push(subchapter);
-
                 }
-            } else if ("H4" === element.nodeName) {
+            } else if ('H4' === element.nodeName) {
                 if (subchapter) {
                     subchapter.anchors.push(anchor);
                 }

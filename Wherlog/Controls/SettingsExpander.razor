@@ -3,12 +3,15 @@
 
 <div class="@ClassValue" style="@Style">
     <FluentAccordion>
-        <FluentAccordionItem Class="expander-item" ChildContent="@ChildContent">
+        <FluentAccordionItem
+        Class="expander-item"
+        ChildContent="@ChildContent"
+        Expanded="@Expanded">
             <HeadingTemplate>
                 <SettingsPresenter Icon="@Icon"
-                                   Header="@Header"
-                                   Description="@Description"
-                                   ActionContent="@ActionContent" />
+                Header="@Header"
+                Description="@Description"
+                ActionContent="@ActionContent" />
             </HeadingTemplate>
         </FluentAccordionItem>
     </FluentAccordion>
@@ -19,6 +22,12 @@
     protected override string ClassValue => new CssBuilder(Class)
         .AddClass("settings-expander")
         .Build();
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the item is expanded or collapsed.
+    /// </summary>
+    [Parameter]
+    public bool Expanded { get; set; }
 
     /// <summary>
     /// Gets or sets the content of a ContentControl.

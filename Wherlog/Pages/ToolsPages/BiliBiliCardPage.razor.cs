@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.JSInterop;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,21 +14,15 @@ namespace Wherlog.Pages.ToolsPages
     {
         private readonly HttpClient client = new();
 
-        private Task<string> CreateCardAsync(string imageProxy, string id, string type, string infoTypes)
-        {
-            return string.IsNullOrEmpty(id)
+        private Task<string> GetApiAsync() =>
+            string.IsNullOrEmpty(id)
                 ? Task.FromResult(string.Empty)
-                : client.GetStringAsync(GetApi(id, type)).ContinueWith(task =>
-            {
-                return !string.IsNullOrEmpty(task.Result)
-                    ? CreateCard(JsonDocument.Parse(task.Result).RootElement, imageProxy, id, type, infoTypes)
-                    : string.Empty;
-            });
-        }
+                : client.GetStringAsync(GetApi(id, type));
 
-        private static string CreateCard(JsonElementNode token, string imageProxy, string id, string type, string infoTypes)
+        private static string CreateCard(string json, string imageProxy, string id, string type, string infoTypes, string theme)
         {
-            if (token == null) { return string.Empty; }
+            if (string.IsNullOrEmpty(json)) { return string.Empty; }
+            JsonElementNode token = JsonDocument.Parse(json).RootElement;
             Dictionary<string, string> message;
             switch (type)
             {
@@ -77,7 +72,7 @@ namespace Wherlog.Pages.ToolsPages
                     }
 
             }
-            return CreateElement(imageProxy, infoTypes, message);
+            return CreateElement(imageProxy, infoTypes, message, theme);
         }
 
         private static string GetApi(string id, string type)
@@ -131,7 +126,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "video";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when token["data"] is JsonElementNode data:
@@ -154,7 +149,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -205,7 +200,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -216,7 +211,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "article";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when token["data"] is JsonElementNode data:
@@ -237,7 +232,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -264,7 +259,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -275,7 +270,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "user";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when token["data"] is JsonElementNode data
@@ -291,7 +286,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -310,7 +305,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -321,7 +316,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "live";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when token["data"] is JsonElementNode data:
@@ -334,7 +329,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -360,7 +355,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -371,7 +366,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "bangumi";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when (token["result"]?["media"]) is JsonElementNode media:
@@ -385,7 +380,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -412,7 +407,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -423,7 +418,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "audio";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when token["data"] is JsonElementNode data:
@@ -444,7 +439,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -462,7 +457,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -473,7 +468,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "dynamic";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when (token["data"]?["card"]) is JsonElementNode data:
@@ -485,21 +480,40 @@ namespace Wherlog.Pages.ToolsPages
                             message["views"] = FormatLargeNumber(desc["view"]?.GetInt64());
                             message["comments"] = FormatLargeNumber(desc["comment"]?.GetInt64());
                             message["likes"] = FormatLargeNumber(desc["like"]?.GetInt64());
-                        }
-                        message["type"] = type;
-                        if (data["item"] is JsonElementNode item)
-                        {
-                            message["title"] = item["description"]?.GetString();
-                        }
-                        if (data["card"] is JsonElementNode card)
-                        {
-                            card = JsonDocument.Parse(card.GetString()).RootElement;
-                            message["cover"] = card["item"]?["pictures"]?.FirstOrDefault()?["img_src"]?.GetString();
+                            long? _type = desc["type"]?.GetInt64();
+                            JsonElementNode card =
+                                _type is 1 or 4 or 2 or 8 or 64
+                                ? JsonDocument.Parse(data["card"]?.GetString()).RootElement
+                                : null;
+                            switch (_type)
+                            {
+                                case 1:
+                                case 4:
+                                    message["title"] = card["item"]?["content"]?.GetString();
+                                    message["cover"] = card["user"]?["face"]?.GetString();
+                                    break;
+                                case 2:
+                                    message["title"] = card["item"]?["description"]?.GetString();
+                                    message["cover"] = card["item"]?["pictures"]?.FirstOrDefault()?["img_src"]?.GetString();
+                                    break;
+                                case 8:
+                                    message["title"] = card["dynamic"]?.GetString();
+                                    message["cover"] = card["pic"]?.GetString();
+                                    break;
+                                case 64:
+                                    message["title"] = card["title"]?.GetString();
+                                    message["cover"] = card["image_urls"]?.FirstOrDefault()?.GetString();
+                                    break;
+                                default:
+                                    message["title"] = $"{desc["user_profile"]?["info"]?["uname"]?.GetString()} 的动态";
+                                    message["cover"] = desc["user_profile"]?["info"]?["face"]?.GetString();
+                                    break;
+                            }
                         }
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -517,7 +531,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -528,7 +542,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "favorite";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when token["data"] is JsonElementNode data:
@@ -546,7 +560,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -573,7 +587,7 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
@@ -584,7 +598,7 @@ namespace Wherlog.Pages.ToolsPages
             const string type = "album";
             if (token != null)
             {
-                long? code = token["code"].GetInt64();
+                long? code = token["code"]?.GetInt64();
                 switch (code)
                 {
                     case 0 when token["data"] is JsonElementNode data
@@ -602,7 +616,7 @@ namespace Wherlog.Pages.ToolsPages
                         return message;
 
                     case 0:
-                        Console.WriteLine($"Failed to get bilibli {type} {id}");
+                        Console.WriteLine($"Failed to get bilibili {type} {id}");
                         return new Dictionary<string, string> {
                             { "vid", id },
                             { "type", type },
@@ -628,13 +642,13 @@ namespace Wherlog.Pages.ToolsPages
 
                 void Warn(long? code, string message)
                 {
-                    Console.WriteLine($"Failed to get bilibli {type} {id}: {{ code: {code}, message: {message} }}");
+                    Console.WriteLine($"Failed to get bilibili {type} {id}: {{ code: {code}, message: {message} }}");
                 }
             }
             return null;
         }
 
-        private static string CreateElement(string imageProxy, string infoTypes, IReadOnlyDictionary<string, string> attributes)
+        private static string CreateElement(string imageProxy, string infoTypes, Dictionary<string, string> attributes, string theme)
         {
             StringBuilder builder = new("<bilibili-card");
             if (attributes.TryGetValue("vid", out string vid) && !string.IsNullOrEmpty(vid))
@@ -692,6 +706,10 @@ namespace Wherlog.Pages.ToolsPages
             if (!string.IsNullOrEmpty(imageProxy))
             {
                 _ = builder.Append(" image-proxy=\"").Append(imageProxy).Append('"');
+            }
+            if (!string.IsNullOrEmpty(theme))
+            {
+                _ = builder.Append(" theme=\"").Append(theme).Append('"');
             }
             return builder.Append("></bilibili-card>").ToString();
         }

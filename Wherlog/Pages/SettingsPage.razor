@@ -13,9 +13,9 @@
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>
             <Header>
-                <h2 class="unset">Display</h2>
+                <h2 id="display" class="unset">Display</h2>
             </Header>
-            <Children>
+            <ChildContent>
                 <SettingsCard>
                     <Icon>
                         <FluentIcon Value="new Icons.Regular.Size20.Color()" />
@@ -23,12 +23,14 @@
                     <Header>
                         <h3 class="unset">App Theme</h3>
                     </Header>
-                    <Description>Set the theme of this App.</Description>
+                    <Description>
+                        Set the theme of this App.
+                    </Description>
                     <ActionContent>
-                        <FluentDesignTheme @bind-Mode="@mode" StorageName="theme" />
+                        <FluentDesignTheme @bind-Mode="mode" StorageName="theme" />
                         <FluentSelect Width="auto"
                                       Items="@(Enum.GetValues<DesignThemeModes>())"
-                                      @bind-SelectedOption="@mode" />
+                                      @bind-SelectedOption="mode" />
                     </ActionContent>
                 </SettingsCard>
 
@@ -39,7 +41,9 @@
                     <Header>
                         <h3 class="unset">Language</h3>
                     </Header>
-                    <Description>Select language and restart to change language.</Description>
+                    <Description>
+                        Select language and restart to change language.
+                    </Description>
                     <ActionContent>
                         <FluentSelect Width="auto"
                                       Items="@LanguageHelper.SupportCultures"
@@ -50,14 +54,14 @@
                         </FluentSelect>
                     </ActionContent>
                 </SettingsCard>
-            </Children>
+            </ChildContent>
         </SettingsGroup>
 
         <SettingsGroup>
             <Header>
                 <h2 class="unset">Configs</h2>
             </Header>
-            <Children>
+            <ChildContent>
                 <SettingsCard>
                     <Icon>
                         <FluentIcon Value="new Icons.Regular.Size20.ArrowReset()" />
@@ -65,7 +69,9 @@
                     <Header>
                         <h3 class="unset">Reset Application</h3>
                     </Header>
-                    <Description>Reset settings of this application.</Description>
+                    <Description>
+                        Reset settings of this application.
+                    </Description>
                     <ActionContent>
                         <FluentButton OnClick="ResetAsync">
                             Reset
@@ -80,7 +86,9 @@
                     <Header>
                         <h3 class="unset">Framework Information</h3>
                     </Header>
-                    <Description>Information about the frameworks of this app.</Description>
+                    <Description>
+                        Information about the frameworks of this app.
+                    </Description>
                     <ChildContent>
                         <div class="setting-expander-content-grid">
                             <table class="info-table">
@@ -108,14 +116,14 @@
                         </div>
                     </ChildContent>
                 </SettingsExpander>
-            </Children>
+            </ChildContent>
         </SettingsGroup>
 
         <SettingsGroup>
             <Header>
                 <h2 class="unset">About</h2>
             </Header>
-            <Children>
+            <ChildContent>
                 <SettingsExpander>
                     <Icon>
                         <FluentIcon Value="new Icons.Regular.Size20.Info()" />
@@ -199,20 +207,22 @@
                         </FluentStack>
                     </Description>
                 </SettingsCard>
-            </Children>
+            </ChildContent>
         </SettingsGroup>
 
         <SettingsGroup>
             <Header>
                 <h2 class="unset">Others</h2>
             </Header>
-            <Children>
+            <ChildContent>
                 <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools"))">
                     <Icon>
                         <FluentIcon Value="new Icons.Regular.Size20.Toolbox()" />
                     </Icon>
                     <Header>Tools</Header>
-                    <Description>The list of available tools.</Description>
+                    <Description>
+                        The list of available tools.
+                    </Description>
                     <ActionIcon>
                         <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
                     </ActionIcon>
@@ -225,19 +235,21 @@
                     <Header>
                         <h3 class="unset">Navigate</h3>
                     </Header>
-                    <Description>Navigate to target url.</Description>
+                    <Description>
+                        Navigate to target url.
+                    </Description>
                     <ActionContent>
                         <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
                             <FluentTextField Placeholder="输入 URL"
                                              Style="flex: 1"
                                              @bind-Value="path" />
-                            <FluentButton OnClick="@(() => Navigation.NavigateTo(path ?? string.Empty))">
+                            <FluentButton OnClick="() => Navigation.NavigateTo(path ?? string.Empty)">
                                 前往
                             </FluentButton>
                         </FluentStack>
                     </ActionContent>
                 </SettingsCard>
-            </Children>
+            </ChildContent>
         </SettingsGroup>
     </FluentStack>
 </TableContentsView>

@@ -2,52 +2,58 @@
     --font-monospace: "Cascadia Code NF", "Cascadia Code PL", "Cascadia Code", Consolas, "Courier New", "Liberation Mono", SFMono-Regular, Menlo, Monaco, monospace;
 }
 
-::deep .alert {
-    border: 1px dashed var(--accent-fill-rest);
-    padding: 5px;
-}
-
-::deep code {
-    padding: 0.10rem 0.25rem;
-    background: var(--neutral-stroke-layer-rest);
-    border-radius: 0.25rem;
-}
-
-::deep kbd {
-    padding: 0.10rem 0.25rem;
-    font-size: 0.875em;
-    color: var(--neutral-foreground-rest);
-    background-color: var(--neutral-fill-secondary-rest);
-    border-radius: 0.25rem;
-    border: 1px solid var(--accent-fill-rest);
-}
-
-::deep h6.unset,
-::deep h5.unset,
-::deep h4.unset,
-::deep h3.unset,
-::deep h2.unset,
-::deep h1.unset {
-    margin-top: unset;
-    margin-bottom: unset;
-    font-weight: unset;
-    font-family: unset;
-    font-size: unset;
-    line-height: unset;
-}
-
-::deep .clickable-card {
-    background: var(--neutral-fill-input-rest);
-}
-
-    ::deep .clickable-card:hover {
-        background: var(--neutral-fill-input-hover);
-        border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-hover);
-        box-shadow: var(--elevation-shadow-card-hover);
+    ::deep .alert {
+        border: 1px dashed var(--accent-fill-rest);
+        padding: 5px;
     }
 
-    ::deep .clickable-card:active {
-        background: var(--neutral-fill-input-active);
-        border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-active);
-        box-shadow: var(--elevation-shadow-card-pressed);
+    ::deep code {
+        padding: 0.10rem 0.25rem;
+        background: var(--neutral-stroke-layer-rest);
+        border-radius: 0.25rem;
     }
+
+    ::deep kbd {
+        padding: 0.10rem 0.25rem;
+        font-size: 0.875em;
+        color: var(--neutral-foreground-rest);
+        background-color: var(--neutral-fill-secondary-rest);
+        border-radius: 0.25rem;
+        border: 1px solid var(--accent-fill-rest);
+    }
+
+    ::deep h6.unset,
+    ::deep h5.unset,
+    ::deep h4.unset,
+    ::deep h3.unset,
+    ::deep h2.unset,
+    ::deep h1.unset {
+        margin-top: unset;
+        margin-bottom: unset;
+        font-weight: unset;
+        font-family: unset;
+        font-size: unset;
+        line-height: unset;
+    }
+
+    ::deep fluent-select::part(listbox),
+    ::deep fluent-select .listbox {
+        max-height: calc(var(--base-height-multiplier) * 30px);
+    }
+
+
+    ::deep .clickable-card {
+        background: var(--neutral-fill-input-rest);
+    }
+
+        ::deep .clickable-card:hover {
+            background: var(--neutral-fill-input-hover);
+            border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-hover);
+            box-shadow: var(--elevation-shadow-card-hover);
+        }
+
+        ::deep .clickable-card:active {
+            background: var(--neutral-fill-input-active);
+            border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-active);
+            box-shadow: var(--elevation-shadow-card-pressed);
+        }

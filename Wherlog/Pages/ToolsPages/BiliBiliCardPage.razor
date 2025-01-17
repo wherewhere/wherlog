@@ -3,73 +3,203 @@
 @using System.Text.Json
 @using System.Text
 
-<ContentsView>
-    <PageHeader Title="BiliBili Card" />
+<TableContentsView>
+    <PageHeader Title="哔哩哔哩卡片" />
+
+    <script src="https://cdn.jsdelivr.net/npm/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.js" async></script>
 
     <FluentStack Orientation="Orientation.Vertical">
-        <FluentTabs>
-            <FluentTab Label="Auto">
-                <FluentStack Orientation="Orientation.Vertical">
-                    <FluentTextField Label="BiliBili Media ID"
-                                     Placeholder="BV1y54y1a768"
-                                     @bind-Value="ID" />
-                    <FluentCombobox Width="auto"
-                                    Label="Card Type"
-                                    Items="types"
-                                    Placeholder="video"
-                                    @bind-Value="Type" />
-                    <FluentTextField Label="Image Proxy"
-                                     Placeholder="https://images.weserv.nl/?url="
-                                     @bind-Value="imageProxy" />
-                    <FluentTextField Label="Info Types"
-                                     Placeholder="views danmakus"
-                                     @bind-Value="infoTypes" />
-                    <FluentButton OnClick="@(() => CreateCardAsync(imageProxy, id, type, infoTypes).ContinueWith(x => UpdateExample(x.Result)))">
-                        Create Card
-                    </FluentButton>
-                </FluentStack>
-            </FluentTab>
+        <SettingsGroup>
+            <SettingsCard>
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.DesignIdeas()" />
+                </Icon>
+                <Header>
+                    <h3 id="bilibili-card-output" class="unset">生成类型</h3>
+                </Header>
+                <Description>
+                    选择生成卡片的类型。
+                </Description>
+                <ActionContent>
+                    <FluentSelect TOption="string"
+                                  @bind-Value="output"
+                                  Style="min-width: calc(var(--base-height-multiplier) * 11.25px);">
+                        <FluentOption Value="components">控件</FluentOption>
+                        <FluentOption Value="html" Disabled="true">HTML</FluentOption>
+                        <FluentOption Value="svg" Disabled="true">SVG</FluentOption>
+                    </FluentSelect>
+                </ActionContent>
+            </SettingsCard>
 
-            <FluentTab Label="Manual">
-                <FluentStack Orientation="Orientation.Vertical">
-                    <FluentTextField Label="BiliBili Media ID"
-                                     Placeholder="BV1y54y1a768"
-                                     @bind-Value="ID" />
-                    <FluentCombobox Width="auto"
-                                    Label="Card Type"
-                                    Items="types"
-                                    Placeholder="video"
-                                    @bind-Value="Type" />
-                    <FluentAnchor Href="@url" Target="_blank">Get JSON</FluentAnchor>
-                    <FluentTextArea Label="Input JSON"
-                                    Resize="TextAreaResize.Both"
-                                    @bind-Value="json" />
-                    <FluentTextField Label="Image Proxy"
-                                     Placeholder="https://images.weserv.nl/?url="
-                                     @bind-Value="imageProxy" />
-                    <FluentTextField Label="Info Types"
-                                     Placeholder="views danmakus"
-                                     @bind-Value="infoTypes" />
-                    <FluentButton OnClick="@(() => UpdateExample(CreateCard(JsonDocument.Parse(json).RootElement, imageProxy, id, type, infoTypes)))">
-                        Create Card
-                    </FluentButton>
-                </FluentStack>
-            </FluentTab>
-        </FluentTabs>
-        <MarkdownSection Content="@example" Style="max-width: 100%;" />
+            <SettingsCard>
+                <Icon>
+                    <FluentIcon Value="GetTypeIcon(type)" />
+                </Icon>
+                <Header>
+                    <h3 id="bilibili-card-type" class="unset">卡片类型</h3>
+                </Header>
+                <Description>
+                    选择卡片显示内容的类型。
+                </Description>
+                <ActionContent>
+                    <FluentSelect TOption="string"
+                                  @bind-Value="Type"
+                                  Style="min-width: calc(var(--base-height-multiplier) * 11.25px);">
+                        @foreach (KeyValuePair<string, string> type in types)
+                        {
+                            <FluentOption Value="@type.Key">@type.Value</FluentOption>
+                        }
+                    </FluentSelect>
+                </ActionContent>
+            </SettingsCard>
+
+            <SettingsCard>
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.CardUi()" />
+                </Icon>
+                <Header>
+                    <h3 id="bilibili-card-id" class="unset">卡片 ID</h3>
+                </Header>
+                <Description>输入卡片显示的哔哩哔哩<span>@types[type]</span>的 ID。</Description>
+                <ActionContent>
+                    <FluentTextField @bind-Value="ID" Placeholder="@GetExampleID(type)" />
+                </ActionContent>
+            </SettingsCard>
+
+            <SettingsExpander Expanded="true">
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.DatabaseArrowDown()" />
+                </Icon>
+                <Header>
+                    <h3 id="bilibili-card-get-data" class="unset">获取数据</h3>
+                </Header>
+                <Description>
+                    从哔哩哔哩获取 JSON 数据。(由于跨域限制无法自动获取信息，请手动在下方填入 JSON 数据)
+                </Description>
+                <ChildContent>
+                    <div class="setting-expander-content-grid">
+                        <InputLabel Label="输入 JSON">
+                            <ActionContent>
+                                <FluentStack HorizontalGap="4" Style="width: auto;">
+                                    <FluentButton Title="这个按钮并不能正常使用"
+                                                  Disabled="string.IsNullOrEmpty(id)"
+                                                  OnClick="GetApiAsync">
+                                        自动
+                                    </FluentButton>
+                                    <FluentAnchor Href="@url" Target="_blank">手动</FluentAnchor>
+                                </FluentStack>
+                            </ActionContent>
+                            <ChildContent>
+                                <FluentTextArea @bind-Value="json"
+                                                Resize="TextAreaResize.Vertical"
+                                                Style="width: 100%;" />
+                            </ChildContent>
+                        </InputLabel>
+                    </div>
+                </ChildContent>
+            </SettingsExpander>
+
+            <SettingsCard>
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.ImageArrowForward()" />
+                </Icon>
+                <Header>
+                    <h3 id="bilibili-card-image-proxy" class="unset">图片代理</h3>
+                </Header>
+                <Description>
+                    设置封面图片的代理。
+                </Description>
+                <ActionContent>
+                    <FluentTextField @bind-Value="imageProxy" Placeholder="https://images.weserv.nl/?url=" />
+                </ActionContent>
+            </SettingsCard>
+
+            <SettingsCard>
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.TagMultiple()" />
+                </Icon>
+                <Header>
+                    <h3 id="bilibili-card-info-types" class="unset">信息类型</h3>
+                </Header>
+                <Description>
+                    设置卡片显示信息的类型。(views, danmakus, comments, favorites, coins, likes)
+                </Description>
+                <ActionContent>
+                    <FluentTextField @bind-Value="infoTypes" Placeholder="@GetDefaultInfoTypes(type)" />
+                </ActionContent>
+            </SettingsCard>
+
+            <SettingsCard>
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.Color()" />
+                </Icon>
+                <Header>
+                    <h3 id="bilibili-card-theme" class="unset">卡片主题</h3>
+                </Header>
+                <Description>
+                    选择卡片的主题样式。
+                </Description>
+                <ActionContent>
+                    <FluentCombobox Placeholder="default"
+                                    TOption="string"
+                                    @bind-Value="theme"
+                                    Autocomplete="ComboboxAutocomplete.List"
+                                    Style="min-width: unset;">
+                        @foreach (KeyValuePair<string, string> type in themes)
+                        {
+                            <FluentOption Value="@type.Key" title="@type.Value">@type.Key</FluentOption>
+                        }
+                    </FluentCombobox>
+                </ActionContent>
+            </SettingsCard>
+
+            <FluentCard Style="padding: calc(var(--design-unit) * 4px); border-radius: calc(var(--control-corner-radius) * 1px);">
+                <InputLabel Label="预览">
+                    <ActionContent>
+                        <FluentButton OnClick="() => UpdateExample(CreateCard(json, imageProxy, id, type, infoTypes, theme))">生成卡片</FluentButton>
+                    </ActionContent>
+                    <ChildContent>
+                        <MarkdownSection Content="@example" Style="max-width: 100%;" />
+                    </ChildContent>
+                </InputLabel>
+            </FluentCard>
+        </SettingsGroup>
     </FluentStack>
-</ContentsView>
+</TableContentsView>
 
 @code
 {
-    private string id;
-    private string type;
-    private string url;
-    private string json;
-    private string imageProxy;
-    private string infoTypes;
-    private string example;
-    private readonly string[] types = ["video", "article", "user", "live", "bangumi", "audio", "dynamic", "favorite", "album"];
+    private string id = string.Empty;
+    private string output = "components";
+    private string type = "video";
+    private string url = string.Empty;
+    private string json = string.Empty;
+    private string imageProxy = string.Empty;
+    private string infoTypes = string.Empty;
+    private string theme = string.Empty;
+    private string example = string.Empty;
+
+    private static readonly Dictionary<string, string> types = new()
+    {
+        { "video", "视频" },
+        { "article", "专栏" },
+        { "user", "用户" },
+        { "live", "直播" },
+        { "bangumi", "番剧" },
+        { "audio", "音频" },
+        { "dynamic", "动态" },
+        { "favorite", "收藏夹" },
+        { "album", "相簿" }
+    };
+
+    private static readonly Dictionary<string, string> themes = new()
+    {
+        { "system" , "跟随系统" },
+        { "light" , "浅色" },
+        { "dark" , "深色" },
+        { "https://wherewhere.github.io/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.fluent.css" , "Fluent UI" },
+        { "https://wherewhere.github.io/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.windose.css" , "Windose" }
+    };
 
     private string ID
     {
@@ -97,6 +227,44 @@
         }
     }
 
+    private static Icon GetTypeIcon(string type) => type switch
+    {
+        "video" => new Icons.Regular.Size20.VideoClip(),
+        "article" => new Icons.Regular.Size20.Document(),
+        "user" => new Icons.Regular.Size20.Person(),
+        "live" => new Icons.Regular.Size20.Live(),
+        "bangumi" => new Icons.Regular.Size20.MoviesAndTv(),
+        "audio" => new Icons.Regular.Size20.MusicNote2(),
+        "dynamic" => new Icons.Regular.Size20.Feed(),
+        "favorite" => new Icons.Regular.Size20.Collections(),
+        "album" => new Icons.Regular.Size20.Album(),
+        _ => new Icons.Regular.Size20.PresenceUnknown(),
+    };
+
+    private static string GetExampleID(string type) => type switch
+    {
+        "video" => "BV1y54y1a768",
+        "article" => "cv8930865",
+        "user" => "266112738",
+        "live" => "12720436",
+        "bangumi" => "md1689",
+        "audio" => "au13598",
+        "dynamic" => "501590001933778048",
+        "favorite" => "1026854530",
+        "album" => "99184721",
+        _ => string.Empty,
+    };
+
+    private static string GetDefaultInfoTypes(string type) => type switch
+    {
+        "video" => "views, danmakus",
+        "user" => "views, likes",
+        "live" => "views",
+        "bangumi" => "favorites",
+        "favorite" => "views, favorites",
+        _ => "views, comments",
+    };
+
     private void UpdateApiUrl()
     {
         if (string.IsNullOrWhiteSpace(id)) { url = null; }
@@ -106,20 +274,13 @@
 
     private void UpdateExample(string element)
     {
-        if (string.IsNullOrEmpty(element))
-        {
-            example = string.Empty;
-        }
-        else
-        {
-            const string script = "<script src=\"https://unpkg.com/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.js\"></script>";
-            example = new StringBuilder()
-                .AppendLine(script)
+        example = string.IsNullOrEmpty(element)
+            ? string.Empty
+            : new StringBuilder()
                 .AppendLine(element)
                 .AppendLine("```html")
                 .AppendLine(element)
                 .Append("```")
                 .ToString();
-        }
     }
 }

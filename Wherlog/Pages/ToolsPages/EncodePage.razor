@@ -1,53 +1,58 @@
-﻿@page "/tools/encode"
+﻿@page "/tools/encoding"
+@page "/tools/encode"
 @page "/tools/decode"
 @using System.Net
 @using System.Text
 @using System.Text.RegularExpressions
 
 <TableContentsView>
-    <PageHeader Title="Encode & Decode" />
+    <PageHeader Title="编码与解码" />
 
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>
-            <Children>
-                <SettingsCard>
-                    <Icon>
-                        <FluentIcon Value="new Icons.Regular.Size20.SettingsCogMultiple()" />
-                    </Icon>
-                    <Header>
-                        <h3 class="unset">编码类型</h3>
-                    </Header>
-                    <Description>选择编码的类型。</Description>
-                    <ActionContent>
-                        <FluentSelect Width="auto"
-                        Items="@(Enum.GetValues<EncodeType>())"
-                        @bind-SelectedOption="@type" />
-                    </ActionContent>
-                </SettingsCard>
+            <SettingsCard>
+                <Icon>
+                    <FluentIcon Value="new Icons.Regular.Size20.SettingsCogMultiple()" />
+                </Icon>
+                <Header>
+                    <h3 id="encode-type" class="unset">编码类型</h3>
+                </Header>
+                <Description>
+                    选择编码的类型。
+                </Description>
+                <ActionContent>
+                    <FluentSelect Items="@(Enum.GetValues<EncodeType>())"
+                                  @bind-SelectedOption="type"
+                                  Style="min-width: calc(var(--base-height-multiplier) * 12.5px);" />
+                </ActionContent>
+            </SettingsCard>
 
-                <FluentSplitter>
-                    <Panel1>
-                        <InputLabel Label="明文" Style="padding-right: 0.15rem">
-                            <ActionContent>
-                                <FluentButton OnClick="Encode">编码</FluentButton>
-                            </ActionContent>
-                            <ChildContent>
-                                <FluentTextArea @bind-Value="decode" Resize="TextAreaResize.Vertical" Style="width: 100%;" />
-                            </ChildContent>
-                        </InputLabel>
-                    </Panel1>
-                    <Panel2>
-                        <InputLabel Label="密文" Style="padding-left: 0.15rem">
-                            <ActionContent>
-                                <FluentButton OnClick="Decode">解码</FluentButton>
-                            </ActionContent>
-                            <ChildContent>
-                                <FluentTextArea @bind-Value="encode" Resize="TextAreaResize.Vertical" Style="width: 100%;" />
-                            </ChildContent>
-                        </InputLabel>
-                    </Panel2>
-                </FluentSplitter>
-            </Children>
+            <FluentSplitter>
+                <Panel1>
+                    <InputLabel Label="明文" Style="padding-right: 0.15rem">
+                        <ActionContent>
+                            <FluentButton OnClick="Encode">编码</FluentButton>
+                        </ActionContent>
+                        <ChildContent>
+                            <FluentTextArea @bind-Value="decode"
+                                            Resize="TextAreaResize.Vertical"
+                                            Style="width: 100%;" />
+                        </ChildContent>
+                    </InputLabel>
+                </Panel1>
+                <Panel2>
+                    <InputLabel Label="密文" Style="padding-left: 0.15rem">
+                        <ActionContent>
+                            <FluentButton OnClick="Decode">解码</FluentButton>
+                        </ActionContent>
+                        <ChildContent>
+                            <FluentTextArea @bind-Value="encode"
+                                            Resize="TextAreaResize.Vertical"
+                                            Style="width: 100%;" />
+                        </ChildContent>
+                    </InputLabel>
+                </Panel2>
+            </FluentSplitter>
         </SettingsGroup>
     </FluentStack>
 </TableContentsView>
