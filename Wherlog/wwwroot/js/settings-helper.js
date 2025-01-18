@@ -1,6 +1,6 @@
 ﻿export function getValue(key) {
     const value = window.localStorage.getItem(key);
-    if (typeof value === 'undefined' || value === null) {
+    if (typeof value === "undefined" || value === null) {
         return;
     }
     else {
@@ -9,10 +9,10 @@
 }
 
 export function setValue(key, value) {
-    if (typeof value === 'undefined' || value === null) {
+    if (typeof value === "undefined" || value === null) {
         return;
     }
-    else if (typeof value === 'string') {
+    else if (typeof value === "string") {
         window.localStorage.setItem(key, JSON.parse(value));
     }
     else {

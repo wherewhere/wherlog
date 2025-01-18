@@ -10,18 +10,55 @@ using System.Threading.Tasks;
 
 namespace Wherlog.Pages.ToolsPages
 {
-    public partial class BiliBiliCardPage : IDisposable
+    public partial class BiliBiliCardPage
     {
+        private const string JAVASCRIPT_FILE = $"./{nameof(Pages)}/{nameof(ToolsPages)}/{nameof(BiliBiliCardPage)}.razor.js";
         private readonly HttpClient client = new();
+
+        private IJSObjectReference _jsModule;
 
         private Task<string> GetApiAsync() =>
             string.IsNullOrEmpty(id)
                 ? Task.FromResult(string.Empty)
                 : client.GetStringAsync(GetApi(id, type));
 
-        private static string CreateCard(string json, string imageProxy, string id, string type, string infoTypes, string theme)
+        private async Task<string> CreateCardAsync(string json, string imageProxy, string id, string type, string infoTypes, string theme)
         {
-            if (string.IsNullOrEmpty(json)) { return string.Empty; }
+            Dictionary<string, string> message = GetMessage(json, id, type);
+            switch (output)
+            {
+                case "components":
+                    return CreateElement(imageProxy, infoTypes, message, theme);
+                case "html":
+                    _jsModule ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+                    return await _jsModule.InvokeAsync<string>(
+                        "createCard",
+                        imageProxy,
+                        infoTypes,
+                        new
+                        {
+                            vid = message.TryGetValue("vid", out string vid) ? vid : null,
+                            type = message.TryGetValue("type", out string _type) ? _type : null,
+                            title = message.TryGetValue("title", out string title) ? title : null,
+                            author = message.TryGetValue("author", out string author) ? author : null,
+                            cover = message.TryGetValue("cover", out string cover) ? cover : null,
+                            duration = message.TryGetValue("duration", out string duration) ? duration : null,
+                            views = message.TryGetValue("views", out string views) ? views : null,
+                            danmakus = message.TryGetValue("danmakus", out string danmakus) ? danmakus : null,
+                            comments = message.TryGetValue("comments", out string comments) ? comments : null,
+                            favorites = message.TryGetValue("favorites", out string favorites) ? favorites : null,
+                            coins = message.TryGetValue("coins", out string coins) ? coins : null,
+                            likes = message.TryGetValue("likes", out string likes) ? likes : null
+                        },
+                        theme);
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private static Dictionary<string, string> GetMessage(string json, string id, string type)
+        {
+            if (string.IsNullOrEmpty(json)) { return []; }
             JsonElementNode token = JsonDocument.Parse(json).RootElement;
             Dictionary<string, string> message;
             switch (type)
@@ -72,11 +109,12 @@ namespace Wherlog.Pages.ToolsPages
                     }
 
             }
-            return CreateElement(imageProxy, infoTypes, message, theme);
+            return message;
         }
 
         private static string GetApi(string id, string type)
         {
+            if (string.IsNullOrEmpty(id)) { return string.Empty; }
             switch (type)
             {
                 case "video":
@@ -747,10 +785,24 @@ namespace Wherlog.Pages.ToolsPages
             return builder.ToString();
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            client.Dispose();
-            GC.SuppressFinalize(this);
+            try
+            {
+                client.Dispose();
+                if (_jsModule != null)
+                {
+                    await _jsModule.DisposeAsync();
+                    _jsModule = null;
+                }
+                GC.SuppressFinalize(this);
+            }
+            catch (Exception ex) when (ex is JSDisconnectedException or
+                                       OperationCanceledException)
+            {
+                // The JSRuntime side may routinely be gone already if the reason we're disposing is that
+                // the client disconnected. This is not an error.
+            }
         }
 
         private class JsonElementNode(in JsonElement element) : IEnumerable<JsonElementNode>

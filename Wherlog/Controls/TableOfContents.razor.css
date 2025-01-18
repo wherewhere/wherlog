@@ -37,21 +37,21 @@ li {
 
 
 ::deep fluent-button {
-    display: none;
     position: fixed;
-    bottom: 45px;
+    bottom: -300px;
     right: 20px;
     left: unset;
     z-index: 99;
     cursor: pointer;
+    transition: bottom .25s ease-in-out;
 }
 
 [dir="rtl"] * ::deep fluent-button {
-    display: none;
     position: fixed;
-    bottom: 45px;
     left: 20px;
     right: unset;
-    z-index: 99;
-    cursor: pointer;
+}
+
+::deep fluent-button.on {
+    bottom: 45px;
 }

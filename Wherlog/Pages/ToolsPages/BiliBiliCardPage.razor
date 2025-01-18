@@ -1,5 +1,7 @@
 ﻿@page "/tools/bilibili"
 @page "/tools/bilibili-card"
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
 @using System.Text.Json
 @using System.Text
 
@@ -25,7 +27,7 @@
                                   @bind-Value="output"
                                   Style="min-width: calc(var(--base-height-multiplier) * 11.25px);">
                         <FluentOption Value="components">控件</FluentOption>
-                        <FluentOption Value="html" Disabled="true">HTML</FluentOption>
+                        <FluentOption Value="html">HTML</FluentOption>
                         <FluentOption Value="svg" Disabled="true">SVG</FluentOption>
                     </FluentSelect>
                 </ActionContent>
@@ -43,7 +45,7 @@
                 </Description>
                 <ActionContent>
                     <FluentSelect TOption="string"
-                                  @bind-Value="Type"
+                                  @bind-Value="type"
                                   Style="min-width: calc(var(--base-height-multiplier) * 11.25px);">
                         @foreach (KeyValuePair<string, string> type in types)
                         {
@@ -62,7 +64,7 @@
                 </Header>
                 <Description>输入卡片显示的哔哩哔哩<span>@types[type]</span>的 ID。</Description>
                 <ActionContent>
-                    <FluentTextField @bind-Value="ID" Placeholder="@GetExampleID(type)" />
+                    <FluentTextField @bind-Value="id" Placeholder="@GetExampleID(type)" />
                 </ActionContent>
             </SettingsCard>
 
@@ -86,7 +88,7 @@
                                                   OnClick="GetApiAsync">
                                         自动
                                     </FluentButton>
-                                    <FluentAnchor Href="@url" Target="_blank">手动</FluentAnchor>
+                                    <FluentAnchor Href="@GetApi(id, type)" Target="_blank">手动</FluentAnchor>
                                 </FluentStack>
                             </ActionContent>
                             <ChildContent>
@@ -156,7 +158,7 @@
             <FluentCard Style="padding: calc(var(--design-unit) * 4px); border-radius: calc(var(--control-corner-radius) * 1px);">
                 <InputLabel Label="预览">
                     <ActionContent>
-                        <FluentButton OnClick="() => UpdateExample(CreateCard(json, imageProxy, id, type, infoTypes, theme))">生成卡片</FluentButton>
+                        <FluentButton OnClick="() => CreateCardAsync(json, imageProxy, id, type, infoTypes, theme).ContinueWith(x => UpdateExample(x.Result))">生成卡片</FluentButton>
                     </ActionContent>
                     <ChildContent>
                         <MarkdownSection Content="@example" Style="max-width: 100%;" />
@@ -172,7 +174,6 @@
     private string id = string.Empty;
     private string output = "components";
     private string type = "video";
-    private string url = string.Empty;
     private string json = string.Empty;
     private string imageProxy = string.Empty;
     private string infoTypes = string.Empty;
@@ -200,32 +201,6 @@
         { "https://wherewhere.github.io/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.fluent.css" , "Fluent UI" },
         { "https://wherewhere.github.io/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.windose.css" , "Windose" }
     };
-
-    private string ID
-    {
-        get => id;
-        set
-        {
-            if (id != value)
-            {
-                this.id = value;
-                UpdateApiUrl();
-            }
-        }
-    }
-
-    private string Type
-    {
-        get => type;
-        set
-        {
-            if (type != value)
-            {
-                this.type = value;
-                UpdateApiUrl();
-            }
-        }
-    }
 
     private static Icon GetTypeIcon(string type) => type switch
     {
@@ -265,19 +240,15 @@
         _ => "views, comments",
     };
 
-    private void UpdateApiUrl()
-    {
-        if (string.IsNullOrWhiteSpace(id)) { url = null; }
-        else { url = GetApi(id, type); }
-    }
-
-
     private void UpdateExample(string element)
     {
         example = string.IsNullOrEmpty(element)
             ? string.Empty
             : new StringBuilder()
+                .AppendLine("""<p style="margin-bottom: calc(var(--design-unit) * 1px)">""")
                 .AppendLine(element)
+                .AppendLine("</p>")
+                .AppendLine()
                 .AppendLine("```html")
                 .AppendLine(element)
                 .Append("```")

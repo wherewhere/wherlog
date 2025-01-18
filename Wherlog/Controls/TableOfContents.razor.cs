@@ -89,7 +89,6 @@ namespace Wherlog.Controls
 
                 await BackToTopAsync();
                 await QueryDomAsync();
-
             }
         }
 

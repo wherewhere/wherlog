@@ -21,11 +21,11 @@
         box-shadow: var(--elevation-shadow-card-pressed);
     }
 
-::deep fluent-accordion-item.expander::part(region),
-::deep fluent-accordion-item.expander .region {
-    border-bottom-left-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
-    border-bottom-right-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
-}
+    ::deep fluent-accordion-item.expander-item::part(region),
+    ::deep fluent-accordion-item.expander-item .region {
+        border-bottom-left-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
+        border-bottom-right-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
+    }
 
 ::deep div.settings-presenter {
     padding: var(--settings-expander-header-padding);

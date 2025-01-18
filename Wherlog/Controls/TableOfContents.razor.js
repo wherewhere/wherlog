@@ -1,5 +1,5 @@
 ﻿export function queryDomForTocEntries() {
-    const article = document.getElementById('article');
+    const article = document.getElementById("article");
     const headings = article.querySelectorAll("h2, h3, h4");
 
     const tocArray = [];
@@ -20,12 +20,12 @@
                 anchors: []
             };
 
-            if ('H3' === element.nodeName) {
+            if ("H3" === element.nodeName) {
                 if (chapter) {
                     subchapter = anchor;
                     chapter.anchors.push(subchapter);
                 }
-            } else if ('H4' === element.nodeName) {
+            } else if ("H4" === element.nodeName) {
                 if (subchapter) {
                     subchapter.anchors.push(anchor);
                 }
@@ -42,24 +42,19 @@
 const backToTopButton = document.getElementById("backtotop");
 
 // When the user scrolls down 20px from the top of the document, show the button
-let bodycontent = document.getElementById('body-content');
-if (!bodycontent) {
-    bodycontent = document.body;
-}
+const bodycontent = document.getElementById("body-content") || document.body;
 
-bodycontent.onscroll = () => {
-    if (document.body.scrollTop > 20 || document.getElementById('body-content').scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        backToTopButton.style.display = "flex";
-    } else {
-        backToTopButton.style.display = "none";
-    }
-};
+bodycontent.addEventListener("scroll", () => {
+    const contentHeight = bodycontent.scrollHeight - bodycontent.offsetHeight;
+    const scrollPercent = contentHeight > 0 ? Math.min(100 * bodycontent.scrollTop / contentHeight, 100) : 0;
+    const isShow = Math.round(scrollPercent) >= 5;
+    backToTopButton.classList.toggle("on", isShow);
+    backToTopButton.querySelector("span").innerText = Math.round(scrollPercent) + '%';
+});
 
 // When the user clicks on the button, scroll to the top of the document
 export function backToTop() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    document.getElementById('body-content').scrollTop = 0;
+    bodycontent.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // Very simple check to see if mobile or tablet is being used 
