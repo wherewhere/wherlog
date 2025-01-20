@@ -1,7 +1,7 @@
 ﻿@using Microsoft.FluentUI.AspNetCore.Components.Utilities
 @inherits FluentComponentBase
 
-<div class="input-label" style="@Style">
+<div class="@ClassValue" style="@Style">
     <div class="fluent-input-label">
         <label>@Label</label>
         @ActionContent
@@ -9,9 +9,10 @@
     @ChildContent
 </div>
 
-@code {
+@code
+{
     protected string ClassValue => new CssBuilder(Class)
-        .AddClass("settings-presenter")
+        .AddClass("input-label")
         .Build();
 
     /// <summary>

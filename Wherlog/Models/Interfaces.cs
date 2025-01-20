@@ -34,12 +34,13 @@ namespace Wherlog.Models
 
         string GetContent()
         {
+            string raw = Raw.Replace("{% raw %}", string.Empty).Replace("{% endraw %}", string.Empty);
             bool inRow = false;
             short time = 0, count = 0;
             int index = 0;
-            for (; index < Raw.Length; index++)
+            for (; index < raw.Length; index++)
             {
-                char c = Raw[index];
+                char c = raw[index];
                 if (inRow)
                 {
                     if (c == '-')
@@ -50,7 +51,7 @@ namespace Wherlog.Models
                     {
                         if (count >= 3 && ++time == 2)
                         {
-                            return Raw[index..];
+                            return raw[index..];
                         }
                         else
                         {
@@ -65,7 +66,7 @@ namespace Wherlog.Models
                     count++;
                 }
             }
-            return Raw;
+            return raw;
         }
     }
 

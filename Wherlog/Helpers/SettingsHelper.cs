@@ -1,6 +1,8 @@
 ﻿using Microsoft.JSInterop;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 
 namespace Wherlog.Helpers
@@ -11,6 +13,7 @@ namespace Wherlog.Helpers
 
         private IJSObjectReference _jsModule;
 
+        public const string BaseUrl = nameof(BaseUrl);
         public const string CurrentLanguage = nameof(CurrentLanguage);
 
         public async ValueTask<Type> GetAsync<Type>(string key)
@@ -19,9 +22,9 @@ namespace Wherlog.Helpers
             string value = await _jsModule.InvokeAsync<string>("getValue", key);
             if (string.IsNullOrEmpty(value)) { return default; }
             System.Type type = typeof(Type);
-            return type == typeof(string) && JsonSerializer.Deserialize(value, SourceGenerationContext.Default.String) is Type @string
-                ? @string
+            return type == typeof(string) ? Deserialize(value, SourceGenerationContext.Default.String)
                 : JsonSerializer.Deserialize<Type>(value);
+            static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo) => JsonSerializer.Deserialize(json, jsonTypeInfo) is Type value ? value : default;
         }
 
         public async ValueTask SetAsync<Type>(string key, Type value)
@@ -52,6 +55,10 @@ namespace Wherlog.Helpers
         {
             _jsModule ??= await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
 
+            if (!await IsExistsAsync(BaseUrl))
+            {
+                await SetAsync(BaseUrl, RequestHelper.DefaultBaseUrl);
+            }
             if (!await IsExistsAsync(CurrentLanguage))
             {
                 await SetAsync(CurrentLanguage, LanguageHelper.AutoLanguageCode);

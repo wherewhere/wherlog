@@ -32,6 +32,8 @@ namespace Wherlog
                 await SettingsHelper.SetDefaultSettingsAsync();
             }
 
+            RequestHelper.Default = new RequestHelper(await SettingsHelper.GetAsync<string>(SettingsHelper.BaseUrl));
+
             string language = await SettingsHelper.GetAsync<string>(SettingsHelper.CurrentLanguage);
             if (language != LanguageHelper.AutoLanguageCode)
             {

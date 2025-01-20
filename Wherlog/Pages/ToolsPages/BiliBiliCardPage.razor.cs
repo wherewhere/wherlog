@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Wherlog.Pages.ToolsPages
 {
-    public partial class BiliBiliCardPage
+    public partial class BiliBiliCardPage : IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./{nameof(Pages)}/{nameof(ToolsPages)}/{nameof(BiliBiliCardPage)}.razor.js";
         private readonly HttpClient client = new();

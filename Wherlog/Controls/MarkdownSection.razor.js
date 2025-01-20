@@ -16,7 +16,7 @@ export function addCopyButton() {
             const copyButton = document.createElement("button");
             copyButton.className = "hljs-copy";
             copyButton.innerText = "Copy";
-            copyButton.addEventListener("click", (event) => {
+            copyButton.addEventListener("click", event => {
                 const button = event.target;
                 navigator.clipboard.writeText(code)
                     .then(() => {

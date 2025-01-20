@@ -14,7 +14,9 @@ namespace Wherlog.Helpers
 {
     public sealed class RequestHelper(string baseUrl)
     {
-        public static RequestHelper Default { get; } = new RequestHelper("https://wherewhere.github.io");
+        public const string DefaultBaseUrl = "https://wherewhere.github.io";
+
+        public static RequestHelper Default { get; set; }
 
         public HttpClient HttpClient { get; } = new HttpClient { BaseAddress = new Uri(baseUrl) };
 

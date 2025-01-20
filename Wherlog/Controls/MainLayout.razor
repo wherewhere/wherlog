@@ -4,10 +4,24 @@
 
 <div class="main-layout">
     <FluentLayout>
-        <FluentHeader Style="padding: env(titlebar-area-y, 0) calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px)) 0 env(titlebar-area-x, 0); -webkit-app-region: drag;">@(site?.Title ?? "wherlog")</FluentHeader>
+        <FluentHeader Style="padding: env(titlebar-area-y, 0) calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px)) 0 env(titlebar-area-x, 0); -webkit-app-region: drag;">
+            <FluentDesignTheme @bind-Mode="Mode" StorageName="theme" />
+            <HeadContent>
+                @if (string.IsNullOrEmpty(themeColor))
+                {
+                    <meta name="theme-color" content="#036ac4" media="(prefers-color-scheme: light)">
+                    <meta name="theme-color" content="#60c9fc" media="(prefers-color-scheme: dark)">
+                }
+                else
+                {
+                    <meta name="theme-color" content="@themeColor" />
+                }
+            </HeadContent>
+            @(site?.Title ?? "wherlog")
+        </FluentHeader>
         <FluentStack Class="main-split"
-                     Width="100%"
-                     Style="align-items: stretch;">
+        Width="100%"
+        Style="align-items: stretch;">
             <div class="nav-div">
                 <NavMenu />
             </div>
@@ -21,8 +35,8 @@
                             <div class="blazor-error-boundary">@ex.Message</div>
                             <FluentButton OnClick="OnParametersSet" BackgroundColor="transparent">
                                 <FluentIcon Value="@(new Icons.Regular.Size20.Dismiss())"
-                                            Color="Color.Custom"
-                                            CustomColor="white" />
+                                Color="Color.Custom"
+                                CustomColor="white" />
                             </FluentButton>
                         </div>
                     </ErrorContent>
@@ -42,6 +56,32 @@
     private RequestHelper request = RequestHelper.Default;
     private ErrorBoundary errorBoundary;
     private SiteModel site;
+    private string themeColor = string.Empty;
+
+    private DesignThemeModes mode = DesignThemeModes.System;
+    private DesignThemeModes Mode
+    {
+        get => mode;
+        set
+        {
+            if (mode != value)
+            {
+                switch (value)
+                {
+                    case DesignThemeModes.Dark:
+                        themeColor = "#60c9fc";
+                        break;
+                    case DesignThemeModes.Light:
+                        themeColor = "#036ac4";
+                        break;
+                    default:
+                        themeColor = string.Empty;
+                        break;
+                }
+                mode = value;
+            }
+        }
+    }
 
     protected override void OnParametersSet() => errorBoundary?.Recover();
 

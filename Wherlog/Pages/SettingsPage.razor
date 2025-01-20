@@ -29,8 +29,8 @@
                     <ActionContent>
                         <FluentDesignTheme @bind-Mode="mode" StorageName="theme" />
                         <FluentSelect Width="auto"
-                                      Items="@(Enum.GetValues<DesignThemeModes>())"
-                                      @bind-SelectedOption="mode" />
+                        Items="@(Enum.GetValues<DesignThemeModes>())"
+                        @bind-SelectedOption="mode" />
                     </ActionContent>
                 </SettingsCard>
 
@@ -46,8 +46,8 @@
                     </Description>
                     <ActionContent>
                         <FluentSelect Width="auto"
-                                      Items="@LanguageHelper.SupportCultures"
-                                      @bind-SelectedOption="SelectedLanguage">
+                        Items="@LanguageHelper.SupportCultures"
+                        @bind-SelectedOption="SelectedLanguage">
                             <OptionTemplate>
                                 @context.DisplayName
                             </OptionTemplate>
@@ -137,7 +137,7 @@
                             <FluentStack HorizontalGap="4" Style="overflow-x: auto">
                                 <a class="text-button" href="https://github.com/wherewhere/wherlog/issues" target="_blank">Feedback</a>
                                 <a class="text-button" href="https://github.com/wherewhere/wherlog/discussions target=" _blank"">Discussions</a>
-                                <a class="text-button" href="https://wherewhere.github.io" target="_blank">魔法薇ㄦ的书馆</a>
+                                <a class="text-button" href="@baseUrl" target="_blank">魔法薇ㄦ的书馆</a>
                             </FluentStack>
                         </FluentStack>
                     </Description>
@@ -148,7 +148,7 @@
                             <ol>
                                 <li>本程序是 <a href="https://github.com/wherewhere/wherewhere.github.io" target="_blank">魔法薇ㄦ的书馆</a> 的网页客户端，禁止用于商业用途。</li>
                                 <li>本程序是开源软件，因此，在使用时请确保程序是来自<a href="https://github.com/wherewhere/wherlog" target="_blank">本 Github 仓库</a>，以确保您的数据安全。</li>
-                                <li>若程序来源无异常，程序运行过程中您的所有数据都仅用于与 <a href="https://wherewhere.github.io" target="_blank">魔法薇ㄦ的书馆</a> 的服务器交流或储存于本地，开发者不会窃取您的任何数据。但即便如此，也请注意使用环境的安全性。</li>
+                                <li>若程序来源无异常，程序运行过程中您的所有数据都仅用于与 <a href="@baseUrl" target="_blank">魔法薇ㄦ的书馆</a> 的服务器交流或储存于本地，开发者不会窃取您的任何数据。但即便如此，也请注意使用环境的安全性。</li>
                             </ol>
                             <h5>参与人员</h5>
                             <p>
@@ -241,10 +241,32 @@
                     <ActionContent>
                         <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
                             <FluentTextField Placeholder="输入 URL"
-                                             Style="flex: 1"
-                                             @bind-Value="path" />
+                            Style="flex: 1"
+                            @bind-Value="path" />
                             <FluentButton OnClick="() => Navigation.NavigateTo(path ?? string.Empty)">
                                 前往
+                            </FluentButton>
+                        </FluentStack>
+                    </ActionContent>
+                </SettingsCard>
+
+                <SettingsCard>
+                    <Icon>
+                        <FluentIcon Value="new Icons.Regular.Size20.Database()" />
+                    </Icon>
+                    <Header>
+                        <h3 class="unset">修改源</h3>
+                    </Header>
+                    <Description>
+                        修改获取数据的源链接。
+                    </Description>
+                    <ActionContent>
+                        <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
+                            <FluentTextField Placeholder="输入 URL"
+                            Style="flex: 1"
+                            @bind-Value="baseUrl" />
+                            <FluentButton OnClick="SetBaseUrlAsync">
+                                修改
                             </FluentButton>
                         </FluentStack>
                     </ActionContent>
@@ -273,6 +295,8 @@
         }
     }
 
+    private string baseUrl;
+
     protected override async Task OnParametersSetAsync()
     {
         string lang = await App.SettingsHelper.GetAsync<string>(SettingsHelper.CurrentLanguage);
@@ -281,6 +305,7 @@
             lang = LanguageHelper.GetCurrentLanguage();
         }
         culture = new CultureInfo(lang);
+        baseUrl = await App.SettingsHelper.GetAsync<string>(SettingsHelper.BaseUrl);
     }
 
     private async Task SetLanguageAsync(CultureInfo culture)
@@ -293,9 +318,16 @@
         }
     }
 
+    private async Task SetBaseUrlAsync()
+    {
+        await App.SettingsHelper.SetAsync(SettingsHelper.BaseUrl, baseUrl);
+        RequestHelper.Default = new RequestHelper(baseUrl);
+    }
+
     private async Task ResetAsync()
     {
         await App.SettingsHelper.ResetAsync();
         await App.SettingsHelper.SetDefaultSettingsAsync();
+        await OnParametersSetAsync();
     }
 }
