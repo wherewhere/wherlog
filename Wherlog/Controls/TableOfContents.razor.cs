@@ -50,7 +50,8 @@ namespace Wherlog.Controls
         }
 
         private Anchor[] _anchors;
-        private bool _expanded = true;
+        private bool _expanded = false;
+        private bool _isMobile = false;
 
         private IJSObjectReference _jsModule;
 
@@ -71,7 +72,6 @@ namespace Wherlog.Controls
         /// <summary>
         /// Gets or sets the content to be rendered inside the component.
         /// </summary>
-
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
@@ -80,12 +80,7 @@ namespace Wherlog.Controls
             if (firstRender)
             {
                 _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-                bool mobile = await _jsModule.InvokeAsync<bool>("isDevice");
-
-                if (mobile)
-                {
-                    _expanded = false;
-                }
+                _isMobile = await _jsModule.InvokeAsync<bool>("isDevice");
 
                 await BackToTopAsync();
                 await QueryDomAsync();
@@ -116,14 +111,13 @@ namespace Wherlog.Controls
             }
 
             _anchors = foundAnchors;
+            _expanded = !_isMobile && _anchors?.Length > 0;
             StateHasChanged();
         }
 
-        private static bool AnchorsEqual(Anchor[] firstSet, Anchor[] secondSet)
-        {
-            return (firstSet ?? [])
+        private static bool AnchorsEqual(Anchor[] firstSet, Anchor[] secondSet) =>
+            (firstSet ?? [])
                 .SequenceEqual(secondSet ?? []);
-        }
 
         protected override void OnInitialized()
         {
@@ -152,7 +146,6 @@ namespace Wherlog.Controls
                 ? new RenderFragment(builder =>
                 {
                     int i = 0;
-
                     builder.OpenElement(i++, "ul");
                     foreach (Anchor item in items)
                     {
@@ -177,7 +170,6 @@ namespace Wherlog.Controls
                 {
                     builder.AddContent(0, ChildContent);
                 });
-
         }
 
         public async ValueTask DisposeAsync()

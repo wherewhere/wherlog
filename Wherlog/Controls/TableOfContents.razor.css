@@ -1,6 +1,8 @@
 ﻿::deep ul {
     list-style: none;
     text-overflow: ellipsis;
+    margin-bottom: 0;
+    line-height: 1.5;
 }
 
     ::deep ul:first-of-type {
@@ -11,11 +13,33 @@
     padding-right: 1rem;
 }
 
-
 li {
     text-overflow: ellipsis;
 }
 
+::deep fluent-accordion-item {
+    box-sizing: border-box;
+    box-shadow: var(--elevation-shadow-card-rest);
+    border-radius: calc(var(--control-corner-radius) * 1px);
+}
+
+    ::deep fluent-accordion-item:hover {
+        background: var(--neutral-fill-input-hover);
+        border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-hover);
+        box-shadow: var(--elevation-shadow-card-hover);
+    }
+
+    ::deep fluent-accordion-item:active {
+        background: var(--neutral-fill-input-active);
+        border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-active);
+        box-shadow: var(--elevation-shadow-card-pressed);
+    }
+
+    ::deep fluent-accordion-item::part(region),
+    ::deep fluent-accordion-item .region {
+        border-bottom-left-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
+        border-bottom-right-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
+    }
 
 ::deep fluent-anchor::part(control) {
     color: var(--neutral-foreground-rest);
@@ -34,7 +58,6 @@ li {
     ::deep fluent-anchor::part(control):hover {
         text-decoration: underline;
     }
-
 
 ::deep fluent-button {
     position: fixed;

@@ -12,6 +12,11 @@
     max-width: 100%;
 }
 
+    ::deep img.emoji {
+        height: 18px;
+        width: 18px;
+    }
+
 ::deep .snippet {
     margin-bottom: 0.5rem;
     border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-rest);

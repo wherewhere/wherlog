@@ -5,8 +5,8 @@
 
 @if (Post != null)
 {
-    <div class="post-card" @onclick="() => OnClick(Post.Url)">
-        <h3>@Post.Title</h3>
+    <div class="post-card" @onclick="() => OnClick(Post.Url)" @ref="content">
+        <h2>@Post.Title</h2>
         @(new MarkupString(Post.Excerpt))
     </div>
 }
@@ -16,6 +16,7 @@
     private const string JAVASCRIPT_FILE = $"./{nameof(Controls)}/{nameof(PostCard)}.razor.js";
 
     private IJSObjectReference _jsModule;
+    private ElementReference content;
 
     [Parameter]
     public PostModel Post { get; set; }
@@ -28,8 +29,8 @@
         {
             // add highlight for any code blocks
             _jsModule ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-            await _jsModule.InvokeVoidAsync("highlight");
-            await _jsModule.InvokeVoidAsync("fixImage");
+            await _jsModule.InvokeVoidAsync("highlight", content);
+            await _jsModule.InvokeVoidAsync("fixImage", content);
         }
     }
 

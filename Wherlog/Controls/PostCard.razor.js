@@ -1,31 +1,33 @@
-﻿export function highlight() {
-    const elements = document.getElementsByClassName("highlight");
-    const numberOfElements = elements.length;
-    for (let i = 0; i < numberOfElements; i++) {
-        setElements(elements[i]);
-    }
-    function setElements(element) {
-        if (element instanceof Element) {
-            const className = [];
-            element.classList.forEach(x => className.push("hljs-" + x));
-            element.className = className.join(' ');
-            const numberOfElements = +element?.children.length;
-            for (let i = 0; i < numberOfElements; i++) {
-                setElements(element.children[i]);
-            }
+﻿export function highlight(element) {
+    if (!(element instanceof Element)) { return; }
+    const figure = element.querySelectorAll("figure.highlight");
+    figure.forEach(element => {
+        // Skip pre > .mermaid for folding and copy button
+        if (element.querySelector(".mermaid")) return;
+        let span = element.querySelectorAll(".code .line span");
+        if (span.length === 0) {
+            // Hljs without line_number and wrap
+            span = element.querySelectorAll("code.highlight span");
         }
-    }
+        span.forEach(s => {
+            s.classList.forEach(name => {
+                if (!name.startsWith("hljs-")) {
+                    s.classList.replace(name, `hljs-${name}`);
+                }
+            });
+        });
+    });
 }
 
-export function fixImage() {
-    const images = document.getElementsByTagName("img");
-    const numberOfElements = images.length;
-    for (let i = 0; i < numberOfElements; i++) {
-        const image = images[i];
-        const src = image.getAttribute("data-src");
-        if (src) {
-            image.removeAttribute("data-src");
-            image.setAttribute("src", src);
-        }
+export function fixImage(element) {
+    if (element instanceof Element) {
+        const images = element.querySelectorAll("img[data-src]:not([src])");
+        images.forEach(image => {
+            const src = image.getAttribute("data-src");
+            if (src) {
+                image.removeAttribute("data-src");
+                image.setAttribute("src", src);
+            }
+        });
     }
 }
