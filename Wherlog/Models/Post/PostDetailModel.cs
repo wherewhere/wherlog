@@ -9,6 +9,9 @@ namespace Wherlog.Models.Post
         [JsonPropertyName("title")]
         public string Title { get; init; }
 
+        [JsonPropertyName("description")]
+        public string Description { get; init; }
+
         [JsonPropertyName("slug")]
         public string Slug { get; init; }
 
@@ -23,6 +26,9 @@ namespace Wherlog.Models.Post
 
         [JsonPropertyName("url")]
         public string Url { get; init; }
+
+        [JsonPropertyName("language")]
+        public string Language { get; init; }
 
         [JsonPropertyName("cover")]
         public string Cover { get; init; }

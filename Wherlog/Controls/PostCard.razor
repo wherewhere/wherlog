@@ -1,11 +1,14 @@
 ﻿@using Wherlog.Models.Post
 @implements IAsyncDisposable
 @inject IJSRuntime JSRuntime
+@inject ILogger<PostCard> Logger
 @inject NavigationManager Navigation
 
 @if (Post != null)
 {
-    <div class="post-card" @onclick="() => OnClick(Post.Url)" @ref="content">
+    <div class="post-card" lang="@Post.Language"
+         @onclick="() => OnClick(Post.Url)"
+         @ref="content">
         <h2>@Post.Title</h2>
         @(new MarkupString(Post.Excerpt))
     </div>
@@ -51,6 +54,7 @@
         {
             // The JSRuntime side may routinely be gone already if the reason we're disposing is that
             // the client disconnected. This is not an error.
+            Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
         }
     }
 }

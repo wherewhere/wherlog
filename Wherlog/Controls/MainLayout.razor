@@ -1,5 +1,4 @@
-﻿@using Wherlog.Helpers
-@using Wherlog.Models
+﻿@using Wherlog.Models
 @inherits LayoutComponentBase
 
 <div class="main-layout">
@@ -20,8 +19,8 @@
             @(site?.Title ?? "wherlog")
         </FluentHeader>
         <FluentStack Class="main-split"
-        Width="100%"
-        Style="align-items: stretch;">
+                     Width="100%"
+                     Style="align-items: stretch;">
             <div class="nav-div">
                 <NavMenu />
             </div>
@@ -35,8 +34,8 @@
                             <div class="blazor-error-boundary">@ex.Message</div>
                             <FluentButton OnClick="OnParametersSet" BackgroundColor="transparent">
                                 <FluentIcon Value="@(new Icons.Regular.Size20.Dismiss())"
-                                Color="Color.Custom"
-                                CustomColor="white" />
+                                            Color="Color.Custom"
+                                            CustomColor="white" />
                             </FluentButton>
                         </div>
                     </ErrorContent>

@@ -7,6 +7,12 @@ namespace Wherlog.Models.Page
         [JsonPropertyName("title")]
         public string Title { get; init; }
 
+        [JsonPropertyName("description")]
+        public string Description { get; init; }
+
+        [JsonPropertyName("language")]
+        public string Language { get; init; }
+
         [JsonPropertyName("url")]
         public string Url { get; init; }
 

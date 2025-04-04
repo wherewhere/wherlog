@@ -75,11 +75,17 @@ namespace Wherlog.Models
         [JsonPropertyName("title")]
         public string Title { get; }
 
+        [JsonPropertyName("description")]
+        public string Description { get; }
+
         [JsonPropertyName("date")]
         public DateTimeOffset Date { get; }
 
         [JsonPropertyName("updated")]
         public DateTimeOffset Updated { get; }
+
+        [JsonPropertyName("language")]
+        public string Language { get; }
 
         [JsonPropertyName("comments")]
         public bool Comments { get; }

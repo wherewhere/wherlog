@@ -21,6 +21,9 @@ namespace Wherlog.Models.Post
         [JsonPropertyName("url")]
         public string Url { get; }
 
+        [JsonPropertyName("language")]
+        public string Language { get; }
+
         [JsonPropertyName("cover")]
         public string Cover { get; }
 

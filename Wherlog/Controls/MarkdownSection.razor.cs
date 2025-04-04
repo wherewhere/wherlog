@@ -1,10 +1,12 @@
 ﻿using Markdig;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components.Utilities;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
+using Wherlog.Helpers;
 
 namespace Wherlog.Controls
 {
@@ -115,6 +117,7 @@ namespace Wherlog.Controls
             {
                 // The JSRuntime side may routinely be gone already if the reason we're disposing is that
                 // the client disconnected. This is not an error.
+                Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
             }
         }
     }

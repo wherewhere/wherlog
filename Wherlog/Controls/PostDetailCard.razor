@@ -3,8 +3,10 @@
 @inject IStringLocalizer<PostDetailCard> Loc
 
 <TableContentsView Heading="@Loc["TableOfContentsHeading"]" @ref=_toc>
-    <h1 class="post-title">@Post.Title</h1>
-    <MarkdownSection OnContentConverted="_toc.RefreshTableOfContentsAsync" Content="@((Post as IRaw).GetContent())" />
+    <div lang="@Post.Language">
+        <h1 class="post-title">@Post.Title</h1>
+        <MarkdownSection OnContentConverted="_toc.RefreshTableOfContentsAsync" Content="@((Post as IRaw).GetContent())" />
+    </div>
 </TableContentsView>
 
 @code

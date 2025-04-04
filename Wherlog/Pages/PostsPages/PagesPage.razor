@@ -1,5 +1,4 @@
 ﻿@page "/pages/{*path}"
-@using Wherlog.Helpers
 @using Wherlog.Models
 @using Wherlog.Models.Page
 @inject IStringLocalizer<PagesPage> Loc
@@ -22,7 +21,14 @@
                                 MinimalStyle="true"
                                 @onclick="() => OnClick(model.Url)"
                                 Style="cursor: pointer;">
-                        <h4>@model.Title</h4>
+                        <div lang="@model.Language">
+                            <h4>@model.Title</h4>
+                            @if (!string.IsNullOrEmpty(model.Description))
+                            {
+                                <br />
+                                <span>@model.Description</span>
+                            }
+                        </div>
                     </FluentCard>
                 }
             </FluentStack>

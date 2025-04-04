@@ -63,6 +63,8 @@ namespace Wherlog.Helpers
     public static class RequestExtensions
     {
         public static Task<T> GetResults<T>(this Task<Entry<T>> task) where T : class => task.ContinueWith(x => x.Result?.Data);
+
+        public static object GetMessage(this Exception ex) => ex.Message is { Length: > 0 } message ? message : ex.GetType();
     }
 
     [JsonSerializable(typeof(Entry<SiteModel>))]

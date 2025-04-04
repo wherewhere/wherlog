@@ -2,6 +2,7 @@
 @page "/tools/bilibili-card"
 @implements IAsyncDisposable
 @inject IJSRuntime JSRuntime
+@inject ILogger<BiliBiliCardPage> Logger
 @using System.Text.Json
 @using System.Text
 
@@ -198,8 +199,8 @@
         { "system" , "跟随系统" },
         { "light" , "浅色" },
         { "dark" , "深色" },
-        { "https://wherewhere.github.io/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.fluent.css" , "Fluent UI" },
-        { "https://wherewhere.github.io/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.windose.css" , "Windose" }
+        { "fluent" , "Fluent UI" },
+        { "windose" , "Windose" }
     };
 
     private static Icon GetTypeIcon(string type) => type switch

@@ -24,6 +24,9 @@ namespace Wherlog.Models.Post
         [JsonPropertyName("excerpt")]
         public string Excerpt { get; init; }
 
+        [JsonPropertyName("language")]
+        public string Language { get; init; }
+
         [JsonPropertyName("images")]
         public string[] Images { get; init; }
 

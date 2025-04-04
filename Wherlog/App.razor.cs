@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -28,7 +29,7 @@ namespace Wherlog
 
             if (SettingsHelper == null)
             {
-                SettingsHelper = new SettingsHelper(jsRuntime);
+                SettingsHelper = new SettingsHelper(jsRuntime, host.Services.GetRequiredService<ILogger<SettingsHelper>>());
                 await SettingsHelper.SetDefaultSettingsAsync();
             }
 

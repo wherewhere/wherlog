@@ -1,7 +1,7 @@
 ﻿@page "/posts/{*path}"
-@using Wherlog.Helpers
 @using Wherlog.Models
 @using Wherlog.Models.Post
+@inject ILogger<PostsPage> Logger
 @inject IStringLocalizer<PostsPage> Loc
 @inject NavigationManager Navigation
 
@@ -30,12 +30,14 @@ else
     {
         if (!string.IsNullOrEmpty(Path))
         {
+            string path = Path.TrimEnd('/');
             try
             {
-                post = await request.GetPostAsync(Path.TrimEnd('/')).GetResults();
+                post = await request.GetPostAsync(path).GetResults();
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.LogError(ex, "Cannot find post \"{path}\". {message} (0x{hResult:X})", path, ex.GetMessage(), ex.HResult);
                 Navigation.NavigateTo("posts");
             }
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Wherlog.Helpers
 {
-    public sealed class SettingsHelper(IJSRuntime jsRuntime) : IAsyncDisposable
+    public sealed class SettingsHelper(IJSRuntime jsRuntime, ILogger<SettingsHelper> logger) : IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./js/settings-helper.js";
 
@@ -82,6 +83,7 @@ namespace Wherlog.Helpers
             {
                 // The JSRuntime side may routinely be gone already if the reason we're disposing is that
                 // the client disconnected. This is not an error.
+                logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
             }
         }
     }

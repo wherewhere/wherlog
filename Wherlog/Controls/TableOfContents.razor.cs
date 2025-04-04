@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.Extensions.Logging;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Wherlog.Helpers;
 
 namespace Wherlog.Controls
 {
@@ -132,7 +134,7 @@ namespace Wherlog.Controls
                 await BackToTopAsync();
                 await QueryDomAsync();
             }
-            catch (Exception)
+            catch (ObjectDisposedException)
             {
                 // Already disposed
             }
@@ -192,6 +194,7 @@ namespace Wherlog.Controls
             {
                 // The JSRuntime side may routinely be gone already if the reason we're disposing is that
                 // the client disconnected. This is not an error.
+                Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
             }
         }
     }
