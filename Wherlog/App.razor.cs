@@ -20,9 +20,9 @@ namespace Wherlog
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services
-                   .AddLocalization()
-                   .AddFluentUIComponents();
+            _ = builder.Services
+                       .AddLocalization()
+                       .AddFluentUIComponents();
 
             WebAssemblyHost host = builder.Build();
             IJSRuntime jsRuntime = host.Services.GetRequiredService<IJSRuntime>();

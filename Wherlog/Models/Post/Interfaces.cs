@@ -7,34 +7,34 @@ namespace Wherlog.Models.Post
     public interface IPost
     {
         [JsonPropertyName("title")]
-        public string Title { get; }
+        string Title { get; }
 
         [JsonPropertyName("date")]
-        public DateTimeOffset Date { get; }
+        DateTimeOffset Date { get; }
 
         [JsonPropertyName("updated")]
-        public DateTimeOffset Updated { get; }
+        DateTimeOffset Updated { get; }
 
         [JsonPropertyName("comments")]
-        public bool Comments { get; }
+        bool Comments { get; }
 
         [JsonPropertyName("url")]
-        public string Url { get; }
+        string Url { get; }
 
         [JsonPropertyName("language")]
-        public string Language { get; }
+        string Language { get; }
 
         [JsonPropertyName("cover")]
-        public string Cover { get; }
+        string Cover { get; }
 
         [JsonPropertyName("images")]
-        public string[] Images { get; }
+        string[] Images { get; }
 
         [JsonPropertyName("categories")]
-        public CateModel[] Categories { get; }
+        CateModel[] Categories { get; }
 
         [JsonPropertyName("tags")]
-        public CateModel[] Tags { get; }
+        CateModel[] Tags { get; }
     }
 
     public interface IPost<out TInfo> : IInfo<TInfo> where TInfo : IInfo

@@ -35,8 +35,10 @@
         <FluentStack Orientation="Orientation.Vertical">
             @foreach (PostModel post in cate.Posts)
             {
-                <FluentCard>
-                    <PostCard Post="@post" />
+                <FluentCard Class="clickable-card" MinimalStyle="true">
+                    <FillColorDiv FillColor="neutralFillInputRest">
+                        <PostCard Post="@post" />
+                    </FillColorDiv>
                 </FluentCard>
             }
         </FluentStack>

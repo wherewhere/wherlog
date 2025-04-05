@@ -18,7 +18,9 @@
             @foreach (PostModel post in postList)
             {
                 <FluentCard Class="clickable-card" MinimalStyle="true">
-                    <PostCard Post="@post" />
+                    <FillColorDiv FillColor="neutralFillInputRest">
+                        <PostCard Post="@post" />
+                    </FillColorDiv>
                 </FluentCard>
             }
         </FluentStack>

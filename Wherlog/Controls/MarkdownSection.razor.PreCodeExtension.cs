@@ -20,7 +20,7 @@ namespace Wherlog.Controls
             CodeBlockRenderer originalCodeBlockRenderer = htmlRenderer.ObjectRenderers.FindExact<CodeBlockRenderer>();
             if (originalCodeBlockRenderer != null)
             {
-                htmlRenderer.ObjectRenderers.Remove(originalCodeBlockRenderer);
+                _ = htmlRenderer.ObjectRenderers.Remove(originalCodeBlockRenderer);
             }
 
             htmlRenderer.ObjectRenderers.AddIfNotAlready(new MarkdownSectionPreCodeRenderer(

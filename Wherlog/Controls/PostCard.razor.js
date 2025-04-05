@@ -3,7 +3,7 @@
     const figure = element.querySelectorAll("figure.highlight");
     figure.forEach(element => {
         // Skip pre > .mermaid for folding and copy button
-        if (element.querySelector(".mermaid")) return;
+        if (element.querySelector(".mermaid")) { return; }
         let span = element.querySelectorAll(".code .line span");
         if (span.length === 0) {
             // Hljs without line_number and wrap
@@ -20,14 +20,24 @@
 }
 
 export function fixImage(element) {
-    if (element instanceof Element) {
-        const images = element.querySelectorAll("img[data-src]:not([src])");
-        images.forEach(image => {
-            const src = image.getAttribute("data-src");
-            if (src) {
-                image.removeAttribute("data-src");
-                image.setAttribute("src", src);
-            }
-        });
+    if (!(element instanceof Element)) { return; }
+    const images = element.querySelectorAll("img[data-src]:not([src])");
+    images.forEach(image => {
+        const src = image.getAttribute("data-src");
+        if (src) {
+            image.removeAttribute("data-src");
+            image.setAttribute("src", src);
+        }
+    });
+}
+
+export function setTheme(element) {
+    if (!(element instanceof Element)) { return; }
+    const cards = element.getElementsByTagName("bilibili-card");
+    for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        if (!card.hasAttribute("theme")) {
+            card.setAttribute("theme", "fluent");
+        }
     }
 }

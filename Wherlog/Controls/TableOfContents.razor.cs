@@ -95,7 +95,7 @@ namespace Wherlog.Controls
             {
                 return;
             }
-            await _jsModule.InvokeAsync<Anchor[]>("backToTop");
+            _ = await _jsModule.InvokeAsync<Anchor[]>("backToTop");
         }
 
         private async Task QueryDomAsync()

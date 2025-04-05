@@ -18,13 +18,13 @@ namespace Wherlog.Models
     public interface IIndex<out TInfo> : IInfo<TInfo> where TInfo : IInfo
     {
         [JsonPropertyName("index")]
-        public int Index { get; }
+        int Index { get; }
     }
 
     public interface ICount<out TInfo> : IInfo<TInfo> where TInfo : IInfo
     {
         [JsonPropertyName("count")]
-        public int Count { get; }
+        int Count { get; }
     }
 
     public interface IRaw
@@ -73,34 +73,34 @@ namespace Wherlog.Models
     public interface IDetail : IRaw
     {
         [JsonPropertyName("title")]
-        public string Title { get; }
+        string Title { get; }
 
         [JsonPropertyName("description")]
-        public string Description { get; }
+        string Description { get; }
 
         [JsonPropertyName("date")]
-        public DateTimeOffset Date { get; }
+        DateTimeOffset Date { get; }
 
         [JsonPropertyName("updated")]
-        public DateTimeOffset Updated { get; }
+        DateTimeOffset Updated { get; }
 
         [JsonPropertyName("language")]
-        public string Language { get; }
+        string Language { get; }
 
         [JsonPropertyName("comments")]
-        public bool Comments { get; }
+        bool Comments { get; }
 
         [JsonPropertyName("url")]
-        public string Url { get; }
+        string Url { get; }
 
         [JsonPropertyName("cover")]
-        public string Cover { get; }
+        string Cover { get; }
 
         [JsonPropertyName("images")]
-        public string[] Images { get; }
+        string[] Images { get; }
 
         [JsonPropertyName("content")]
-        public string Content { get; }
+        string Content { get; }
     }
 
     public interface IInfo

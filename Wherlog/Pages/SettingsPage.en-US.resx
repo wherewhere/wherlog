@@ -117,7 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutGroupHeader" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="ConfigsGroupHeader" xml:space="preserve">
+    <value>Configs</value>
+  </data>
+  <data name="ContactMeSettingsHeader" xml:space="preserve">
+    <value>Contact Me</value>
+  </data>
+  <data name="ContactMeText" xml:space="preserve">
+    <value>Follow me on social apps for the latest developments. If you find any bugs, please report them to me by PM. I will try my best to solve it. If you have Telegram account, feel free to chat in Paving Base Group 😊!</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DiscussionsLink" xml:space="preserve">
+    <value>Discussions</value>
+  </data>
+  <data name="DisplayGroupHeader" xml:space="preserve">
+    <value>Display</value>
+  </data>
+  <data name="DonateSettingsHeader" xml:space="preserve">
+    <value>Supports</value>
+  </data>
+  <data name="DonateText" xml:space="preserve">
+    <value>Wherlog is an open-source application which is build for love. If you like this app, don't forget to rate it in the store. Of course, it would be great if you could donate a little. Thank you for your support.💕</value>
+  </data>
+  <data name="FeedbackLink" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="FrameworkSettingsDescription" xml:space="preserve">
+    <value>Information about the frameworks of this app.</value>
+  </data>
+  <data name="FrameworkSettingsHeader" xml:space="preserve">
+    <value>Framework Information</value>
+  </data>
+  <data name="FrameworkText" xml:space="preserve">
+    <value>Framework</value>
+  </data>
+  <data name="JoinGroup" xml:space="preserve">
+    <value>Join Our Chat</value>
+  </data>
+  <data name="LanguageSettingsDescription" xml:space="preserve">
+    <value>Select language and restart to change language.</value>
+  </data>
+  <data name="LanguageSettingsHeader" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="NavigateSettingsButton" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="NavigateSettingsDescription" xml:space="preserve">
+    <value>Navigate to target url.</value>
+  </data>
+  <data name="NavigateSettingsHeader" xml:space="preserve">
+    <value>Navigate</value>
+  </data>
+  <data name="NavigateSettingsInput" xml:space="preserve">
+    <value>Input URL</value>
+  </data>
+  <data name="OSArchitectureText" xml:space="preserve">
+    <value>OS Architecture</value>
+  </data>
+  <data name="OSPlatformText" xml:space="preserve">
+    <value>OS Platform</value>
+  </data>
+  <data name="OthersGroupHeader" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="ResetSettingsButton" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResetSettingsConfirm" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ResetSettingsDescription" xml:space="preserve">
+    <value>Reset settings of this application.</value>
+  </data>
+  <data name="ResetSettingsHeader" xml:space="preserve">
+    <value>Reset Application</value>
+  </data>
+  <data name="ResetSettingsTitle" xml:space="preserve">
+    <value>Are you sure you want to reset the app?</value>
+  </data>
+  <data name="SourceSettingsButton" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="SourceSettingsDescription" xml:space="preserve">
+    <value>Change the souce link of data.</value>
+  </data>
+  <data name="SourceSettingsHeader" xml:space="preserve">
+    <value>Change Source</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="ThemeSettingsDescription" xml:space="preserve">
+    <value>Set the theme of this App.</value>
+  </data>
+  <data name="ThemeSettingsHeader" xml:space="preserve">
+    <value>App Theme</value>
+  </data>
   <data name="TitleText" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="ToolsSettingsDescription" xml:space="preserve">
+    <value>The list of available tools.</value>
+  </data>
+  <data name="ToolsSettingsHeader" xml:space="preserve">
+    <value>Tools</value>
   </data>
 </root>

@@ -46,7 +46,7 @@ namespace Wherlog.Controls
 
                     if (OnContentConverted.HasDelegate)
                     {
-                        OnContentConverted.InvokeAsync();
+                        _ = OnContentConverted.InvokeAsync();
                     }
 
                     _raiseContentConverted = true;
@@ -71,6 +71,7 @@ namespace Wherlog.Controls
             {
                 await _jsModule.InvokeVoidAsync("highlight");
                 await _jsModule.InvokeVoidAsync("addCopyButton");
+                await _jsModule.InvokeVoidAsync("setTheme");
 
                 _raiseContentConverted = false;
                 if (OnContentConverted.HasDelegate)

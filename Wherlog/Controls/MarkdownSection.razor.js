@@ -8,11 +8,12 @@
 }
 
 export function addCopyButton() {
-    const snippets = document.querySelectorAll(".snippet");
+    const snippets = document.getElementsByClassName("snippet");
     const numberOfSnippets = snippets.length;
     for (let i = 0; i < numberOfSnippets; i++) {
-        if (!snippets[i].querySelector("button.hljs-copy")) {
-            const code = snippets[i].querySelector("code").innerText;
+        const snippet = snippets[i];
+        if (!snippet.querySelector("button.hljs-copy")) {
+            const code = snippet.querySelector("code").innerText;
             const copyButton = document.createElement("button");
             copyButton.className = "hljs-copy";
             copyButton.innerText = "Copy";
@@ -26,7 +27,17 @@ export function addCopyButton() {
                         }
                     });
             });
-            snippets[i].appendChild(copyButton);
+            snippets.appendChild(copyButton);
+        }
+    }
+}
+
+export function setTheme() {
+    const cards = document.getElementsByTagName("bilibili-card");
+    for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        if (!card.hasAttribute("theme")) {
+            card.setAttribute("theme", "fluent");
         }
     }
 }

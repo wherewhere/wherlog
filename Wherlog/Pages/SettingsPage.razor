@@ -12,7 +12,7 @@
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>
             <Header>
-                <h2 id="display" class="unset">Display</h2>
+                <h2 id="display" class="unset">@Loc["DisplayGroupHeader"]</h2>
             </Header>
             <ChildContent>
                 <SettingsCard>
@@ -20,16 +20,20 @@
                         <FluentIcon Value="new Icons.Regular.Size20.Color()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">App Theme</h3>
+                        <h3 id="display-theme" class="unset">@Loc["ThemeSettingsHeader"]</h3>
                     </Header>
                     <Description>
-                        Set the theme of this App.
+                        @Loc["ThemeSettingsDescription"]
                     </Description>
                     <ActionContent>
                         <FluentDesignTheme @bind-Mode="mode" StorageName="theme" />
                         <FluentSelect Width="auto"
-                        Items="@(Enum.GetValues<DesignThemeModes>())"
-                        @bind-SelectedOption="mode" />
+                                      Items="@(Enum.GetValues<DesignThemeModes>())"
+                                      @bind-SelectedOption="mode">
+                            <OptionTemplate>
+                                @Loc[context.ToString()]
+                            </OptionTemplate>
+                        </FluentSelect>
                     </ActionContent>
                 </SettingsCard>
 
@@ -38,15 +42,15 @@
                         <FluentIcon Value="new Icons.Regular.Size20.LocalLanguage()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">Language</h3>
+                        <h3 id="display-language" class="unset">@Loc["LanguageSettingsHeader"]</h3>
                     </Header>
                     <Description>
-                        Select language and restart to change language.
+                        @Loc["LanguageSettingsDescription"]
                     </Description>
                     <ActionContent>
                         <FluentSelect Width="auto"
-                        Items="@LanguageHelper.SupportCultures"
-                        @bind-SelectedOption="SelectedLanguage">
+                                      Items="@LanguageHelper.SupportCultures"
+                                      @bind-SelectedOption="SelectedLanguage">
                             <OptionTemplate>
                                 @context.DisplayName
                             </OptionTemplate>
@@ -58,7 +62,7 @@
 
         <SettingsGroup>
             <Header>
-                <h2 class="unset">Configs</h2>
+                <h2 id="configs" class="unset">@Loc["ConfigsGroupHeader"]</h2>
             </Header>
             <ChildContent>
                 <SettingsCard>
@@ -66,15 +70,27 @@
                         <FluentIcon Value="new Icons.Regular.Size20.ArrowReset()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">Reset Application</h3>
+                        <h3 id="configs-reset" class="unset">@Loc["ResetSettingsHeader"]</h3>
                     </Header>
                     <Description>
-                        Reset settings of this application.
+                        @Loc["ResetSettingsDescription"]
                     </Description>
                     <ActionContent>
-                        <FluentButton OnClick="ResetAsync">
-                            Reset
+                        <FluentButton Id="configs-reset-button" OnClick="() => flyout = !flyout">
+                            @Loc["ResetSettingsButton"]
                         </FluentButton>
+                        <FluentPopover AnchorId="configs-reset-button"
+                                       Style="width: 250px;"
+                                       @bind-Open="flyout">
+                            <Header>
+                                @Loc["ResetSettingsTitle"]
+                            </Header>
+                            <Footer>
+                                <FluentButton OnClick="ResetAsync">
+                                    @Loc["ResetSettingsConfirm"]
+                                </FluentButton>
+                            </Footer>
+                        </FluentPopover>
                     </ActionContent>
                 </SettingsCard>
 
@@ -83,16 +99,16 @@
                         <FluentIcon Value="new Icons.Regular.Size20.DeveloperBoard()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">Framework Information</h3>
+                        <h3 id="configs-framework" class="unset">@Loc["FrameworkSettingsHeader"]</h3>
                     </Header>
                     <Description>
-                        Information about the frameworks of this app.
+                        @Loc["FrameworkSettingsDescription"]
                     </Description>
                     <ChildContent>
                         <div class="setting-expander-content-grid">
                             <table class="info-table">
                                 <tr>
-                                    <td>Framework</td>
+                                    <td>@Loc["FrameworkText"]</td>
                                     <td class="info-table-description">@RuntimeInformation.FrameworkDescription</td>
                                 </tr>
                                 <tr>
@@ -104,11 +120,11 @@
                                     <td class="info-table-description">@typeof(FluentComponentBase).Assembly.GetName().Version</td>
                                 </tr>
                                 <tr>
-                                    <td>OS Platform</td>
+                                    <td>@Loc["OSPlatformText"]</td>
                                     <td class="info-table-description">@RuntimeInformation.OSDescription</td>
                                 </tr>
                                 <tr>
-                                    <td>OS Architecture</td>
+                                    <td>@Loc["OSArchitectureText"]</td>
                                     <td class="info-table-description">@RuntimeInformation.OSArchitecture</td>
                                 </tr>
                             </table>
@@ -120,7 +136,7 @@
 
         <SettingsGroup>
             <Header>
-                <h2 class="unset">About</h2>
+                <h2 id="about" class="unset">@Loc["AboutGroupHeader"]</h2>
             </Header>
             <ChildContent>
                 <SettingsExpander>
@@ -128,14 +144,14 @@
                         <FluentIcon Value="new Icons.Regular.Size20.Info()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">@(typeof(App).Assembly?.GetName() is AssemblyName name ? $"{name.Name} v{name.Version.ToString(3)}" : "Wherlog")</h3>
+                        <h3 id="about-about" class="unset">@(typeof(App).Assembly?.GetName() is AssemblyName name ? $"{name.Name} v{name.Version.ToString(3)}" : "Wherlog")</h3>
                     </Header>
                     <Description>
                         <FluentStack Orientation="Orientation.Vertical" VerticalGap="0">
                             <span>魔法薇ㄦ的书馆网页客户端</span>
-                            <FluentStack HorizontalGap="4" Style="overflow-x: auto">
-                                <a class="text-button" href="https://github.com/wherewhere/wherlog/issues" target="_blank">Feedback</a>
-                                <a class="text-button" href="https://github.com/wherewhere/wherlog/discussions target=" _blank"">Discussions</a>
+                            <FluentStack HorizontalGap="4" Style="overflow-x: auto;">
+                                <a class="text-button" href="https://github.com/wherewhere/wherlog/issues" target="_blank">@Loc["FeedbackLink"]</a>
+                                <a class="text-button" href="https://github.com/wherewhere/wherlog/discussions" target="_blank">@Loc["DiscussionsLink"]</a>
                                 <a class="text-button" href="@baseUrl" target="_blank">魔法薇ㄦ的书馆</a>
                             </FluentStack>
                         </FluentStack>
@@ -169,12 +185,12 @@
                         <FluentIcon Value="new Icons.Regular.Size20.ContactCard()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">Contact Me</h3>
+                        <h3 id="about-contact" class="unset">@Loc["ContactMeSettingsHeader"]</h3>
                     </Header>
                     <Description>
                         <FluentStack Orientation="Orientation.Vertical" VerticalGap="0">
-                            <span>在社交软件上关注我来获取最新开发动向。如果你发现了什么 Bug，请通过私信告诉我。我会尽最大可能来解决这些问题。如果你有电报账号，欢迎来铺路根据地群组聊天😊!</span>
-                            <FluentStack HorizontalGap="4" Style="overflow-x: auto">
+                            <span>@Loc["ContactMeText"]</span>
+                            <FluentStack HorizontalGap="4" Style="overflow-x: auto;">
                                 <a class="text-button" href="https://github.com/wherewhere" target="_blank">GitHub</a>
                                 <a class="text-button" href="http://www.coolapk.com/u/536381" target="_blank">Coolapk</a>
                                 <a class="text-button" href="https://twitter.com/wherewhere7" target="_blank">Twitter</a>
@@ -184,7 +200,7 @@
                     </Description>
                     <ActionContent>
                         <FluentAnchor Href="https://t.me/PavingBase">
-                            电报
+                            @Loc["JoinGroup"]
                         </FluentAnchor>
                     </ActionContent>
                 </SettingsCard>
@@ -194,12 +210,12 @@
                         <FluentIcon Value="new Icons.Regular.Size20.Heart()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">Supports</h3>
+                        <h3 id="about-donate" class="unset">@Loc["DonateSettingsHeader"]</h3>
                     </Header>
                     <Description>
                         <FluentStack Orientation="Orientation.Vertical" VerticalGap="0">
-                            <span>Wherlog 是一个为爱发电的开源软件。如果你喜欢这个应用，不要忘了在商店里打上好评哦，当然如果可以捐赠一点点就更好了。感谢大家的支持💕！</span>
-                            <FluentStack HorizontalGap="4" Style="overflow-x: auto">
+                            <span>@Loc["DonateText"]</span>
+                            <FluentStack HorizontalGap="4" Style="overflow-x: auto;">
                                 <a class="text-button" href="@("https://afdian.com/@wherewhere")" target="_blank">爱发电</a>
                                 <a class="text-button" href="https://patreon.com/wherewhere" target="_blank">Patreon</a>
                             </FluentStack>
@@ -211,16 +227,18 @@
 
         <SettingsGroup>
             <Header>
-                <h2 class="unset">Others</h2>
+                <h2 id="others" class="unset">@Loc["OthersGroupHeader"]</h2>
             </Header>
             <ChildContent>
                 <SettingsButton OnClick="@(() => Navigation.NavigateTo("tools"))">
                     <Icon>
                         <FluentIcon Value="new Icons.Regular.Size20.Toolbox()" />
                     </Icon>
-                    <Header>Tools</Header>
+                    <Header>
+                        <h3 id="others-tools" class="unset">@Loc["ToolsSettingsHeader"]</h3>
+                    </Header>
                     <Description>
-                        The list of available tools.
+                        @Loc["ToolsSettingsDescription"]
                     </Description>
                     <ActionIcon>
                         <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
@@ -232,18 +250,18 @@
                         <FluentIcon Value="new Icons.Regular.Size20.Navigation()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">Navigate</h3>
+                        <h3 id="others-navigate" class="unset">@Loc["NavigateSettingsHeader"]</h3>
                     </Header>
                     <Description>
-                        Navigate to target url.
+                        @Loc["NavigateSettingsDescription"]
                     </Description>
                     <ActionContent>
                         <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
-                            <FluentTextField Placeholder="输入 URL"
-                            Style="flex: 1"
-                            @bind-Value="path" />
+                            <FluentTextField Placeholder="@Loc["NavigateSettingsInput"]"
+                                             Style="flex: 1;"
+                                             @bind-Value="path" />
                             <FluentButton OnClick="() => Navigation.NavigateTo(path ?? string.Empty)">
-                                前往
+                                @Loc["NavigateSettingsButton"]
                             </FluentButton>
                         </FluentStack>
                     </ActionContent>
@@ -254,18 +272,18 @@
                         <FluentIcon Value="new Icons.Regular.Size20.Database()" />
                     </Icon>
                     <Header>
-                        <h3 class="unset">修改源</h3>
+                        <h3 id="others-source" class="unset">@Loc["SourceSettingsHeader"]</h3>
                     </Header>
                     <Description>
-                        修改获取数据的源链接。
+                        @Loc["SourceSettingsDescription"]
                     </Description>
                     <ActionContent>
                         <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
-                            <FluentTextField Placeholder="输入 URL"
-                            Style="flex: 1"
-                            @bind-Value="baseUrl" />
+                            <FluentTextField Placeholder="@Loc["NavigateSettingsInput"]"
+                                             Style="flex: 1;"
+                                             @bind-Value="baseUrl" />
                             <FluentButton OnClick="SetBaseUrlAsync">
-                                修改
+                                @Loc["SourceSettingsButton"]
                             </FluentButton>
                         </FluentStack>
                     </ActionContent>
@@ -279,6 +297,7 @@
 {
     private DesignThemeModes mode;
     private string path;
+    private bool flyout;
 
     private CultureInfo culture;
     private CultureInfo SelectedLanguage
@@ -325,6 +344,7 @@
 
     private async Task ResetAsync()
     {
+        flyout = false;
         await App.SettingsHelper.ResetAsync();
         await App.SettingsHelper.SetDefaultSettingsAsync();
         await OnParametersSetAsync();

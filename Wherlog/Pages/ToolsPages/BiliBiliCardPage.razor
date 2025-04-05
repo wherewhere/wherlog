@@ -63,7 +63,9 @@
                 <Header>
                     <h3 id="bilibili-card-id" class="unset">卡片 ID</h3>
                 </Header>
-                <Description>输入卡片显示的哔哩哔哩<span>@types[type]</span>的 ID。</Description>
+                <Description>
+                    输入卡片显示的哔哩哔哩<span>@types[type]</span>的 ID。
+                </Description>
                 <ActionContent>
                     <FluentTextField @bind-Value="id" Placeholder="@GetExampleID(type)" />
                 </ActionContent>
@@ -246,7 +248,7 @@
         example = string.IsNullOrEmpty(element)
             ? string.Empty
             : new StringBuilder()
-                .AppendLine("""<p style="margin-bottom: calc(var(--design-unit) * 1px)">""")
+                .AppendLine("""<p style="margin-bottom: calc(var(--design-unit) * 1px);">""")
                 .AppendLine(element)
                 .AppendLine("</p>")
                 .AppendLine()

@@ -30,7 +30,7 @@ namespace Wherlog.Controls
 
         protected override void Write(HtmlRenderer renderer, CodeBlock obj)
         {
-            renderer.EnsureLine();
+            _ = renderer.EnsureLine();
 
             if (_blocksAsDiv is not null && obj is FencedCodeBlock { Info: string info } && _blocksAsDiv.Contains(info))
             {
@@ -42,43 +42,43 @@ namespace Wherlog.Controls
 
                 if (renderer.EnableHtmlForBlock)
                 {
-                    renderer.Write("<div")
+                    _ = renderer.Write("<div")
                             .WriteAttributes(obj.TryGetAttributes(),
                                 cls => cls.StartsWith(infoPrefix, StringComparison.Ordinal) ? cls[infoPrefix.Length..] : cls)
                             .Write('>');
                 }
 
-                renderer.WriteLeafRawLines(obj, true, true, true);
+                _ = renderer.WriteLeafRawLines(obj, true, true, true);
 
                 if (renderer.EnableHtmlForBlock)
                 {
-                    renderer.WriteLine("</div>");
+                    _ = renderer.WriteLine("</div>");
                 }
             }
             else
             {
                 if (renderer.EnableHtmlForBlock)
                 {
-                    renderer.Write("<pre");
+                    _ = renderer.Write("<pre");
 
                     WritePreAttributes(renderer, obj, options?.PreTagAttributes);
 
-                    renderer.Write("><code");
+                    _ = renderer.Write("><code");
 
                     WriteCodeAttributes(renderer, obj, options?.CodeTagAttributes);
 
-                    renderer.Write('>');
+                    _ = renderer.Write('>');
                 }
 
-                renderer.WriteLeafRawLines(obj, true, true);
+                _ = renderer.WriteLeafRawLines(obj, true, true);
 
                 if (renderer.EnableHtmlForBlock)
                 {
-                    renderer.WriteLine("</code></pre>");
+                    _ = renderer.WriteLine("</code></pre>");
                 }
             }
 
-            renderer.EnsureLine();
+            _ = renderer.EnsureLine();
         }
 
         private void WritePreAttributes(HtmlRenderer renderer, CodeBlock obj, string preGenericAttributes)
@@ -133,7 +133,7 @@ namespace Wherlog.Controls
             }
 
             //
-            renderer.WriteAttributes(fromCodeBlock);
+            _ = renderer.WriteAttributes(fromCodeBlock);
         }
     }
 }
