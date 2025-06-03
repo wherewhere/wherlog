@@ -25,7 +25,7 @@ namespace Wherlog.Helpers
             ["zh-Hans", "zh-cn", "zh-hans-cn", "zh-sg", "zh-hans-sg"]
         ];
 
-        public static CultureInfo[] SupportCultures { get; } = SupportLanguages.Select(x => new CultureInfo(x)).ToArray();
+        public static CultureInfo[] SupportCultures { get; } = [.. SupportLanguages.Select(x => new CultureInfo(x))];
 
         public static int FindIndexFromSupportLanguageCodes(string language) => Array.FindIndex(SupportLanguageCodes, codes => Array.Exists(codes, x => x.Equals(language, StringComparison.OrdinalIgnoreCase)));
 

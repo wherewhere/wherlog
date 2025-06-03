@@ -1,8 +1,9 @@
 ﻿@page "/tools"
+@inject IStringLocalizer<ToolsPage> Loc
 @inject NavigationManager Navigation
 
 <TableContentsView>
-    <PageHeader Title="Tools" />
+    <PageHeader Title="@Loc["TitleText"]" />
 
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>
@@ -11,10 +12,10 @@
                     <FluentIcon Value="new Icons.Regular.Size20.CalendarDate()" />
                 </Icon>
                 <Header>
-                    <h3 id="convert-timestamp" class="unset">DateTime</h3>
+                    <h3 id="convert-timestamp" class="unset">@Loc["DateTimeSettingsHeader"]</h3>
                 </Header>
                 <Description>
-                    Convert between Unix timestamp and human-readable date time.
+                    @Loc["DateTimeSettingsDescription"]
                 </Description>
                 <ActionIcon>
                     <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
@@ -26,10 +27,10 @@
                     <FluentIcon Value="new Icons.Regular.Size20.CodeText()" />
                 </Icon>
                 <Header>
-                    <h3 id="convert-encoding" class="unset">Encode & Decode</h3>
+                    <h3 id="convert-encoding" class="unset">@Loc["EncodingSettingsHeader"]</h3>
                 </Header>
                 <Description>
-                    Encode and decode text using Base64, URL, HTML and so on.
+                    @Loc["EncodingSettingsDescription"]
                 </Description>
                 <ActionIcon>
                     <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />
@@ -41,10 +42,10 @@
                     <FluentIcon Value="new Icons.Regular.Size20.Video()" />
                 </Icon>
                 <Header>
-                    <h3 id="render-bilibili-card" class="unset">BiliBili Card</h3>
+                    <h3 id="render-bilibili-card" class="unset">@Loc["BiliBiliCardSettingsHeader"]</h3>
                 </Header>
                 <Description>
-                    Create BiliBili video card by <a href="https://github.com/wherewhere/hexo-tag-bilibili-card" target="_blank">bilibili-card</a>.
+                    @(new MarkupString(Loc["BiliBiliCardSettingsDescription"]))
                 </Description>
                 <ActionIcon>
                     <FluentIcon Value="new Icons.Regular.Size12.ChevronRight()" Color="Color.FillInverse" />

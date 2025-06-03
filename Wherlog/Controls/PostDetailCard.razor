@@ -2,7 +2,7 @@
 @using Wherlog.Models.Post
 @inject IStringLocalizer<PostDetailCard> Loc
 
-<TableContentsView Heading="@Loc["TableOfContentsHeading"]" @ref=_toc>
+<TableContentsView @ref=_toc>
     <div lang="@Post.Language">
         <h1 class="post-title">@Post.Title</h1>
         <MarkdownSection OnContentConverted="_toc.RefreshTableOfContentsAsync" Content="@((Post as IRaw).GetContent())" />

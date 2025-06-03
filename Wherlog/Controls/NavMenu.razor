@@ -19,31 +19,36 @@
             <FluentNavLink Href="./"
                            Match="NavLinkMatch.All"
                            Icon="@(new Icons.Regular.Size20.Home())"
-                           IconColor="Color.Accent">
+                           IconColor="Color.Accent"
+                           title="@Loc["HomeText"]">
                 @Loc["HomeText"]
             </FluentNavLink>
             <FluentNavLink Href="tags"
                            Match="NavLinkMatch.Prefix"
                            Icon="@(new Icons.Regular.Size20.TagMultiple())"
-                           IconColor="Color.Accent">
+                           IconColor="Color.Accent"
+                           title="@Loc["TagText"]">
                 @Loc["TagText"]
             </FluentNavLink>
             <FluentNavLink Href="categories"
                            Match="NavLinkMatch.Prefix"
                            Icon="@(new Icons.Regular.Size20.Grid())"
-                           IconColor="Color.Accent">
+                           IconColor="Color.Accent"
+                           title="@Loc["CategoryText"]">
                 @Loc["CategoryText"]
             </FluentNavLink>
             <FluentNavLink Href="archives"
                            Match="NavLinkMatch.Prefix"
                            Icon="@(new Icons.Regular.Size20.Archive())"
-                           IconColor="Color.Accent">
+                           IconColor="Color.Accent"
+                           title="@Loc["ArchiveText"]">
                 @Loc["ArchiveText"]
             </FluentNavLink>
             <FluentNavLink Href="settings"
                            Match="NavLinkMatch.Prefix"
                            Icon="@(new Icons.Regular.Size20.Settings())"
-                           IconColor="Color.Accent">
+                           IconColor="Color.Accent"
+                           title="@Loc["SettingsText"]">
                 @Loc["SettingsText"]
             </FluentNavLink>
         </FluentNavMenu>

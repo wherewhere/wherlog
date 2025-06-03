@@ -61,34 +61,31 @@ footer {
         top: 0.5rem;
     }
 
+.loading-cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .loading-progress {
-    position: relative;
-    display: block;
-    width: 8rem;
-    height: 8rem;
-    margin: 20vh auto 1rem auto;
-}
-
-    .loading-progress circle {
-        fill: none;
-        stroke: var(--accent-fill-rest);
-        stroke-linecap: round;
-        stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
-        stroke-width: 0.6rem;
-        transform-origin: 50% 50%;
-        transform: rotate(-90deg);
-    }
-
-.loading-progress-text {
+    bottom: 0;
+    width: var(--blazor-load-percentage, 0%);
+    background: var(--accent-fill-rest);
+    height: calc((var(--stroke-width) * 3) * 1px);
+    transition: all 0.2s ease-in-out;
+    overflow: hidden;
     position: absolute;
-    text-align: center;
-    font-weight: bold;
-    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
 }
 
-    .loading-progress-text:after {
-        content: var(--blazor-load-percentage-text, "Loading");
-    }
+.loading-progress-text:after {
+    content: var(--blazor-load-percentage-text, "Loading");
+}
 
 @media (max-width: 600px) {
     .header-gutters {

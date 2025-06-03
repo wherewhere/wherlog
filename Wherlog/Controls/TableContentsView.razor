@@ -1,4 +1,6 @@
-﻿<div class="table-contents-view">
+﻿@inject IStringLocalizer<TableContentsView> Loc
+
+<div class="table-contents-view">
     <article id="article">
         @ChildContent
     </article>
@@ -18,7 +20,7 @@
     /// Defaults to 'In this article'
     /// </summary>
     [Parameter]
-    public string Heading { get; set; } = "In this article";
+    public string Heading { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether a 'Back to top' button should be rendered.
@@ -33,5 +35,12 @@
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
+    /// <inheritdoc/>
+    protected override void OnInitialized() => Heading ??= Loc[nameof(Heading)];
+
+    /// <summary>
+    /// Refreshes the Table of Contents.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public Task RefreshTableOfContentsAsync() => _toc?.Refresh() ?? Task.CompletedTask;
 }

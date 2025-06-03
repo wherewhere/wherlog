@@ -26,10 +26,13 @@
     <!-- End -->
 
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div class="loading-cover">
+            <img id="loading-logo" width="100" src="img/icon.svg" alt="wherlog" />
+            <fluent-tooltip anchor="loading-logo">
+                <span class="loading-progress-text"></span>
+            </fluent-tooltip>
+        </div>
+        <div class="loading-progress"></div>
     </div>
 
     <div id="blazor-error-ui">
@@ -41,7 +44,7 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <!-- highlight -->
     <script src="js/highlight-extensions.js" async></script>
-    <script>navigator.serviceWorker.register("service-worker.js");</script>
+    <script>navigator.serviceWorker.register("service-worker.js")</script>
 </body>
 
 </html>

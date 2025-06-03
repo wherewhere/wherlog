@@ -17,6 +17,7 @@ div.nav-div {
     padding: 0.5rem 1.5rem;
     align-self: stretch !important;
     width: 100%;
+    transition: all 0.083s ease-in-out;
 }
 
 .blazor-error-root {
@@ -38,8 +39,8 @@ div.nav-div {
         height: calc(100dvh - 97px) !important;
     }
 
-    .main-split {
-        flex-direction: column;
+    .content {
+        padding: 0.5rem 1rem;
     }
 
     div.nav-div {
