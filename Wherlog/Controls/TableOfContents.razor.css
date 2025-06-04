@@ -59,6 +59,10 @@ li {
         text-decoration: underline;
     }
 
+::deep .active > fluent-anchor::part(control) {
+    color: var(--accent-foreground-rest);
+}
+
 ::deep fluent-button {
     position: fixed;
     bottom: -300px;

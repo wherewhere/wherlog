@@ -85,6 +85,7 @@ bodycontent.addEventListener("scroll", () => {
     const isShow = Math.round(scrollPercent) >= 5;
     backToTopButton.classList.toggle("on", isShow);
     backToTopButton.querySelector("span").innerText = Math.round(scrollPercent) + '%';
+    updateActiveNav();
 });
 
 // When the user clicks on the button, scroll to the top of the document
@@ -95,4 +96,49 @@ export function backToTop() {
 // Very simple check to see if mobile or tablet is being used 
 export function isDevice() {
     return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
+}
+
+let sections = [];
+function updateActiveNav() {
+    if (!sections.length) { return; }
+    let index = sections.findIndex(x => x?.getBoundingClientRect().top > 50);
+    if (index === -1) {
+        index = sections.length - 1;
+    } else if (index > 0) {
+        index--;
+    }
+    activateNavByIndex(index);
+}
+
+function activateNavByIndex(index) {
+    const nav = document.querySelector(".table-of-contents ul");
+    if (!nav) { return; }
+
+    const navItemList = nav.getElementsByTagName("li");
+    const target = navItemList[index];
+
+    if (!target || target.classList.contains("active-current")) { return; }
+
+    const actives = nav.querySelectorAll(".active");
+    actives.forEach(x => x.classList.remove("active", "active-current"));
+    target.classList.add("active", "active-current");
+
+    let activateEle = target.parentElement;
+
+    while (nav.contains(activateEle)) {
+        if (activateEle instanceof HTMLLIElement) {
+            activateEle.classList.add("active");
+        }
+        activateEle = activateEle.parentElement;
+    }
+}
+
+export function registerSidebarTOC() {
+    sections = [];
+    const elements = document.querySelectorAll(".table-of-contents li fluent-anchor");
+    elements.forEach(element => {
+        const target = document.getElementById(decodeURI(element.getAttribute("href")).replace('#', ''));
+        sections.push(target);
+    });
+    updateActiveNav();
 }

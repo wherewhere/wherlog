@@ -115,6 +115,8 @@ namespace Wherlog.Controls
             _anchors = foundAnchors;
             _expanded = !_isMobile && _anchors?.Length > 0;
             StateHasChanged();
+
+            await _jsModule.InvokeVoidAsync("registerSidebarTOC");
         }
 
         private static bool AnchorsEqual(Anchor[] firstSet, Anchor[] secondSet) =>

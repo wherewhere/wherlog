@@ -27,7 +27,7 @@ export function addCopyButton() {
                         }
                     });
             });
-            snippets.appendChild(copyButton);
+            snippet.appendChild(copyButton);
         }
     }
 }
