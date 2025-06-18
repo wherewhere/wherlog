@@ -148,7 +148,7 @@
                     <FluentCombobox Placeholder="default"
                                     TOption="string"
                                     @bind-Value="theme"
-                                    Autocomplete="ComboboxAutocomplete.List"
+                                    Autocomplete="ComboboxAutocomplete.Both"
                                     Style="min-width: unset;">
                         @foreach (KeyValuePair<string, string> type in themes)
                         {
@@ -158,13 +158,15 @@
                 </ActionContent>
             </SettingsCard>
 
-            <FluentCard Style="padding: calc(var(--design-unit) * 4px); border-radius: calc(var(--control-corner-radius) * 1px);">
+            <FluentCard Style="@($"padding: calc(var(--design-unit) * 4px) calc(var(--design-unit) * 4px) calc(var(--design-unit) * 4px - {(string.IsNullOrWhiteSpace(example) ? "var(--design-unit) * 1px" : "0.5rem")}); border-radius: calc(var(--control-corner-radius) * 1px);")">
                 <InputLabel Label="预览">
                     <ActionContent>
                         <FluentButton OnClick="() => CreateCardAsync(json, imageProxy, id, type, infoTypes, theme).ContinueWith(x => UpdateExample(x.Result))">生成卡片</FluentButton>
                     </ActionContent>
                     <ChildContent>
-                        <MarkdownSection Content="@example" Style="max-width: 100%;" />
+                        <MarkdownSection Content="@example"
+                                         IsChangeCardTheme="false"
+                                         Style="max-width: 100%;" />
                     </ChildContent>
                 </InputLabel>
             </FluentCard>

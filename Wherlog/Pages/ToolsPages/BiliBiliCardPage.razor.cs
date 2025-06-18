@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -39,20 +40,23 @@ namespace Wherlog.Pages.ToolsPages
                         infoTypes,
                         new
                         {
-                            vid = message.TryGetValue("vid", out string vid) ? vid : null,
-                            type = message.TryGetValue("type", out string _type) ? _type : null,
-                            title = message.TryGetValue("title", out string title) ? title : null,
-                            author = message.TryGetValue("author", out string author) ? author : null,
-                            cover = message.TryGetValue("cover", out string cover) ? cover : null,
-                            duration = message.TryGetValue("duration", out string duration) ? duration : null,
-                            views = message.TryGetValue("views", out string views) ? views : null,
-                            danmakus = message.TryGetValue("danmakus", out string danmakus) ? danmakus : null,
-                            comments = message.TryGetValue("comments", out string comments) ? comments : null,
-                            favorites = message.TryGetValue("favorites", out string favorites) ? favorites : null,
-                            coins = message.TryGetValue("coins", out string coins) ? coins : null,
-                            likes = message.TryGetValue("likes", out string likes) ? likes : null
+                            vid = GetValueOrDefault(message, "vid"),
+                            type = GetValueOrDefault(message, "type"),
+                            title = GetValueOrDefault(message, "title"),
+                            author = GetValueOrDefault(message, "author"),
+                            cover = GetValueOrDefault(message, "cover"),
+                            duration = GetValueOrDefault(message, "duration"),
+                            views = GetValueOrDefault(message, "views"),
+                            danmakus = GetValueOrDefault(message, "danmakus"),
+                            comments = GetValueOrDefault(message, "comments"),
+                            favorites = GetValueOrDefault(message, "favorites"),
+                            coins = GetValueOrDefault(message, "coins"),
+                            likes = GetValueOrDefault(message, "likes")
                         },
                         theme);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    static T GetValueOrDefault<T>(Dictionary<string, T> dictionary, string key) where T : class =>
+                        dictionary.TryGetValue(key, out T value) ? value : null;
                 default:
                     return string.Empty;
             }

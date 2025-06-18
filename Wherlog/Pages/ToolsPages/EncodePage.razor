@@ -4,9 +4,10 @@
 @using System.Net
 @using System.Text
 @using System.Text.RegularExpressions
+@inject IStringLocalizer<EncodePage> Loc
 
 <TableContentsView>
-    <PageHeader Title="编码与解码" />
+    <PageHeader Title="@Loc["TitleText"]" />
 
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>
@@ -15,10 +16,10 @@
                     <FluentIcon Value="new Icons.Regular.Size20.SettingsCogMultiple()" />
                 </Icon>
                 <Header>
-                    <h3 id="encode-type" class="unset">编码类型</h3>
+                    <h3 id="encode-type" class="unset">@Loc["TypeSettingsHeader"]</h3>
                 </Header>
                 <Description>
-                    选择编码的类型。
+                    @Loc["TypeSettingsDescription"]
                 </Description>
                 <ActionContent>
                     <FluentSelect Items="@(Enum.GetValues<EncodeType>())"
@@ -29,9 +30,9 @@
 
             <FluentSplitter>
                 <Panel1>
-                    <InputLabel Label="明文" Style="padding-right: 0.15rem;">
+                    <InputLabel Label="@Loc["DecodedLabel"]" Style="padding-right: 0.15rem;">
                         <ActionContent>
-                            <FluentButton OnClick="Encode">编码</FluentButton>
+                            <FluentButton OnClick="Encode">@Loc["DecodedButton"]</FluentButton>
                         </ActionContent>
                         <ChildContent>
                             <FluentTextArea @bind-Value="decode"
@@ -41,9 +42,9 @@
                     </InputLabel>
                 </Panel1>
                 <Panel2>
-                    <InputLabel Label="密文" Style="padding-left: 0.15rem;">
+                    <InputLabel Label="@Loc["EncodedLabel"]" Style="padding-left: 0.15rem;">
                         <ActionContent>
-                            <FluentButton OnClick="Decode">解码</FluentButton>
+                            <FluentButton OnClick="Decode">@Loc["EncodedButton"]</FluentButton>
                         </ActionContent>
                         <ChildContent>
                             <FluentTextArea @bind-Value="encode"
@@ -68,8 +69,8 @@
     }
 
     private EncodeType type;
-    private string encode = "";
-    private string decode = "";
+    private string encode = string.Empty;
+    private string decode = string.Empty;
 
     private void Encode()
     {

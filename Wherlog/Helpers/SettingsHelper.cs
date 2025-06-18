@@ -2,6 +2,7 @@
 using Microsoft.JSInterop;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
@@ -24,8 +25,10 @@ namespace Wherlog.Helpers
             if (string.IsNullOrEmpty(value)) { return default; }
             System.Type type = typeof(Type);
             return type == typeof(string) ? Deserialize(value, SourceGenerationContext.Default.String)
-                : JsonSerializer.Deserialize<Type>(value);
-            static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo) => JsonSerializer.Deserialize(json, jsonTypeInfo) is Type value ? value : default;
+                : JsonSerializer.Deserialize(value, type, SourceGenerationContext.Default) is Type result ? result : default;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo) =>
+                JsonSerializer.Deserialize(json, jsonTypeInfo) is Type value ? value : default;
         }
 
         public async ValueTask SetAsync<Type>(string key, Type value)
@@ -34,7 +37,7 @@ namespace Wherlog.Helpers
             string result = value switch
             {
                 string => JsonSerializer.Serialize(value, SourceGenerationContext.Default.String),
-                _ => JsonSerializer.Serialize(value)
+                _ => JsonSerializer.Serialize(value, typeof(Type), SourceGenerationContext.Default)
             };
             await _jsModule.InvokeVoidAsync("setValue", key, result);
         }

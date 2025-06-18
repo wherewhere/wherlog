@@ -29,6 +29,9 @@ namespace Wherlog.Controls
         public string Content { get; set; }
 
         [Parameter]
+        public bool IsChangeCardTheme { get; set; } = true;
+
+        [Parameter]
         public EventCallback OnContentConverted { get; set; }
 
         public string InternalContent
@@ -71,7 +74,11 @@ namespace Wherlog.Controls
             {
                 await _jsModule.InvokeVoidAsync("highlight");
                 await _jsModule.InvokeVoidAsync("addCopyButton");
-                await _jsModule.InvokeVoidAsync("setTheme");
+
+                if (IsChangeCardTheme)
+                {
+                    await _jsModule.InvokeVoidAsync("setTheme");
+                }
 
                 _raiseContentConverted = false;
                 if (OnContentConverted.HasDelegate)
