@@ -129,6 +129,9 @@
   <data name="DateTimeSettingsHeader" xml:space="preserve">
     <value>时间戳转换</value>
   </data>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>各种各样的实用小工具</value>
+  </data>
   <data name="EncodingSettingsDescription" xml:space="preserve">
     <value>编码与解码 Base64、URL、HTML、Unicode 文本。</value>
   </data>

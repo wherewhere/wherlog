@@ -28,7 +28,7 @@
                     <ActionContent>
                         <FluentDesignTheme @bind-Mode="mode" StorageName="theme" />
                         <FluentSelect Width="auto"
-                                      Items="@(Enum.GetValues<DesignThemeModes>())"
+                                      Items="Enum.GetValues<DesignThemeModes>()"
                                       @bind-SelectedOption="mode">
                             <OptionTemplate>
                                 @Loc[context.ToString()]
@@ -49,7 +49,7 @@
                     </Description>
                     <ActionContent>
                         <FluentSelect Width="auto"
-                                      Items="@LanguageHelper.SupportCultures"
+                                      Items="LanguageHelper.SupportCultures"
                                       @bind-SelectedOption="SelectedLanguage">
                             <OptionTemplate>
                                 @context.DisplayName

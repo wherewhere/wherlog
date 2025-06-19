@@ -9,12 +9,22 @@
 {
     <ContentsView>
         <PageHeader Title="@Loc["TitleText"]" />
-        <FluentProgressRing />
+        <FluentStack Orientation="Orientation.Vertical"
+                     HorizontalAlignment="HorizontalAlignment.Stretch"
+                     VerticalAlignment="VerticalAlignment.SpaceBetween">
+            <FluentSkeleton Width="38.1966%"
+                            Height="var(--type-ramp-plus-4-line-height)"
+                            Shimmer="true" />
+            <FluentSkeleton Width="100%"
+                            Shimmer="true"
+                            Style="min-height: 100px; flex: 1;" />
+        </FluentStack>
     </ContentsView>
 }
 else
 {
     <PageTitle>@post.Title</PageTitle>
+    <PageDescription Content="@post.Description" />
     <PostDetailCard Post="post" />
 }
 

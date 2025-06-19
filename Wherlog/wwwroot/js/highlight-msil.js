@@ -5,7 +5,6 @@ Description: Microsoft Intermediate Language
 Category: assembler
 */
 
-/** @type LanguageFn */
 function LanguageFn(hljs) {
     const BUILT_IN_KEYWORDS = [
         'bool',

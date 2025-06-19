@@ -8,38 +8,63 @@
 
 <ContentsView>
     <PageHeader Title="@Title" />
-    @if (postList == null)
-    {
-        <FluentProgressRing />
-    }
-    else
-    {
-        <FluentStack Orientation="Orientation.Vertical">
-            @foreach (PostModel post in postList)
-            {
+    <FluentStack Orientation="Orientation.Vertical">
+        <Virtualize Items="postList" Context="post">
+            <ItemContent>
                 <FluentCard Class="clickable-card" MinimalStyle="true">
                     <FillColorDiv FillColor="neutralFillInputRest">
-                        <PostCard Post="@post" />
+                        <PostCard Post="post" />
                     </FillColorDiv>
                 </FluentCard>
-            }
-        </FluentStack>
-    }
+            </ItemContent>
+            <EmptyContent>
+                <FluentCard Class="default-card" MinimalStyle="true">
+                    <FillColorDiv FillColor="neutralFillInputRest">
+                        <FluentStack Orientation="Orientation.Vertical"
+                                     HorizontalAlignment="HorizontalAlignment.Stretch"
+                                     VerticalAlignment="VerticalAlignment.SpaceBetween">
+                            <FluentSkeleton Width="38.1966%"
+                                            Height="var(--type-ramp-plus-4-line-height)"
+                                            Shimmer="true" />
+                            <FluentSkeleton Width="100%"
+                                            Shimmer="true"
+                                            Style="min-height: 100px; flex: 1;" />
+                        </FluentStack>
+                    </FillColorDiv>
+                </FluentCard>
+            </EmptyContent>
+            <Placeholder>
+                <FluentCard Class="default-card" MinimalStyle="true">
+                    <FillColorDiv FillColor="neutralFillInputRest">
+                        <FluentStack Orientation="Orientation.Vertical"
+                                     HorizontalAlignment="HorizontalAlignment.Stretch"
+                                     VerticalAlignment="VerticalAlignment.SpaceBetween">
+                            <FluentSkeleton Width="50%"
+                                            Height="var(--type-ramp-plus-4-line-height)"
+                                            Shimmer="true" />
+                            <FluentSkeleton Width="100%"
+                                            Shimmer="true"
+                                            Style="min-height: 100px; flex: 1;" />
+                        </FluentStack>
+                    </FillColorDiv>
+                </FluentCard>
+            </Placeholder>
+        </Virtualize>
+    </FluentStack>
 </ContentsView>
 
 @code
 {
     private RequestHelper request = RequestHelper.Default;
     private static PostsModel postsIndex;
-    private static List<PostModel> postList;
+    private static List<PostModel> postList = [];
 
     private string Title => Navigation.Uri.Contains("posts") ? Loc["PostsTitleText"] : Loc["TitleText"];
 
     protected override async Task OnInitializedAsync()
     {
         postsIndex ??= await request.GetPostsAsync().GetResults();
-        postList ??= [];
-        if (postList.Count < postsIndex.Count)
+        if (postList.Count <= 0)
         {
             foreach (IndexModel<InfoModel> index in postsIndex?.Pages)
             {

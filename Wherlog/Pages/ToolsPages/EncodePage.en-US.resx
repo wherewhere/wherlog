@@ -123,6 +123,9 @@
   <data name="DecodedLabel" xml:space="preserve">
     <value>Decoded</value>
   </data>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>Encode and decode text using Base64, URL, HTML or Unicode</value>
+  </data>
   <data name="EncodedButton" xml:space="preserve">
     <value>Decoding</value>
   </data>

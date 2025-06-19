@@ -7,7 +7,7 @@
 @inject IStringLocalizer<EncodePage> Loc
 
 <TableContentsView>
-    <PageHeader Title="@Loc["TitleText"]" />
+    <PageHeader Title="@Loc["TitleText"]" Description="@Loc["DescriptionText"]" />
 
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>
@@ -22,7 +22,7 @@
                     @Loc["TypeSettingsDescription"]
                 </Description>
                 <ActionContent>
-                    <FluentSelect Items="@(Enum.GetValues<EncodeType>())"
+                    <FluentSelect Items="Enum.GetValues<EncodeType>()"
                                   @bind-SelectedOption="type"
                                   Style="min-width: calc(var(--base-height-multiplier) * 12.5px);" />
                 </ActionContent>

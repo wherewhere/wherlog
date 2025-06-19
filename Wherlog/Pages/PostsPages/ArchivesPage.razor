@@ -24,20 +24,66 @@
         {
             @if (view != CalendarViews.Years)
             {
-                <FluentProgressRing />
+                <FluentCard Class="default-card" MinimalStyle="true">
+                    <FillColorDiv FillColor="neutralFillInputRest">
+                        <FluentStack Orientation="Orientation.Vertical"
+                                     HorizontalAlignment="HorizontalAlignment.Stretch"
+                                     VerticalAlignment="VerticalAlignment.SpaceBetween">
+                            <FluentSkeleton Width="38.1966%"
+                                            Height="var(--type-ramp-plus-4-line-height)"
+                                            Shimmer="true" />
+                            <FluentSkeleton Width="100%"
+                                            Shimmer="true"
+                                            Style="min-height: 100px; flex: 1;" />
+                        </FluentStack>
+                    </FillColorDiv>
+                </FluentCard>
             }
         }
         else
         {
             <FluentStack Orientation="Orientation.Vertical">
-                @foreach (PostModel post in archive.Posts)
-                {
-                    <FluentCard Class="clickable-card" MinimalStyle="true">
-                        <FillColorDiv FillColor="neutralFillInputRest">
-                            <PostCard Post="@post" />
-                        </FillColorDiv>
-                    </FluentCard>
-                }
+                <Virtualize Items="archive.Posts" Context="post">
+                    <ItemContent>
+                        <FluentCard Class="clickable-card" MinimalStyle="true">
+                            <FillColorDiv FillColor="neutralFillInputRest">
+                                <PostCard Post="post" />
+                            </FillColorDiv>
+                        </FluentCard>
+                    </ItemContent>
+                    <EmptyContent>
+                        <FluentCard Class="default-card" MinimalStyle="true">
+                            <FillColorDiv FillColor="neutralFillInputRest">
+                                <FluentStack Orientation="Orientation.Vertical"
+                                             HorizontalAlignment="HorizontalAlignment.Stretch"
+                                             VerticalAlignment="VerticalAlignment.SpaceBetween">
+                                    <FluentSkeleton Width="50%"
+                                                    Height="var(--type-ramp-plus-4-line-height)"
+                                                    Shimmer="true" />
+                                    <FluentSkeleton Width="100%"
+                                                    Shimmer="true"
+                                                    Style="min-height: 100px; flex: 1;" />
+                                </FluentStack>
+                            </FillColorDiv>
+                        </FluentCard>
+                    </EmptyContent>
+                    <Placeholder>
+                        <FluentCard Class="default-card" MinimalStyle="true">
+                            <FillColorDiv FillColor="neutralFillInputRest">
+                                <FluentStack Orientation="Orientation.Vertical"
+                                             HorizontalAlignment="HorizontalAlignment.Stretch"
+                                             VerticalAlignment="VerticalAlignment.SpaceBetween">
+                                    <FluentSkeleton Width="50%"
+                                                    Height="var(--type-ramp-plus-4-line-height)"
+                                                    Shimmer="true" />
+                                    <FluentSkeleton Width="100%"
+                                                    Shimmer="true"
+                                                    Style="min-height: 100px; flex: 1;" />
+                                </FluentStack>
+                            </FillColorDiv>
+                        </FluentCard>
+                    </Placeholder>
+                </Virtualize>
             </FluentStack>
         }
     </article>
@@ -50,8 +96,8 @@
                 Width="auto"
                 Style="display: flex; align-items: center; justify-content: center;">
                 <FluentCalendar
-                    View="@view"
-                    Value="@date"
+                    View="view"
+                    Value="date"
                     DisabledDateFunc="DisableDateTime"
                     ValueChanged="OnValueChanged" />
             </FluentCard>

@@ -3,9 +3,11 @@
 @inject IStringLocalizer<DateTimePage> Loc
 
 <ContentsView>
-    <PageHeader Title="@Loc["TitleText"]" />
+    <PageHeader Title="@Loc["TitleText"]" Description="@Loc["DescriptionText"]" />
 
-    <FluentCard AreaRestricted="false" Style="height: auto; padding: 16px;">
+    <FluentCard Height="auto"
+                AreaRestricted="false"
+                Style="padding: calc(var(--design-unit) * 4px);">
         <FluentStack Orientation="Orientation.Vertical">
             <FluentStack HorizontalAlignment="HorizontalAlignment.SpaceBetween" VerticalAlignment="VerticalAlignment.Center">
                 <FluentNumberField @bind-Value="timeStamp" Style="flex: 1;" />

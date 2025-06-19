@@ -123,6 +123,9 @@
   <data name="DecodedLabel" xml:space="preserve">
     <value>明文</value>
   </data>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>编码与解码 Base64、URL、HTML、Unicode 文本</value>
+  </data>
   <data name="EncodedButton" xml:space="preserve">
     <value>解码</value>
   </data>

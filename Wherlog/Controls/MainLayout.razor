@@ -4,18 +4,8 @@
 <div class="main-layout">
     <FluentLayout>
         <FluentHeader Style="padding: env(titlebar-area-y, 0) calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px)) 0 env(titlebar-area-x, 0); -webkit-app-region: drag;">
-            <FluentDesignTheme @bind-Mode="Mode" StorageName="theme" />
-            <HeadContent>
-                @if (string.IsNullOrEmpty(themeColor))
-                {
-                    <meta name="theme-color" content="#036ac4" media="(prefers-color-scheme: light)">
-                    <meta name="theme-color" content="#60c9fc" media="(prefers-color-scheme: dark)">
-                }
-                else
-                {
-                    <meta name="theme-color" content="@themeColor" />
-                }
-            </HeadContent>
+            <FluentDesignTheme @bind-Mode="mode" StorageName="theme" />
+            <PageThemeColor LightColor="#036ac4" DarkColor="#60c9fc" Mode="mode" />
             @(site?.Title ?? "wherlog")
         </FluentHeader>
         <FluentStack Class="main-split"
@@ -34,7 +24,7 @@
                         <div class="blazor-error-root">
                             <div class="blazor-error-boundary">@ex.Message</div>
                             <FluentButton OnClick="OnParametersSet" BackgroundColor="transparent">
-                                <FluentIcon Value="@(new Icons.Regular.Size20.Dismiss())"
+                                <FluentIcon Value="new Icons.Regular.Size20.Dismiss()"
                                             Color="Color.Custom"
                                             CustomColor="white" />
                             </FluentButton>
@@ -43,45 +33,22 @@
                 </ErrorBoundary>
             </FluentBodyContent>
         </FluentStack>
-        <FluentFooter>
-            <span>Copyright © 2017 - 2025 wherewhere. All Rights Reserved</span>
+        <FluentFooter Style="column-gap: 5px;">
+            <span title="@copyright" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">@copyright</span>
             <FluentSpacer />
-            <a href="https://github.com/wherewhere/wherlog" target="_blank">Github</a>
+            <a title="Wherlog Repository" href="https://github.com/wherewhere/wherlog" target="_blank">Github</a>
         </FluentFooter>
     </FluentLayout>
 </div>
 
 @code
 {
+    private const string copyright = "Copyright © 2017 - 2025 wherewhere. All Rights Reserved";
     private RequestHelper request = RequestHelper.Default;
     private ErrorBoundary errorBoundary;
     private SiteModel site;
     private string themeColor = string.Empty;
-
     private DesignThemeModes mode = DesignThemeModes.System;
-    private DesignThemeModes Mode
-    {
-        get => mode;
-        set
-        {
-            if (mode != value)
-            {
-                switch (value)
-                {
-                    case DesignThemeModes.Dark:
-                        themeColor = "#60c9fc";
-                        break;
-                    case DesignThemeModes.Light:
-                        themeColor = "#036ac4";
-                        break;
-                    default:
-                        themeColor = string.Empty;
-                        break;
-                }
-                mode = value;
-            }
-        }
-    }
 
     protected override void OnParametersSet() => errorBoundary?.Recover();
 

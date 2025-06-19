@@ -10,8 +10,8 @@
                              Heading="@Heading"
                              Id="toc"
                              role="doc-toc">
-            <FluentIcon Value="@(new Icons.Regular.Size20.TextBulletListTree())"
-                        Color="@Color.Accent"
+            <FluentIcon Value="new Icons.Regular.Size20.TextBulletListTree()"
+                        Color="Color.Accent"
                         Slot="start" />
             @GetTocItems(_anchors)
         </FluentAccordionItem>
@@ -19,7 +19,7 @@
 
     @if (ShowBackButton)
     {
-        <FluentButton Appearance=Appearance.Accent
+        <FluentButton Appearance="Appearance.Accent"
                       @onclick="BackToTopAsync"
                       Id="backtotop"
                       Title="@Loc["BackToTopTitle"]"

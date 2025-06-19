@@ -6,7 +6,7 @@
            id="nav-menu-toggle"
            class="nav-menu-icon" />
     <label for="nav-menu-toggle" class="nav-menu-icon">
-        <FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Color.Fill" />
+        <FluentIcon Value="new Icons.Regular.Size20.Navigation()" Color="Color.Fill" />
     </label>
     <nav class="sitenav"
          aria-labelledby="main-menu"
@@ -18,35 +18,35 @@
                        @bind-Expanded="expanded">
             <FluentNavLink Href="./"
                            Match="NavLinkMatch.All"
-                           Icon="@(new Icons.Regular.Size20.Home())"
+                           Icon="new Icons.Regular.Size20.Home()"
                            IconColor="Color.Accent"
                            title="@Loc["HomeText"]">
                 @Loc["HomeText"]
             </FluentNavLink>
             <FluentNavLink Href="tags"
                            Match="NavLinkMatch.Prefix"
-                           Icon="@(new Icons.Regular.Size20.TagMultiple())"
+                           Icon="new Icons.Regular.Size20.TagMultiple()"
                            IconColor="Color.Accent"
                            title="@Loc["TagText"]">
                 @Loc["TagText"]
             </FluentNavLink>
             <FluentNavLink Href="categories"
                            Match="NavLinkMatch.Prefix"
-                           Icon="@(new Icons.Regular.Size20.Grid())"
+                           Icon="new Icons.Regular.Size20.Grid()"
                            IconColor="Color.Accent"
                            title="@Loc["CategoryText"]">
                 @Loc["CategoryText"]
             </FluentNavLink>
             <FluentNavLink Href="archives"
                            Match="NavLinkMatch.Prefix"
-                           Icon="@(new Icons.Regular.Size20.Archive())"
+                           Icon="new Icons.Regular.Size20.Archive()"
                            IconColor="Color.Accent"
                            title="@Loc["ArchiveText"]">
                 @Loc["ArchiveText"]
             </FluentNavLink>
             <FluentNavLink Href="settings"
                            Match="NavLinkMatch.Prefix"
-                           Icon="@(new Icons.Regular.Size20.Settings())"
+                           Icon="new Icons.Regular.Size20.Settings()"
                            IconColor="Color.Accent"
                            title="@Loc["SettingsText"]">
                 @Loc["SettingsText"]

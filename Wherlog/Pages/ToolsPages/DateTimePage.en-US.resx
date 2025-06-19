@@ -126,6 +126,9 @@
   <data name="ConvertTimeString" xml:space="preserve">
     <value>Convert String</value>
   </data>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>Convert between Unix timestamp and human-readable date time</value>
+  </data>
   <data name="IsMillisecond" xml:space="preserve">
     <value>Is TimeStamp Millisecond</value>
   </data>

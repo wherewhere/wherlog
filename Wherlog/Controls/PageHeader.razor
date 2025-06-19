@@ -1,7 +1,15 @@
 ﻿<div class="page-header">
     <div>
         <PageTitle>@Title</PageTitle>
-        <h1>@Title</h1>
+        @if (!string.IsNullOrEmpty(Description))
+        {
+            <PageDescription Content="@Description" />
+            <h1 title="@Description">@Title</h1>
+        }
+        else
+        {
+            <h1>@Title</h1>
+        }
     </div>
     @CustomContent
 </div>
@@ -10,6 +18,9 @@
 {
     [Parameter]
     public string Title { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
 
     [Parameter]
     public RenderFragment CustomContent { get; set; }

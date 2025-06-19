@@ -1,14 +1,16 @@
 ﻿@inject IStringLocalizer<App> Loc
 
 <div class="app-root">
-    <script src="App.razor.js"></script>
-    <Router AppAssembly="@typeof(App).Assembly">
+    <HeadContent>
+        <HeadMeta />
+    </HeadContent>
+    <Router AppAssembly="typeof(App).Assembly">
         <Found Context="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
         </Found>
         <NotFound>
             <PageTitle>@Loc["NotFoundTitle"]</PageTitle>
-            <LayoutView Layout="@typeof(MainLayout)">
+            <LayoutView Layout="typeof(MainLayout)">
                 <p role="alert">@Loc["NotFoundDescription"]</p>
             </LayoutView>
         </NotFound>

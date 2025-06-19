@@ -41,6 +41,9 @@
         max-height: calc(var(--base-height-multiplier) * 30px);
     }
 
+    ::deep .default-card {
+        background: var(--neutral-fill-input-rest);
+    }
 
     ::deep .clickable-card {
         background: var(--neutral-fill-input-rest);

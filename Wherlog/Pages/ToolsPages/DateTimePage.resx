@@ -126,6 +126,9 @@
   <data name="ConvertTimeString" xml:space="preserve">
     <value>转换字符串</value>
   </data>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>转换 Unix 时间戳与时间字符串</value>
+  </data>
   <data name="IsMillisecond" xml:space="preserve">
     <value>时间戳是否为毫秒</value>
   </data>

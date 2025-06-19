@@ -129,6 +129,9 @@
   <data name="DateTimeSettingsHeader" xml:space="preserve">
     <value>DateTime</value>
   </data>
+  <data name="DescriptionText" xml:space="preserve">
+    <value>A variety of practical gadgets</value>
+  </data>
   <data name="EncodingSettingsDescription" xml:space="preserve">
     <value>Encode and decode text using Base64, URL, HTML or Unicode.</value>
   </data>

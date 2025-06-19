@@ -10,27 +10,73 @@
         <PageHeader Title="@Loc["TitleText"]" />
         @if (HasPath)
         {
-            <FluentProgressRing />
+            <FluentCard Class="default-card" MinimalStyle="true">
+                <FillColorDiv FillColor="neutralFillInputRest">
+                    <FluentStack Orientation="Orientation.Vertical"
+                                 HorizontalAlignment="HorizontalAlignment.Stretch"
+                                 VerticalAlignment="VerticalAlignment.SpaceBetween">
+                        <FluentSkeleton Width="38.1966%"
+                                        Height="var(--type-ramp-plus-4-line-height)"
+                                        Shimmer="true" />
+                        <FluentSkeleton Width="100%"
+                                        Shimmer="true"
+                                        Style="min-height: 100px; flex: 1;" />
+                    </FluentStack>
+                </FillColorDiv>
+            </FluentCard>
         }
         else if (pages != null)
         {
             <FluentStack Orientation="Orientation.Vertical">
-                @foreach (PageModel model in pages)
-                {
-                    <FluentCard Class="clickable-card"
-                                MinimalStyle="true"
-                                @onclick="() => OnClick(model.Url)"
-                                Style="cursor: pointer;">
-                        <div lang="@model.Language">
-                            <h4>@model.Title</h4>
-                            @if (!string.IsNullOrEmpty(model.Description))
-                            {
-                                <br />
-                                <span>@model.Description</span>
-                            }
-                        </div>
-                    </FluentCard>
-                }
+                <Virtualize Items="pages" Context="model">
+                    <ItemContent>
+                        <FluentCard Class="clickable-card"
+                                    MinimalStyle="true"
+                                    @onclick="() => OnClick(model.Url)"
+                                    Style="cursor: pointer;">
+                            <div lang="@model.Language">
+                                <h4>@model.Title</h4>
+                                @if (!string.IsNullOrEmpty(model.Description))
+                                {
+                                    <br />
+                                    <span>@model.Description</span>
+                                }
+                            </div>
+                        </FluentCard>
+                    </ItemContent>
+                    <EmptyContent>
+                        <FluentCard Class="default-card" MinimalStyle="true">
+                            <FillColorDiv FillColor="neutralFillInputRest">
+                                <FluentStack Orientation="Orientation.Vertical"
+                                             HorizontalAlignment="HorizontalAlignment.Stretch"
+                                             VerticalAlignment="VerticalAlignment.SpaceBetween">
+                                    <FluentSkeleton Width="50%"
+                                                    Height="var(--type-ramp-plus-4-line-height)"
+                                                    Shimmer="true" />
+                                    <FluentSkeleton Width="100%"
+                                                    Shimmer="true"
+                                                    Style="min-height: 100px; flex: 1;" />
+                                </FluentStack>
+                            </FillColorDiv>
+                        </FluentCard>
+                    </EmptyContent>
+                    <Placeholder>
+                        <FluentCard Class="default-card" MinimalStyle="true">
+                            <FillColorDiv FillColor="neutralFillInputRest">
+                                <FluentStack Orientation="Orientation.Vertical"
+                                             HorizontalAlignment="HorizontalAlignment.Stretch"
+                                             VerticalAlignment="VerticalAlignment.SpaceBetween">
+                                    <FluentSkeleton Width="50%"
+                                                    Height="var(--type-ramp-plus-4-line-height)"
+                                                    Shimmer="true" />
+                                    <FluentSkeleton Width="100%"
+                                                    Shimmer="true"
+                                                    Style="min-height: 100px; flex: 1;" />
+                                </FluentStack>
+                            </FillColorDiv>
+                        </FluentCard>
+                    </Placeholder>
+                </Virtualize>
             </FluentStack>
         }
     </ContentsView>
@@ -38,6 +84,7 @@
 else
 {
     <PageTitle>@pageModel.Title</PageTitle>
+    <PageDescription Content="@pageModel.Description" />
     <PostDetailCard Post="pageModel" />
     @if (Path == "api")
     {
