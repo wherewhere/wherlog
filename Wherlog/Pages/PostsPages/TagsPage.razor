@@ -7,9 +7,9 @@
 <ContentsView>
     @if (cate == null)
     {
-        <PageHeader Title="@Loc["TitleText"]" />
         @if (!HasSlug && cates != null)
         {
+            <PageHeader Title="@Loc["TitleText"]" Description="@string.Format(Loc["TagDescription"], cates.Length)" />
             <FluentGrid Spacing="1">
                 @foreach (var cate in cates)
                 {
@@ -19,6 +19,7 @@
                                     @onclick="() => OnClick(cate.Slug)"
                                     Style="cursor: pointer;">
                             <h4>@cate.Name</h4>
+                            @string.Format(Loc["CateDescription"], cate.Count)
                         </FluentCard>
                     </FluentGridItem>
                 }
@@ -26,6 +27,7 @@
         }
         else
         {
+            <PageHeader Title="@Loc["TitleText"]" />
             <FluentCard Class="default-card" MinimalStyle="true">
                 <FillColorDiv FillColor="neutralFillInputRest">
                     <FluentStack Orientation="Orientation.Vertical"
@@ -44,7 +46,8 @@
     }
     else
     {
-        <PageHeader Title="@string.Format(Loc["TitleTextFormat"], cate.Info.Name)" />
+        <PageHeader Title="@string.Format(Loc["TitleTextFormat"], cate.Info.Name)"
+                    Description="@string.Format(Loc["CateDescription"], cate.Count)" />
         <FluentStack Orientation="Orientation.Vertical">
             <Virtualize Items="cate.Posts" Context="post">
                 <ItemContent>

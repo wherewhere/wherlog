@@ -1,7 +1,7 @@
 ﻿@using Microsoft.FluentUI.AspNetCore.Components.Utilities
 @inherits SettingsCardBase
 
-<div class="@ClassValue" style="@Style">
+<div id="@Id" class="@ClassValue" style="@Style" @ref="Element" @attributes="AdditionalAttributes">
     <FluentAccordion>
         <FluentAccordionItem
         Class="expander-item"

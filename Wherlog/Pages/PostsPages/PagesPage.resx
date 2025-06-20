@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PageDescription" xml:space="preserve">
+    <value>目前共计 {0} 个页面</value>
+    <comment>{0} - 数量</comment>
+  </data>
   <data name="TitleText" xml:space="preserve">
     <value>页面</value>
   </data>

@@ -4,4 +4,4 @@
 @inject IJSRuntime JSRuntime
 @inject ILogger<MarkdownSection> Logger
 
-<div class="@ClassValue" style="@Style">@HtmlContent</div>
+<div id="@Id" class="@ClassValue" style="@Style" @ref="Element" @attributes="AdditionalAttributes">@HtmlContent</div>

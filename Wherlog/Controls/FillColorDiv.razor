@@ -4,14 +4,13 @@
 @inject IJSRuntime JSRuntime
 @inject ILogger<FillColorDiv> Logger
 
-<div class="@ClassValue" style="@Style" @ref="content">@ChildContent</div>
+<div id="@Id" class="@ClassValue" style="@Style" @ref="Element" @attributes="AdditionalAttributes">@ChildContent</div>
 
 @code
 {
     private const string JAVASCRIPT_FILE = $"./{nameof(Controls)}/{nameof(FillColorDiv)}.razor.js";
 
     private IJSObjectReference _jsModule;
-    private ElementReference content;
     private bool _raiseContentConverted;
 
     protected string ClassValue => new CssBuilder(Class)
@@ -45,7 +44,7 @@
 
         if (_jsModule != null && _raiseContentConverted)
         {
-            await _jsModule.InvokeVoidAsync("setFillColor", content, FillColor);
+            await _jsModule.InvokeVoidAsync("setFillColor", Element, FillColor);
             _raiseContentConverted = false;
         }
     }

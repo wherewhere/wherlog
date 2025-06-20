@@ -7,7 +7,7 @@
 @inject NavigationManager Navigation
 
 <ContentsView>
-    <PageHeader Title="@Title" />
+    <PageHeader Title="@Title" Description="@string.Format(Loc["DescriptionText"], postList.Count)" />
     <FluentStack Orientation="Orientation.Vertical">
         <Virtualize Items="postList" Context="post">
             <ItemContent>
@@ -59,6 +59,8 @@
     private static PostsModel postsIndex;
     private static List<PostModel> postList = [];
 
+    public static List<PostModel> PostList => postList;
+
     private string Title => Navigation.Uri.Contains("posts") ? Loc["PostsTitleText"] : Loc["TitleText"];
 
     protected override async Task OnInitializedAsync()
@@ -66,7 +68,7 @@
         postsIndex ??= await request.GetPostsAsync().GetResults();
         if (postList.Count <= 0)
         {
-            foreach (IndexModel<InfoModel> index in postsIndex?.Pages)
+            foreach (IndexModel<InfoModel> index in postsIndex.Pages)
             {
                 PostsIndexModel indexModel = await request.GetAsync(index.Api, SourceGenerationContext.Default.EntryPostsIndexModel).GetResults();
                 if (indexModel?.Posts?.Length > 0)

@@ -1,6 +1,6 @@
 ﻿@inherits SettingsCardBase
 
-<div class="@ClassValue" style="@Style">
+<div id="@Id" class="@ClassValue" style="@Style" @ref="Element" @attributes="AdditionalAttributes">
     <FluentCard onclick="@OnClick"
                 Class="fluent-card clickable-card"
                 AreaRestricted="false"

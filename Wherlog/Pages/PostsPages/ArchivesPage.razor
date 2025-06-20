@@ -22,7 +22,53 @@
         </h1>
         @if (archive == null)
         {
-            @if (view != CalendarViews.Years)
+            @if (view == CalendarViews.Years)
+            {
+                <FluentStack Orientation="Orientation.Vertical">
+                    <Virtualize Items="PostList" Context="post">
+                        <ItemContent>
+                            <FluentCard Class="clickable-card" MinimalStyle="true">
+                                <FillColorDiv FillColor="neutralFillInputRest">
+                                    <PostCard Post="post" />
+                                </FillColorDiv>
+                            </FluentCard>
+                        </ItemContent>
+                        <EmptyContent>
+                            <FluentCard Class="default-card" MinimalStyle="true">
+                                <FillColorDiv FillColor="neutralFillInputRest">
+                                    <FluentStack Orientation="Orientation.Vertical"
+                                                 HorizontalAlignment="HorizontalAlignment.Stretch"
+                                                 VerticalAlignment="VerticalAlignment.SpaceBetween">
+                                        <FluentSkeleton Width="38.1966%"
+                                                        Height="var(--type-ramp-plus-4-line-height)"
+                                                        Shimmer="true" />
+                                        <FluentSkeleton Width="100%"
+                                                        Shimmer="true"
+                                                        Style="min-height: 100px; flex: 1;" />
+                                    </FluentStack>
+                                </FillColorDiv>
+                            </FluentCard>
+                        </EmptyContent>
+                        <Placeholder>
+                            <FluentCard Class="default-card" MinimalStyle="true">
+                                <FillColorDiv FillColor="neutralFillInputRest">
+                                    <FluentStack Orientation="Orientation.Vertical"
+                                                 HorizontalAlignment="HorizontalAlignment.Stretch"
+                                                 VerticalAlignment="VerticalAlignment.SpaceBetween">
+                                        <FluentSkeleton Width="50%"
+                                                        Height="var(--type-ramp-plus-4-line-height)"
+                                                        Shimmer="true" />
+                                        <FluentSkeleton Width="100%"
+                                                        Shimmer="true"
+                                                        Style="min-height: 100px; flex: 1;" />
+                                    </FluentStack>
+                                </FillColorDiv>
+                            </FluentCard>
+                        </Placeholder>
+                    </Virtualize>
+                </FluentStack>
+            }
+            else
             {
                 <FluentCard Class="default-card" MinimalStyle="true">
                     <FillColorDiv FillColor="neutralFillInputRest">
@@ -120,6 +166,19 @@
     [Parameter]
     public int? Month { get; set; }
 
+    private List<PostModel> PostList
+    {
+        get
+        {
+            List<PostModel> postList = HomePage.PostList;
+            if (postList.Count <= 0)
+            {
+                _ = InitializePostListAsync(postList);
+            }
+            return postList;
+        }
+    }
+
     protected override async Task OnParametersSetAsync()
     {
         isLoading = true;
@@ -165,15 +224,16 @@
     {
         if (archives != null)
         {
+            DateTime @default = default;
             if (Array.Find(archives, x => x.Year == date.Year) is YearModel yearModel)
             {
-                if (view != CalendarViews.Years)
+                if (date.Month != @default.Month)
                 {
                     if (Array.Find(yearModel.Data, x => x.Month == date.Month) is MonthModel monthModel)
                     {
-                        if (view != CalendarViews.Months && archive != null)
+                        if (date.Day != @default.Day && archive != null)
                         {
-                            if (Array.Exists(archive.Posts, x => x.Date.Day == date.Day))
+                            if (Array.Exists(archive.Posts, x => x.Date.Year == date.Year && x.Date.Month == date.Month && x.Date.Day == date.Day))
                             {
                                 return false;
                             }
@@ -204,5 +264,20 @@
                     break;
             }
         }
+    }
+
+    private async Task InitializePostListAsync(List<PostModel> postList)
+    {
+        RequestHelper request = RequestHelper.Default;
+        PostsModel postsIndex = await request.GetPostsAsync().GetResults();
+        foreach (IndexModel<InfoModel> index in postsIndex.Pages)
+        {
+            PostsIndexModel indexModel = await request.GetAsync(index.Api, SourceGenerationContext.Default.EntryPostsIndexModel).GetResults();
+            if (indexModel?.Posts?.Length > 0)
+            {
+                postList.AddRange(indexModel.Posts);
+            }
+        }
+        StateHasChanged();
     }
 }
