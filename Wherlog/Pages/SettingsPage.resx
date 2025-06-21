@@ -120,6 +120,12 @@
   <data name="AboutGroupHeader" xml:space="preserve">
     <value>关于</value>
   </data>
+  <data name="ArchiveSettingsDescription" xml:space="preserve">
+    <value>是否在归档页面使用日历控件。</value>
+  </data>
+  <data name="ArchiveSettingsHeader" xml:space="preserve">
+    <value>归档样式</value>
+  </data>
   <data name="ConfigsGroupHeader" xml:space="preserve">
     <value>配置</value>
   </data>
@@ -128,6 +134,9 @@
   </data>
   <data name="ContactMeText" xml:space="preserve">
     <value>在社交软件上关注我来获取最新开发动向。如果你发现了什么 Bug，请通过私信告诉我。我会尽最大可能来解决这些问题。如果你有电报账号，欢迎来铺路根据地群组聊天😊!</value>
+  </data>
+  <data name="ContentGroupHeader" xml:space="preserve">
+    <value>内容</value>
   </data>
   <data name="Dark" xml:space="preserve">
     <value>深色</value>
@@ -179,6 +188,12 @@
   </data>
   <data name="NavigateSettingsInput" xml:space="preserve">
     <value>输入 URL</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>关</value>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>开</value>
   </data>
   <data name="OSArchitectureText" xml:space="preserve">
     <value>操作系统架构</value>

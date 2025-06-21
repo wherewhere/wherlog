@@ -120,6 +120,12 @@
   <data name="AboutGroupHeader" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="ArchiveSettingsDescription" xml:space="preserve">
+    <value>Whether to use the calendar control on the archive page.</value>
+  </data>
+  <data name="ArchiveSettingsHeader" xml:space="preserve">
+    <value>Archives Style</value>
+  </data>
   <data name="ConfigsGroupHeader" xml:space="preserve">
     <value>Configs</value>
   </data>
@@ -128,6 +134,9 @@
   </data>
   <data name="ContactMeText" xml:space="preserve">
     <value>Follow me on social apps for the latest developments. If you find any bugs, please report them to me by PM. I will try my best to solve it. If you have Telegram account, feel free to chat in Paving Base Group 😊!</value>
+  </data>
+  <data name="ContentGroupHeader" xml:space="preserve">
+    <value>Content</value>
   </data>
   <data name="Dark" xml:space="preserve">
     <value>Dark</value>
@@ -179,6 +188,12 @@
   </data>
   <data name="NavigateSettingsInput" xml:space="preserve">
     <value>Input URL</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>On</value>
   </data>
   <data name="OSArchitectureText" xml:space="preserve">
     <value>OS Architecture</value>

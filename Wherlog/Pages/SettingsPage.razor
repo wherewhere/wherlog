@@ -62,6 +62,30 @@
 
         <SettingsGroup>
             <Header>
+                <h2 id="content" class="unset">@Loc["ContentGroupHeader"]</h2>
+            </Header>
+            <ChildContent>
+                <SettingsCard Class="settings-nowarp">
+                    <Icon>
+                        <FluentIcon Value="new Icons.Regular.Size20.Archive()" />
+                    </Icon>
+                    <Header>
+                        <h3 id="content-archive" class="unset">@Loc["ArchiveSettingsHeader"]</h3>
+                    </Header>
+                    <Description>
+                        @Loc["ArchiveSettingsDescription"]
+                    </Description>
+                    <ActionContent>
+                        <FluentSwitch @bind-Value="UseCalendarArchive">
+                            @(UseCalendarArchive? @Loc["On"] : @Loc["Off"])
+                        </FluentSwitch>
+                    </ActionContent>
+                </SettingsCard>
+            </ChildContent>
+        </SettingsGroup>
+
+        <SettingsGroup>
+            <Header>
                 <h2 id="configs" class="unset">@Loc["ConfigsGroupHeader"]</h2>
             </Header>
             <ChildContent>
@@ -152,7 +176,7 @@
                             <FluentStack HorizontalGap="4" Style="overflow-x: auto;">
                                 <a class="text-button" href="https://github.com/wherewhere/wherlog/issues" target="_blank">@Loc["FeedbackLink"]</a>
                                 <a class="text-button" href="https://github.com/wherewhere/wherlog/discussions" target="_blank">@Loc["DiscussionsLink"]</a>
-                                <a class="text-button" href="@baseUrl" target="_blank">魔法薇ㄦ的书馆</a>
+                                <a class="text-button" href="@_baseUrl" target="_blank">魔法薇ㄦ的书馆</a>
                             </FluentStack>
                         </FluentStack>
                     </Description>
@@ -163,7 +187,7 @@
                             <ol>
                                 <li>本程序是 <a href="https://github.com/wherewhere/wherewhere.github.io" target="_blank">魔法薇ㄦ的书馆</a> 的网页客户端，禁止用于商业用途。</li>
                                 <li>本程序是开源软件，因此，在使用时请确保程序是来自<a href="https://github.com/wherewhere/wherlog" target="_blank">本 Github 仓库</a>，以确保您的数据安全。</li>
-                                <li>若程序来源无异常，程序运行过程中您的所有数据都仅用于与 <a href="@baseUrl" target="_blank">魔法薇ㄦ的书馆</a> 的服务器交流或储存于本地，开发者不会窃取您的任何数据。但即便如此，也请注意使用环境的安全性。</li>
+                                <li>若程序来源无异常，程序运行过程中您的所有数据都仅用于与 <a href="@_baseUrl" target="_blank">魔法薇ㄦ的书馆</a> 的服务器交流或储存于本地，开发者不会窃取您的任何数据。但即便如此，也请注意使用环境的安全性。</li>
                             </ol>
                             <h5>参与人员</h5>
                             <p>
@@ -281,7 +305,7 @@
                         <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
                             <FluentTextField Placeholder="@Loc["NavigateSettingsInput"]"
                                              Style="flex: 1;"
-                                             @bind-Value="baseUrl" />
+                                             @bind-Value="_baseUrl" />
                             <FluentButton OnClick="SetBaseUrlAsync">
                                 @Loc["SourceSettingsButton"]
                             </FluentButton>
@@ -299,21 +323,35 @@
     private string path;
     private bool flyout;
 
-    private CultureInfo culture;
+    private CultureInfo _culture;
     private CultureInfo SelectedLanguage
     {
-        get => culture;
+        get => _culture;
         set
         {
-            if (culture != value)
+            if (_culture != value)
             {
-                culture = value;
+                _culture = value;
                 _ = SetLanguageAsync(value);
             }
         }
     }
 
-    private string baseUrl;
+    private bool _useCalendarArchive;
+    private bool UseCalendarArchive
+    {
+        get => _useCalendarArchive;
+        set
+        {
+            if (_useCalendarArchive != value)
+            {
+                _useCalendarArchive = value;
+                _ = App.SettingsHelper.SetAsync(SettingsHelper.UseCalendarArchive, value);
+            }
+        }
+    }
+
+    private string _baseUrl;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -322,8 +360,9 @@
         {
             lang = LanguageHelper.GetCurrentLanguage();
         }
-        culture = new CultureInfo(lang);
-        baseUrl = await App.SettingsHelper.GetAsync<string>(SettingsHelper.BaseUrl);
+        _culture = new CultureInfo(lang);
+        _baseUrl = await App.SettingsHelper.GetAsync<string>(SettingsHelper.BaseUrl);
+        _useCalendarArchive = await App.SettingsHelper.GetAsync<bool>(SettingsHelper.UseCalendarArchive);
     }
 
     private async Task SetLanguageAsync(CultureInfo culture)
@@ -338,8 +377,8 @@
 
     private async Task SetBaseUrlAsync()
     {
-        await App.SettingsHelper.SetAsync(SettingsHelper.BaseUrl, baseUrl);
-        RequestHelper.Default = new RequestHelper(baseUrl);
+        await App.SettingsHelper.SetAsync(SettingsHelper.BaseUrl, _baseUrl);
+        RequestHelper.Default = new RequestHelper(_baseUrl);
     }
 
     private async Task ResetAsync()

@@ -17,6 +17,7 @@ namespace Wherlog.Helpers
 
         public const string BaseUrl = nameof(BaseUrl);
         public const string CurrentLanguage = nameof(CurrentLanguage);
+        public const string UseCalendarArchive = nameof(UseCalendarArchive);
 
         public async ValueTask<Type> GetAsync<Type>(string key)
         {
@@ -24,7 +25,8 @@ namespace Wherlog.Helpers
             string value = await _jsModule.InvokeAsync<string>("getValue", key);
             if (string.IsNullOrEmpty(value)) { return default; }
             System.Type type = typeof(Type);
-            return type == typeof(string) ? Deserialize(value, SourceGenerationContext.Default.String)
+            return type == typeof(bool) ? Deserialize(value, SourceGenerationContext.Default.Boolean)
+                : type == typeof(string) ? Deserialize(value, SourceGenerationContext.Default.String)
                 : JsonSerializer.Deserialize(value, type, SourceGenerationContext.Default) is Type result ? result : default;
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo) =>
@@ -36,6 +38,7 @@ namespace Wherlog.Helpers
             _jsModule ??= await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
             string result = value switch
             {
+                bool => JsonSerializer.Serialize(value, SourceGenerationContext.Default.Boolean),
                 string => JsonSerializer.Serialize(value, SourceGenerationContext.Default.String),
                 _ => JsonSerializer.Serialize(value, typeof(Type), SourceGenerationContext.Default)
             };
@@ -66,6 +69,10 @@ namespace Wherlog.Helpers
             if (!await IsExistsAsync(CurrentLanguage))
             {
                 await SetAsync(CurrentLanguage, LanguageHelper.AutoLanguageCode);
+            }
+            if (!await IsExistsAsync(UseCalendarArchive))
+            {
+                await SetAsync(UseCalendarArchive, false);
             }
         }
 

@@ -137,16 +137,40 @@
     @if (archives != null)
     {
         <aside>
-            <FluentCard
-                Height="auto"
-                Width="auto"
-                Style="display: flex; align-items: center; justify-content: center;">
-                <FluentCalendar
-                    View="view"
-                    Value="date"
-                    DisabledDateFunc="DisableDateTime"
-                    ValueChanged="OnValueChanged" />
-            </FluentCard>
+            @if (useCalendar)
+            {
+                <FluentCard Height="auto"
+                            Width="auto"
+                            Style="display: flex; align-items: center; justify-content: center;">
+                    <FluentCalendar View="view"
+                                    Value="date"
+                                    DisabledDateFunc="DisableDateTime"
+                                    ValueChanged="OnValueChanged" />
+                </FluentCard>
+            }
+            else
+            {
+                <FluentCard Height="auto"
+                            Width="auto"
+                            Style="padding: calc(var(--design-unit) * 2px);">
+                    <FluentTreeView CurrentSelectedChanged="OnCurrentSelectedChanged">
+                        @foreach (YearModel year in archives)
+                        {
+                            <FluentTreeItem Data="year.Year"
+                                            Expanded="year.Year == Year"
+                                            InitiallySelected="Month == null && year.Year == Year">
+                                @string.Format(Loc["YearText"], year.Year)
+                                @foreach (MonthModel month in year.Data)
+                                {
+                                    <FluentTreeItem Data="(year.Year, month.Month)" InitiallySelected="year.Year == Year && month.Month == Month">
+                                        @string.Format(Loc["MonthText"], month.Month)
+                                    </FluentTreeItem>
+                                }
+                            </FluentTreeItem>
+                        }
+                    </FluentTreeView>
+                </FluentCard>
+            }
         </aside>
     }
 </div>
@@ -155,6 +179,7 @@
 {
     private RequestHelper request = RequestHelper.Default;
     private static ArchivesModel archives;
+    private static bool useCalendar;
     private IArchiveDetail<InfoModel> archive;
     private CalendarViews view = CalendarViews.Years;
     private DateTime? date = null;
@@ -182,11 +207,9 @@
     protected override async Task OnParametersSetAsync()
     {
         isLoading = true;
+        useCalendar = await App.SettingsHelper.GetAsync<bool>(SettingsHelper.UseCalendarArchive);
 
-        if (archives == null)
-        {
-            archives = await request.GetArchivesAsync().GetResults();
-        }
+        archives ??= await request.GetArchivesAsync().GetResults();
 
         archive = null;
         if (Year is int year)
@@ -199,6 +222,10 @@
                     {
                         archive = await request.GetAsync(monthModel.Api, SourceGenerationContext.Default.EntryArchiveDetailModelMonthInfo).GetResults();
                         view = CalendarViews.Days;
+                        if (archive is { Posts: [{ Date: DateTimeOffset offset }, ..] })
+                        {
+                            date = offset.LocalDateTime;
+                        }
                     }
                     else
                     {
@@ -209,6 +236,10 @@
                 {
                     archive = await request.GetAsync(yearModel.Api, SourceGenerationContext.Default.EntryArchiveDetailModelYearInfo).GetResults();
                     view = CalendarViews.Months;
+                    if (archive is { Posts: [{ Date: DateTimeOffset offset }, ..] })
+                    {
+                        date = offset.LocalDateTime;
+                    }
                 }
             }
             else
@@ -233,7 +264,11 @@
                     {
                         if (date.Day != @default.Day && archive != null)
                         {
-                            if (Array.Exists(archive.Posts, x => x.Date.Year == date.Year && x.Date.Month == date.Month && x.Date.Day == date.Day))
+                            if (Array.Exists(archive.Posts, x =>
+                            {
+                                DateTime time = x.Date.LocalDateTime;
+                                return time.Year == date.Year && time.Month == date.Month && time.Day == date.Day;
+                            }))
                             {
                                 return false;
                             }
@@ -263,6 +298,20 @@
                     Navigation.NavigateTo($"archives/{dateTime.Year}/{dateTime.Month:D2}");
                     break;
             }
+        }
+    }
+
+    private void OnCurrentSelectedChanged(FluentTreeItem item)
+    {
+        if (isLoading) { return; }
+        switch (item.Data)
+        {
+            case int year:
+                Navigation.NavigateTo($"archives/{year}");
+                break;
+            case (int year, int month):
+                Navigation.NavigateTo($"archives/{year}/{month:D2}");
+                break;
         }
     }
 

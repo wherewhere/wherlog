@@ -4,16 +4,13 @@
         return;
     }
     else {
-        return JSON.stringify(value);
+        return value;
     }
 }
 
 export function setValue(key, value) {
     if (typeof value === "undefined" || value === null) {
         return;
-    }
-    else if (typeof value === "string") {
-        window.localStorage.setItem(key, JSON.parse(value));
     }
     else {
         window.localStorage.setItem(key, value);
