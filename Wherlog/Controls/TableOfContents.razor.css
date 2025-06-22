@@ -62,23 +62,3 @@ li {
 ::deep .active > fluent-anchor::part(control) {
     color: var(--accent-foreground-rest);
 }
-
-::deep fluent-button {
-    position: fixed;
-    bottom: -300px;
-    right: 20px;
-    left: unset;
-    z-index: 99;
-    cursor: pointer;
-    transition: bottom .25s ease-in-out;
-}
-
-[dir="rtl"] * ::deep fluent-button {
-    position: fixed;
-    left: 20px;
-    right: unset;
-}
-
-::deep fluent-button.on {
-    bottom: 45px;
-}

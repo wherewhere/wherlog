@@ -5,9 +5,7 @@
         @ChildContent
     </article>
     <aside>
-        <TableOfContents Heading="@Heading"
-                         ShowBackButton="ShowBackButton"
-                         @ref=_toc />
+        <TableOfContents Heading="@Heading" @ref=_toc />
     </aside>
 </div>
 
@@ -21,13 +19,6 @@
     /// </summary>
     [Parameter]
     public string Heading { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether a 'Back to top' button should be rendered.
-    /// Defaults to true
-    /// </summary>
-    [Parameter]
-    public bool ShowBackButton { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the content of a ContentControl.

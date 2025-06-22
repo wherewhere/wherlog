@@ -1,0 +1,77 @@
+﻿@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+@inject ILogger<BackToTopButton> Logger
+@inject IStringLocalizer<BackToTopButton> Loc
+@inject NavigationManager NavigationManager
+
+<div class="back-to-top-button">
+    <FluentButton Appearance="Appearance.Accent"
+                  @onclick="BackToTopAsync"
+                  @ref="_button"
+                  Title="@Loc["BackToTopTitle"]"
+                  IconStart="new Icons.Regular.Size16.ArrowUp()">
+        <span>0%</span>
+    </FluentButton>
+</div>
+
+@code
+{
+    private const string JAVASCRIPT_FILE = $"./{nameof(Controls)}/{nameof(BackToTopButton)}.razor.js";
+
+    private FluentButton _button;
+    private IJSObjectReference _jsModule;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+            await _jsModule.InvokeVoidAsync("registerBackToTopButton", _button.Element);
+            await BackToTopAsync();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        // Subscribe to the event
+        NavigationManager.LocationChanged += LocationChanged;
+    }
+
+    private async void LocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        await BackToTopAsync();
+    }
+
+    private async Task BackToTopAsync()
+    {
+        if (_jsModule is null)
+        {
+            return;
+        }
+        await _jsModule.InvokeVoidAsync("backToTop");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            // Unsubscribe from the event when our component is disposed
+            NavigationManager.LocationChanged -= LocationChanged;
+
+            if (_jsModule != null)
+            {
+                await _jsModule.DisposeAsync();
+                _jsModule = null;
+            }
+
+            GC.SuppressFinalize(this);
+        }
+        catch (Exception ex) when (ex is JSDisconnectedException or
+                                   OperationCanceledException)
+        {
+            // The JSRuntime side may routinely be gone already if the reason we're disposing is that
+            // the client disconnected. This is not an error.
+            Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
+        }
+    }
+}

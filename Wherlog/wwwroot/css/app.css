@@ -55,10 +55,12 @@ footer {
     }
 
     #blazor-error-ui .dismiss {
+        width: 16px;
+        fill: currentColor;
         cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
+        float: right;
+        vertical-align: middle;
+        margin-top: 3px;
     }
 
 .loading-cover {

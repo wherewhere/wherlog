@@ -65,13 +65,6 @@ namespace Wherlog.Controls
         public string Heading { get; set; } = "In this article";
 
         /// <summary>
-        /// Gets or sets a value indicating whether a 'Back to top' button should be rendered.
-        /// Defaults to true
-        /// </summary>
-        [Parameter]
-        public bool ShowBackButton { get; set; } = true;
-
-        /// <summary>
         /// Gets or sets the content to be rendered inside the component.
         /// </summary>
         [Parameter]
@@ -84,18 +77,8 @@ namespace Wherlog.Controls
                 _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
                 _isMobile = await _jsModule.InvokeAsync<bool>("isDevice");
 
-                await BackToTopAsync();
                 await QueryDomAsync();
             }
-        }
-
-        private async Task BackToTopAsync()
-        {
-            if (_jsModule is null)
-            {
-                return;
-            }
-            _ = await _jsModule.InvokeAsync<Anchor[]>("backToTop");
         }
 
         private async Task QueryDomAsync()
@@ -133,7 +116,6 @@ namespace Wherlog.Controls
         {
             try
             {
-                await BackToTopAsync();
                 await QueryDomAsync();
             }
             catch (ObjectDisposedException)

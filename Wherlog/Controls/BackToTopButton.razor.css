@@ -1,0 +1,18 @@
+﻿::deep fluent-button {
+    position: fixed;
+    bottom: -300px;
+    right: 20px;
+    left: auto;
+    cursor: pointer;
+    transition: bottom .25s ease-in-out;
+}
+
+[dir="rtl"] * ::deep fluent-button {
+    position: fixed;
+    left: 20px;
+    right: auto;
+}
+
+::deep fluent-button.on {
+    bottom: 45px;
+}

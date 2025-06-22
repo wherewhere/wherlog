@@ -17,32 +17,23 @@ aside {
     width: 19rem;
 }
 
-@media (max-width: 600px) {
-    article {
-        padding: 0 0 1rem 0;
-    }
-
-    aside {
-        padding: 0 0 1rem 0;
-    }
-}
-
 @media (max-width: 767px) {
     div.archives-page {
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 
     article {
-        padding: 1rem 0 1rem 0;
-        border-right: unset;
-        border-bottom: 1px solid var(--neutral-stroke-divider-rest);
+        padding: 0.4rem 0 3rem 0;
+        border-right: none;
         width: 100%;
     }
 
     aside {
-        padding: 1em;
+        padding: 1rem 0 0.6rem 0;
         height: auto;
         width: auto;
+        position: static;
+        border-bottom: 1px solid var(--neutral-stroke-divider-rest);
     }
 }
 
@@ -53,7 +44,6 @@ aside {
     }
 
     article {
-        padding-top: 0px;
         width: calc(100% - 16.5rem);
     }
 }
