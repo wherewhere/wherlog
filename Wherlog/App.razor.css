@@ -28,12 +28,12 @@
     ::deep h3.unset,
     ::deep h2.unset,
     ::deep h1.unset {
-        margin-top: unset;
-        margin-bottom: unset;
-        font-weight: unset;
-        font-family: unset;
-        font-size: unset;
-        line-height: unset;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-weight: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
     }
 
     ::deep fluent-select::part(listbox),

@@ -86,7 +86,7 @@ else
     {
         <style>
             hgroup.main {
-                display: unset;
+                display: block;
             }
         </style>
     }
@@ -103,12 +103,19 @@ else
     [Parameter]
     public string Path { get; set; }
 
+    [SupplyParameterFromQuery(Name = "api")]
+    private string API { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
         pages ??= await request.GetPagesAsync().GetResults();
 
-        pageModel = null;
-        if (HasPath)
+        if (!string.IsNullOrEmpty(API))
+        {
+            pageModel = await request.GetAsync(API, SourceGenerationContext.Default.EntryPageDetailModel).GetResults();
+            Path = pageModel.Url;
+        }
+        else if (HasPath)
         {
             if (Array.Find(pages, x => x.Url.Replace("/index.html", string.Empty).TrimStart('/').Contains(Path)) is PageModel page)
             {
@@ -118,6 +125,10 @@ else
             {
                 Navigation.NavigateTo("pages");
             }
+        }
+        else
+        {
+            pageModel = null;
         }
     }
 

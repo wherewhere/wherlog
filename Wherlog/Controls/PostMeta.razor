@@ -1,0 +1,52 @@
+﻿@using Wherlog.Models.Cate
+@using Wherlog.Models.Post
+
+<div class="post-meta">
+    <span class="post-meta-item">
+        <span class="post-meta-item-text">发布时间:</span>
+        <time title="@Post.Date.LocalDateTime.ToString("G")"
+              itemprop="dateCreated datePublished"
+              datetime="@Post.Date.ToString("s")">
+            @Post.Date.LocalDateTime.ToString("d")
+        </time>
+    </span>
+
+    @if (@Post.Date.Date != Post.Updated.Date)
+    {
+        <span>&nbsp;|</span>
+        <span class="post-meta-item">
+            <span class="post-meta-item-text">最后更新:</span>
+            <time title="@Post.Updated.LocalDateTime.ToString("G")"
+                  itemprop="dateModified"
+                  datetime="@Post.Updated.ToString("s")">
+                @Post.Updated.LocalDateTime.ToString("d")
+            </time>
+        </span>
+    }
+
+    @if (Post.Categories?.Length > 0)
+    {
+        <span>&nbsp;|</span>
+        <span class="post-meta-item">
+            <span class="post-meta-item-text">分类于：</span>
+            @foreach ((int index, CateModel cat) in Post.Categories.Index())
+            {
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                    <a href="@($"categories/{cat.Name}?api={cat.Api}")" itemprop="url" rel="index">
+                        <span itemprop="name">@cat.Name</span>
+                    </a>
+                </span>
+                @if (Post.Categories.Length > 1 && index != Post.Categories.Length)
+                {
+                    <span>、</span>
+                }
+            }
+        </span>
+    }
+</div>
+
+@code
+{
+    [Parameter]
+    public IPost Post { get; set; }
+}

@@ -1,0 +1,6 @@
+﻿div.post-meta {
+    margin-top: 4px;
+    text-align: right;
+    font-size: var(--type-ramp-minus-1-font-size);
+    line-height: var(--type-ramp-minus-1-line-height);
+}

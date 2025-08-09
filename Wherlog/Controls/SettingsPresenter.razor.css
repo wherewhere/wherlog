@@ -38,19 +38,19 @@ div.content-presenter {
 
 ::deep a.text-button {
     font-weight: bold;
-    text-decoration: unset;
+    text-decoration: inherit;
 }
 
 @media (max-width: 600px) {
     div.settings-presenter {
         --settings-card-content-min-width: auto;
         flex-flow: column;
-        justify-content: unset;
-        align-items: unset;
+        justify-content: normal;
+        align-items: normal;
     }
 
     div.header-panel {
-        margin: unset;
+        margin: 0;
     }
 
     div.content-presenter {
@@ -68,6 +68,6 @@ div.content-presenter {
     }
 
     .settings-nowarp div.settings-presenter div.content-presenter {
-        margin: unset;
+        margin: 0;
     }
 }

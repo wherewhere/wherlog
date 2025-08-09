@@ -24,7 +24,7 @@ aside {
 
     article {
         padding: 1rem 0 0.6rem 0;
-        border-right: unset;
+        border-right: none;
         border-bottom: 1px solid var(--neutral-stroke-divider-rest);
         width: 100%;
     }

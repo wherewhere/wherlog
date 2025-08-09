@@ -40,18 +40,19 @@
         display: block;
         position: absolute;
         top: 15px;
-        left: unset;
+        left: auto;
         right: 20px;
         right: calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px) + 20px);
         width: 20px;
         height: 20px;
         border: none;
         -webkit-app-region: no-drag;
+        app-region: no-drag;
     }
 
     [dir="rtl"] .nav-menu-icon {
         left: 20px;
         left: calc(env(titlebar-area-x, 0px) + 20px);
-        right: unset;
+        right: auto;
     }
 }

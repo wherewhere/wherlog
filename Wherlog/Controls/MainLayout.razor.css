@@ -44,8 +44,8 @@ div.nav-div {
     }
 
     div.nav-div {
-        padding-right: unset;
-        border-right: unset;
+        padding-right: 0;
+        border-right: none;
         border-bottom: 1px solid var(--neutral-stroke-divider-rest);
     }
 }

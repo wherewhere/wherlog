@@ -1,13 +1,42 @@
 ﻿@using Wherlog.Models
+@using Wherlog.Models.Cate
 @using Wherlog.Models.Post
 @inject IStringLocalizer<PostDetailCard> Loc
 
-<TableContentsView @ref=_toc>
-    <div lang="@Post.Language">
-        <h1 class="post-title">@Post.Title</h1>
-        <MarkdownSection OnContentConverted="_toc.RefreshTableOfContentsAsync" Content="@((Post as IRaw).GetContent())" />
-    </div>
-</TableContentsView>
+<div class="post-detail-card">
+    <TableContentsView @ref=_toc Lang="@Post.Language">
+        <header class="post-header">
+            <h1 class="post-title" itemprop="name headline">@Post.Title</h1>
+            @if (Post is IPost post)
+            {
+                <div class="post-meta-container">
+                    <PostMeta Post="post"></PostMeta>
+                </div>
+            }
+        </header>
+        <MarkdownSection OnContentConverted="_toc.RefreshTableOfContentsAsync"
+                         Content="@((Post as IRaw).GetContent())"
+                         itemprop="articleBody" />
+        @if (Post is IPost { Tags: { Length : > 0} tags })
+        {
+            <div class="post-tags">
+                @foreach ((int index, CateModel tag) in tags.Index())
+                {
+                    <a href="@($"tags/{tag.Name}?api={tag.Api}")" rel="tag">
+                        <FluentIcon Value="new Icons.Filled.Size16.Tag()"
+                                    Color="Color.Custom"
+                                    CustomColor="currentColor" />
+                        @tag.Name
+                    </a>
+                    @if (tags.Length > 1 && index != tags.Length)
+                    {
+                        <span>&nbsp;</span>
+                    }
+                }
+            </div>
+        }
+    </TableContentsView>
+</div>
 
 @code
 {

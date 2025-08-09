@@ -149,7 +149,7 @@
                                     TOption="string"
                                     @bind-Value="theme"
                                     Autocomplete="ComboboxAutocomplete.Both"
-                                    Style="min-width: unset;">
+                                    Style="min-width: 0;">
                         @foreach (KeyValuePair<string, string> type in themes)
                         {
                             <FluentOption Value="@type.Key" title="@type.Value">@type.Key</FluentOption>

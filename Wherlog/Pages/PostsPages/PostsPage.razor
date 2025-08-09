@@ -10,10 +10,10 @@
     <ContentsView>
         <PageHeader Title="@Loc["TitleText"]" />
         <FluentStack Orientation="Orientation.Vertical"
-                     HorizontalAlignment="HorizontalAlignment.Stretch"
+                     HorizontalAlignment="HorizontalAlignment.Right"
                      VerticalAlignment="VerticalAlignment.SpaceBetween">
             <FluentSkeleton Width="38.1966%"
-                            Height="var(--type-ramp-plus-4-line-height)"
+                            Height="var(--type-ramp-minus-1-line-height)"
                             Shimmer="true" />
             <FluentSkeleton Width="100%"
                             Shimmer="true"
@@ -36,9 +36,17 @@ else
     [Parameter]
     public string Path { get; set; }
 
+    [SupplyParameterFromQuery(Name = "api")]
+    private string API { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
-        if (!string.IsNullOrEmpty(Path))
+        if (!string.IsNullOrEmpty(API))
+        {
+            post = await request.GetAsync(API, SourceGenerationContext.Default.EntryPostDetailModel).GetResults();
+            Path = post.Url;
+        }
+        else if (!string.IsNullOrEmpty(Path))
         {
             string path = Path.TrimEnd('/');
             try

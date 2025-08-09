@@ -105,9 +105,18 @@
     [Parameter]
     public string Slug { get; set; }
 
+    [SupplyParameterFromQuery(Name = "api")]
+    private string API { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
-        if (HasSlug)
+        cates ??= await request.GetCatesAsync(CateType.Category).GetResults();
+        if (!string.IsNullOrEmpty(API))
+        {
+            cate = await request.GetAsync(API, SourceGenerationContext.Default.EntryCateDetailModel).GetResults();
+            Slug = cate.Info.Slug;
+        }
+        else if (HasSlug)
         {
             if (Array.Find(cates, x => x.Slug.Equals(Slug, StringComparison.OrdinalIgnoreCase) || x.Name.Equals(Slug, StringComparison.OrdinalIgnoreCase)) is CateIndexModel cateIndex)
             {
@@ -121,7 +130,6 @@
         else
         {
             cate = null;
-            cates ??= await request.GetCatesAsync(CateType.Category).GetResults();
         }
     }
 

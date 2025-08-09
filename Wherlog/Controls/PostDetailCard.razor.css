@@ -1,0 +1,19 @@
+﻿::deep .post-header {
+    margin-bottom: 1rem;
+}
+
+::deep .post-title {
+    margin: initial;
+    overflow-wrap: break-word;
+}
+
+::deep .post-tags {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+::deep .post-tags a svg
+{
+    fill: currentColor;
+    margin-bottom: -3px;
+}

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Wherlog.Models
 {
@@ -27,5 +28,17 @@ namespace Wherlog.Models
 
         [JsonPropertyName("keywords")]
         public string[] Keywords { get; init; }
+
+        [JsonPropertyName("favicon")]
+        public Dictionary<string, string> Favicon { get; init; }
+
+        [JsonPropertyName("social")]
+        public Dictionary<string, IconURL> Social { get; init; }
+
+        [JsonPropertyName("reward")]
+        public Dictionary<string, string> Reward { get; init; }
+
+        [JsonPropertyName("follow_me")]
+        public Dictionary<string, IconURL> FollowMe { get; init; }
     }
 }

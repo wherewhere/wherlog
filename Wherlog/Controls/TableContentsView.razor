@@ -1,7 +1,7 @@
 ﻿@inject IStringLocalizer<TableContentsView> Loc
 
 <div class="table-contents-view">
-    <article id="article">
+    <article itemscope itemtype="http://schema.org/Article" id="article" lang="@Lang">
         @ChildContent
     </article>
     <aside>
@@ -19,6 +19,12 @@
     /// </summary>
     [Parameter]
     public string Heading { get; set; }
+
+    /// <summary>
+    /// Gets or sets the language of the content.
+    /// </summary>
+    [Parameter]
+    public string Lang { get; set; }
 
     /// <summary>
     /// Gets or sets the content of a ContentControl.

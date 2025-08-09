@@ -3,10 +3,10 @@
 
 <div class="main-layout">
     <FluentLayout>
-        <FluentHeader Style="padding: env(titlebar-area-y, 0) calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px)) 0 env(titlebar-area-x, 0); -webkit-app-region: drag;">
+        <FluentHeader Style="padding: env(titlebar-area-y, 0) calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px)) 0 env(titlebar-area-x, 0); -webkit-app-region: drag; app-region: drag;">
             <FluentDesignTheme @bind-Mode="mode" StorageName="theme" />
             <PageThemeColor LightColor="#036ac4" DarkColor="#60c9fc" Mode="mode" />
-            @(site?.Title ?? "wherlog")
+            <span id="page-title">@(site?.Title ?? "wherlog")</span>
         </FluentHeader>
         <FluentStack Class="main-split"
                      Width="100%"
@@ -15,7 +15,7 @@
             <div class="nav-div">
                 <NavMenu />
             </div>
-            <FluentBodyContent Class="body-content" Id="body-content">
+            <FluentBodyContent Id="body-content" Class="body-content">
                 <ErrorBoundary @ref="errorBoundary">
                     <ChildContent>
                         <div class="content">@Body</div>

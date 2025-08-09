@@ -1,4 +1,13 @@
-﻿::deep img {
+﻿::deep .post-header {
+    margin-bottom: 0.5rem;
+}
+
+::deep .post-title {
+    margin: initial;
+    overflow-wrap: break-word;
+}
+
+::deep img {
     max-width: 100%;
 }
 

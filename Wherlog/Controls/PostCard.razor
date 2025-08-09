@@ -6,12 +6,22 @@
 
 @if (Post != null)
 {
-    <div class="post-card" lang="@Post.Language"
-         @onclick="() => OnClick(Post.Url)"
-         @ref="content">
-        <h2>@Post.Title</h2>
-        @(new MarkupString(Post.Excerpt))
-    </div>
+    <article itemscope
+             itemtype="http://schema.org/Article"
+             class="post-card"
+             lang="@Post.Language"
+             @onclick="() => OnClick(Post.Url)"
+             @ref="content">
+        <header class="post-header">
+            <h2 class="post-title" itemprop="name headline">@Post.Title</h2>
+            <div class="post-meta-container">
+                <PostMeta Post="Post"></PostMeta>
+            </div>
+        </header>
+        <div itemprop="articleBody">
+            @(new MarkupString(Post.Excerpt))
+        </div>
+    </article>
 }
 
 @code
