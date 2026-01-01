@@ -25,8 +25,13 @@ function getTheme(theme) {
         case "system":
         case "default":
             return `${baseUrl}.css`;
+        case "fd":
+        case "fd2":
         case "fluent":
+        case "fluentui":
             return `${baseUrl}.fluent.css`;
+        case "windose":
+            return `${baseUrl}.windose.css`;
         case "-1":
         case "none":
             return '';

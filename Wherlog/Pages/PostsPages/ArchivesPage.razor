@@ -207,7 +207,7 @@
     protected override async Task OnParametersSetAsync()
     {
         isLoading = true;
-        useCalendar = await App.SettingsHelper.GetAsync<bool>(SettingsHelper.UseCalendarArchive);
+        useCalendar = SettingsHelper.Get<bool>(SettingsHelper.UseCalendarArchive);
 
         archives ??= await request.GetArchivesAsync().GetResults();
 

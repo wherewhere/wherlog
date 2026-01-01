@@ -36,8 +36,7 @@
         line-height: inherit;
     }
 
-    ::deep fluent-select::part(listbox),
-    ::deep fluent-select .listbox {
+    ::deep fluent-select::part(listbox) {
         max-height: calc(var(--base-height-multiplier) * 30px);
     }
 
@@ -58,5 +57,5 @@
         ::deep .clickable-card:active {
             background: var(--neutral-fill-input-active);
             border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-active);
-            box-shadow: var(--elevation-shadow-card-pressed);
+            box-shadow: var(--elevation-shadow-card-active);
         }
