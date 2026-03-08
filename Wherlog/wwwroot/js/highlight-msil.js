@@ -361,4 +361,4 @@ function LanguageFn(hljs) {
     };
 }
 
-hljs.registerLanguage('msil', LanguageFn);
+export default LanguageFn;

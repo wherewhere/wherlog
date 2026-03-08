@@ -1,43 +1,39 @@
 ﻿// Add Stylesheets
-hljs_addStylesheet("https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/styles/vs.min.css", "highlight-light", null);
-hljs_addStylesheet("https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/styles/vs2015.min.css", "highlight-dark", "disabled");
+hljs_addStylesheet("lib/@highlightjs/cdn-assets/styles/vs.min.css", "highlight-light", null);
+hljs_addStylesheet("lib/@highlightjs/cdn-assets/styles/vs2015.min.css", "highlight-dark", "disabled");
 
 hljs_addInlineStylesheet(`pre[class~="snippet"] {
     --type-ramp-base-font-variations: unset;
     font-weight: bold;
     }`);
 
-// Add Scripts
-const highlight = hljs_addJavaScript("https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js");
+// Add languages
+import dos from "../lib/@highlightjs/cdn-assets/es/languages/dos.min.js";
+import powershell from "../lib/@highlightjs/cdn-assets/es/languages/powershell.min.js";
+import msil from "./highlight-msil.js";
+import hljs from "../lib/@highlightjs/cdn-assets/es/highlight.min.js";
+hljs.registerLanguage("dos", dos);
+hljs.registerLanguage("powershell", powershell);
+hljs.registerLanguage("msil", msil);
 
-// Add custom code
-highlight.onload = () => {
-    // Add languages
-    hljs_addLanguages(
-        "dos",
-        "powershell"
-    );
-    hljs_addJavaScript("js/highlight-msil.js");
-
-    // Switch highlight Dark/Light theme
-    const theme = document.querySelector("fluent-design-theme");
-    if (theme != null) {
-        theme.addEventListener("onchange", e => {
-            if (e.detail.name == "mode") {
-                if (e.detail.newValue === "undefined") { return; }
-                const isDark = e.detail.newValue.includes("dark");
-                hljs_ColorSwitcher(isDark);
-            }
-        });
-    }
-
-    // Detect system theme changing
-    window.matchMedia("(prefers-color-scheme: dark)")
-          .addEventListener("change", _ => hljs_ColorSystem());
-
-    // First/default theme
-    hljs_ColorSystem();
+// Switch highlight Dark/Light theme
+const theme = document.querySelector("fluent-design-theme");
+if (theme != null) {
+    theme.addEventListener("onchange", e => {
+        if (e.detail.name == "mode") {
+            if (e.detail.newValue === "undefined") { return; }
+            const isDark = e.detail.newValue.includes("dark");
+            hljs_ColorSwitcher(isDark);
+        }
+    });
 }
+
+// Detect system theme changing
+window.matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", _ => hljs_ColorSystem());
+
+// First/default theme
+hljs_ColorSystem();
 
 function hljs_ColorSystem() {
     const theme = document.querySelector("fluent-design-theme");
@@ -61,27 +57,6 @@ function hljs_ColorSwitcher(isDark) {
         lightCss.removeAttribute("disabled");
         darkCss.setAttribute("disabled", "disabled");
     }
-}
-
-function hljs_addLanguages(...langs) {
-    langs.forEach(lang => hljs_addJavaScript(`https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/languages/${lang}.min.js`));
-}
-
-// Add a <script> to the <body> element
-function hljs_addJavaScript(src) {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = src;
-    script.async = true;
-
-    script.onerror = () => {
-        // Error occurred while loading script
-        console.error("Error occurred while loading script", src);
-    };
-
-    document.body.appendChild(script);
-
-    return script;
 }
 
 // Add a <link> to the <head> element

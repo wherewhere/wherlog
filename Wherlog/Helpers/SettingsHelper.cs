@@ -21,8 +21,11 @@ namespace Wherlog.Helpers
                 : type == typeof(string) ? Deserialize(value, SourceGenerationContext.Default.String)
                 : JsonSerializer.Deserialize(value, type, SourceGenerationContext.Default) is Type result ? result : default;
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo) =>
-                JsonSerializer.Deserialize(json, jsonTypeInfo) is Type value ? value : default;
+            static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo)
+            {
+                TValue value = JsonSerializer.Deserialize(json, jsonTypeInfo);
+                return Unsafe.As<TValue, Type>(ref value);
+            }
         }
 
         public static void Set<Type>(string key, Type value)

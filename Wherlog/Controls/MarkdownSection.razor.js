@@ -1,4 +1,6 @@
-﻿export function highlight() {
+﻿import hljs from "../lib/@highlightjs/cdn-assets/es/highlight.min.js";
+
+export function highlight() {
     const preTagList = document.getElementsByTagName("pre");
     const numberOfPreTags = preTagList.length;
     for (let i = 0; i < numberOfPreTags; i++) {
@@ -40,4 +42,4 @@ export function setTheme() {
             card.setAttribute("theme", "fluent");
         }
     }
-}
+} 

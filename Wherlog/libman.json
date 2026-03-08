@@ -1,0 +1,17 @@
+{
+  "version": "3.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "@highlightjs/cdn-assets@latest",
+      "files": [
+        "es/highlight.min.js",
+        "es/languages/dos.min.js",
+        "es/languages/powershell.min.js",
+        "styles/vs.min.css",
+        "styles/vs2015.min.css"
+      ],
+      "destination": "wwwroot/lib/@highlightjs/cdn-assets/"
+    }
+  ]
+}

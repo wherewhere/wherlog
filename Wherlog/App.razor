@@ -1,4 +1,8 @@
-﻿@inject IStringLocalizer<App> Loc
+﻿@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+@inject ILogger<App> Logger
+@inject IStringLocalizer<App> Loc
+@inject NavigationManager Navigation
 
 <div class="app-root">
     <HeadContent>
