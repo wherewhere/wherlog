@@ -439,7 +439,7 @@ function LanguageFn(hljs) {
             NUMBERS,
             {
                 className: 'class',
-                begin: '.class',
+                begin: /\.class/,
                 end: '{',
                 excludeEnd: true,
                 keywords: KEYWORDS,
@@ -463,7 +463,7 @@ function LanguageFn(hljs) {
             },
             {
                 className: 'function',
-                begin: '.method',
+                begin: /\.method/,
                 end: '{',
                 excludeEnd: true,
                 keywords: KEYWORDS,
