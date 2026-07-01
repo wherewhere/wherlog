@@ -13,9 +13,13 @@
                 </CascadingValue>
             </HeadingTemplate>
             <ChildContent>
-                <CascadingValue Name="FillColor" Value="@("neutralFillLayerAltRest")" IsFixed="true">
+                <CascadingValue Name="FillColor"
+                                Value="neutralFillLayerAltRest"
+                                IsFixed="true">
                     <FillColorDiv>
-                        <CascadingValue Name="FillColor" TValue="string" Value="null">
+                        <CascadingValue Name="FillColor"
+                                        TValue="string"
+                                        Value="null">
                             @ChildContent
                         </CascadingValue>
                     </FillColorDiv>
@@ -27,6 +31,8 @@
 
 @code
 {
+    private const string neutralFillLayerAltRest = nameof(neutralFillLayerAltRest);
+
     protected override string ClassValue => new CssBuilder(Class)
         .AddClass("settings-expander")
         .Build();
