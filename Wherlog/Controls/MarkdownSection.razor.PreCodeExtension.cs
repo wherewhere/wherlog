@@ -23,7 +23,8 @@ namespace Wherlog.Controls
                 _ = htmlRenderer.ObjectRenderers.Remove(originalCodeBlockRenderer);
             }
 
-            htmlRenderer.ObjectRenderers.AddIfNotAlready(new MarkdownSectionPreCodeRenderer(
+            htmlRenderer.ObjectRenderers.AddIfNotAlready(
+                new MarkdownSectionPreCodeRenderer(
                     new MarkdownSectionPreCodeRendererOptions
                     {
                         PreTagAttributes = "{.snippet .hljs-copy-wrapper}",
