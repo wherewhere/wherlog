@@ -13,7 +13,7 @@ using Wherlog.Helpers;
 
 namespace Wherlog.Pages.ToolsPages
 {
-    public partial class BiliBiliCardPage : IAsyncDisposable
+    public sealed partial class BiliBiliCardPage : IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./{nameof(Pages)}/{nameof(ToolsPages)}/{nameof(BiliBiliCardPage)}.razor.js";
         private readonly HttpClient client = new();
@@ -33,8 +33,8 @@ namespace Wherlog.Pages.ToolsPages
                 case "components":
                     return CreateElement(imageProxy, infoTypes, message, theme);
                 case "html":
-                    _jsModule ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-                    return await _jsModule.InvokeAsync<string>(
+                    _jsModule ??= await JSRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+                    return await _jsModule.TryInvokeAsync<string>(
                         "createCard",
                         imageProxy,
                         infoTypes,
@@ -808,11 +808,11 @@ namespace Wherlog.Pages.ToolsPages
             {
                 // The JSRuntime side may routinely be gone already if the reason we're disposing is that
                 // the client disconnected. This is not an error.
-                Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
+                Logger.LogInformation(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
             }
         }
 
-        private class JsonElementNode(in JsonElement element) : IEnumerable<JsonElementNode>
+        private sealed class JsonElementNode(in JsonElement element) : IEnumerable<JsonElementNode>
         {
             private readonly JsonElement element = element;
 

@@ -25,8 +25,8 @@
     {
         if (firstRender)
         {
-            _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-            await _jsModule.InvokeVoidAsync("registerBackToTopButton", _button.Element);
+            _jsModule = await JSRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+            await _jsModule.TryInvokeVoidAsync("registerBackToTopButton", _button.Element);
             await BackToTopAsync();
         }
     }
@@ -48,7 +48,7 @@
         {
             return;
         }
-        await _jsModule.InvokeVoidAsync("backToTop");
+        await _jsModule.TryInvokeVoidAsync("backToTop");
     }
 
     public async ValueTask DisposeAsync()
@@ -71,7 +71,7 @@
         {
             // The JSRuntime side may routinely be gone already if the reason we're disposing is that
             // the client disconnected. This is not an error.
-            Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
+            Logger.LogInformation(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
         }
     }
 }

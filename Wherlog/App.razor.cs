@@ -12,7 +12,7 @@ using Wherlog.Helpers;
 
 namespace Wherlog
 {
-    public partial class App : IAsyncDisposable
+    public sealed partial class App : IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./{nameof(App)}.razor.js";
 
@@ -49,11 +49,11 @@ namespace Wherlog
         protected override async Task OnInitializedAsync()
         {
             // add highlight for any code blocks
-            _jsModule ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+            _jsModule ??= await JSRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
             Navigation.LocationChanged += OnLocationChanged;
         }
 
-        private async void OnLocationChanged(object sender, LocationChangedEventArgs args) => await _jsModule.InvokeVoidAsync("onLocationChanged");
+        private async void OnLocationChanged(object sender, LocationChangedEventArgs args) => await _jsModule.TryInvokeVoidAsync("onLocationChanged");
 
         public async ValueTask DisposeAsync()
         {
@@ -74,7 +74,7 @@ namespace Wherlog
             {
                 // The JSRuntime side may routinely be gone already if the reason we're disposing is that
                 // the client disconnected. This is not an error.
-                Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
+                Logger.LogInformation(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
             }
         }
     }

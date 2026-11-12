@@ -1,4 +1,4 @@
-﻿import builder from "https://cdn.jsdelivr.net/npm/hexo-tag-bilibili-card/components/bilibili-card-builder/bilibili-card-builder.esm.js";
+﻿import builder from "../../lib/hexo-tag-bilibili-card/components/bilibili-card-builder/bilibili-card-builder.esm.min.js";
 
 export function createCard(imageProxy, infoTypes, message, theme) {
     const card = builder.createCardWithTagName("div", imageProxy, infoTypes, message, theme);
@@ -12,7 +12,7 @@ export function createCard(imageProxy, infoTypes, message, theme) {
 }
 
 function getTheme(theme) {
-    const baseUrl = "https://cdn.jsdelivr.net/npm/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card";
+    const baseUrl = new URL("lib/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card", document.baseURI);
     switch (theme.toLowerCase()) {
         case '1':
         case "light":

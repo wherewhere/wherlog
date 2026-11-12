@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Wherlog.Controls
 {
-    internal class LinkInlineWithAttributesRenderer : LinkInlineRenderer
+    internal sealed class LinkInlineWithAttributesRenderer : LinkInlineRenderer
     {
         public Dictionary<string, string> ImageAttributes { get; } = [];
 

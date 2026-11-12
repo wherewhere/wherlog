@@ -3,7 +3,7 @@
     /// <summary>
     /// Options for MarkdownSectionPreCodeRenderer
     /// </summary>
-    internal class MarkdownSectionPreCodeRendererOptions
+    internal sealed class MarkdownSectionPreCodeRendererOptions
     {
         /// <summary>
         /// html attributes for Tag element in markdig generic attributes format

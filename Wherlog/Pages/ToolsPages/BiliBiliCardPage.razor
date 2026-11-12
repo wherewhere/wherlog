@@ -3,13 +3,12 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JSRuntime
 @inject ILogger<BiliBiliCardPage> Logger
-@using System.Text.Json
 @using System.Text
 
 <TableContentsView>
     <PageHeader Title="哔哩哔哩卡片" Description="使用 bilibili-card 生成哔哩哔哩卡片" />
 
-    <script src="https://cdn.jsdelivr.net/npm/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.js" async></script>
+    <script src="lib/hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.js" async></script>
 
     <FluentStack Orientation="Orientation.Vertical">
         <SettingsGroup>

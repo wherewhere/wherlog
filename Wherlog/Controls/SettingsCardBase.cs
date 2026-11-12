@@ -3,7 +3,7 @@ using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Wherlog.Controls
 {
-    public abstract class SettingsCardBase : FluentComponentBase
+    public closed class SettingsCardBase : FluentComponentBase
     {
         protected abstract string ClassValue { get; }
 

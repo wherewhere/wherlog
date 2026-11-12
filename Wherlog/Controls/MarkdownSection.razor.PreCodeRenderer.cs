@@ -17,7 +17,7 @@ namespace Wherlog.Controls
     /// Modified version of original markdig CodeBlockRenderer
     /// </summary>
     /// <see href="https://github.com/xoofx/markdig/blob/master/src/Markdig/Renderers/Html/CodeBlockRenderer.cs"/>
-    internal class MarkdownSectionPreCodeRenderer(MarkdownSectionPreCodeRendererOptions options) : HtmlObjectRenderer<CodeBlock>
+    internal sealed class MarkdownSectionPreCodeRenderer(MarkdownSectionPreCodeRendererOptions options) : HtmlObjectRenderer<CodeBlock>
     {
         private HashSet<string> _blocksAsDiv;
 
@@ -26,7 +26,7 @@ namespace Wherlog.Controls
         /// <summary>
         /// Gets a map of fenced code block infos that should be rendered as div blocks instead of pre/code blocks.
         /// </summary>
-        public HashSet<string> BlocksAsDiv => _blocksAsDiv ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> BlocksAsDiv => _blocksAsDiv ??= [with(StringComparer.OrdinalIgnoreCase)];
 
         protected override void Write(HtmlRenderer renderer, CodeBlock obj)
         {

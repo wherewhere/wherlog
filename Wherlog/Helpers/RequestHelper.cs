@@ -78,5 +78,5 @@ namespace Wherlog.Helpers
     [JsonSerializable(typeof(Entry<MonthDetailModel>))]
     [JsonSerializable(typeof(Entry<PagesModel>))]
     [JsonSerializable(typeof(Entry<PageDetailModel>))]
-    public partial class SourceGenerationContext : JsonSerializerContext;
+    public sealed partial class SourceGenerationContext : JsonSerializerContext;
 }

@@ -4,7 +4,7 @@ using Microsoft.FluentUI.AspNetCore.Components.Utilities;
 
 namespace Wherlog.Controls
 {
-    public partial class SettingsButton : SettingsCardBase
+    public sealed partial class SettingsButton : SettingsCardBase
     {
         protected override string ClassValue => new CssBuilder(Class)
             .AddClass("settings-button")

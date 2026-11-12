@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Sections;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
+using Wherlog.Helpers;
 
 namespace Wherlog.Controls
 {
@@ -25,9 +26,9 @@ namespace Wherlog.Controls
         {
             if (firstRender)
             {
-                await using IJSObjectReference _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-                _defaultDescription = await _jsModule.InvokeAsync<string>("getAndRemoveExistingMeta", "description");
-                _defaultThemeColors = await _jsModule.InvokeAsync<ThemeColor[]>("getAndRemoveExistingThemeColor");
+                await using IJSObjectReference _jsModule = await JSRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+                _defaultDescription = await _jsModule.TryInvokeAsync<string>("getAndRemoveExistingMeta", "description");
+                _defaultThemeColors = await _jsModule.TryInvokeAsync<ThemeColor[]>("getAndRemoveExistingThemeColor");
                 _isInitialized = true;
                 StateHasChanged();
             }
@@ -81,7 +82,7 @@ namespace Wherlog.Controls
         private void BuildDefaultThemeColorsRenderTree(RenderTreeBuilder builder)
         {
             int index = 0;
-            foreach(ThemeColor themeColor in _defaultThemeColors)
+            foreach (ThemeColor themeColor in _defaultThemeColors)
             {
                 builder.OpenElement(index++, "meta");
                 builder.AddAttribute(index++, "name", "theme-color");

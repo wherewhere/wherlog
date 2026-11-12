@@ -45,14 +45,14 @@ namespace Wherlog.Helpers
 
         public static async ValueTask<string> GetLanguageCodeAsync(IJSRuntime jsRuntime)
         {
-            await using IJSObjectReference _jsModule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-            return await _jsModule.InvokeAsync<string>("getLanguageCode");
+            await using IJSObjectReference _jsModule = await jsRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+            return await _jsModule.TryInvokeAsync<string>("getLanguageCode");
         }
 
         public static async ValueTask SetLanguageCodeAsync(string code, IJSRuntime jsRuntime)
         {
-            await using IJSObjectReference _jsModule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-            await _jsModule.InvokeVoidAsync("setLanguageCode", code);
+            await using IJSObjectReference _jsModule = await jsRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+            await _jsModule.TryInvokeVoidAsync("setLanguageCode", code);
         }
     }
 }

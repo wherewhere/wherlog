@@ -11,7 +11,7 @@ using Wherlog.Helpers;
 
 namespace Wherlog.Controls
 {
-    public partial class TableOfContents : IAsyncDisposable
+    public sealed partial class TableOfContents : IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./{nameof(Controls)}/{nameof(TableOfContents)}.razor.js";
 
@@ -74,8 +74,8 @@ namespace Wherlog.Controls
         {
             if (firstRender)
             {
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
-                _isMobile = await _jsModule.InvokeAsync<bool>("isDevice");
+                _jsModule = await JSRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+                _isMobile = await _jsModule.TryInvokeAsync<bool>("isDevice");
 
                 await QueryDomAsync();
             }
@@ -88,7 +88,7 @@ namespace Wherlog.Controls
                 return;
             }
 
-            Anchor[] foundAnchors = await _jsModule.InvokeAsync<Anchor[]>("queryDomForTocEntries");
+            Anchor[] foundAnchors = await _jsModule.TryInvokeAsync<Anchor[]>("queryDomForTocEntries");
 
             if (AnchorsEqual(_anchors, foundAnchors))
             {
@@ -99,7 +99,7 @@ namespace Wherlog.Controls
             _expanded = !_isMobile && _anchors?.Length > 0;
             StateHasChanged();
 
-            await _jsModule.InvokeVoidAsync("registerSidebarTOC");
+            await _jsModule.TryInvokeVoidAsync("registerSidebarTOC");
         }
 
         private static bool AnchorsEqual(Anchor[] firstSet, Anchor[] secondSet) =>
@@ -178,7 +178,7 @@ namespace Wherlog.Controls
             {
                 // The JSRuntime side may routinely be gone already if the reason we're disposing is that
                 // the client disconnected. This is not an error.
-                Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
+                Logger.LogInformation(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
             }
         }
     }

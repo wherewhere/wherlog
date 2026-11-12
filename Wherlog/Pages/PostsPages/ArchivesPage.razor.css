@@ -48,6 +48,37 @@ aside {
     }
 }
 
+@container (max-width: 767px) {
+    div.archives-page {
+        flex-direction: column-reverse;
+    }
+
+    article {
+        padding: 0.4rem 0 3rem 0;
+        border-right: none;
+        width: 100%;
+    }
+
+    aside {
+        padding: 1rem 0 0.6rem 0;
+        height: auto;
+        width: auto;
+        position: static;
+        border-bottom: 1px solid var(--neutral-stroke-divider-rest);
+    }
+}
+
+@container (min-width: 768px) and (max-width: 1024px) {
+    aside {
+        padding: 1.5em 0.75em 1em 0.75em;
+        width: 18rem;
+    }
+
+    article {
+        width: calc(100% - 16.5rem);
+    }
+}
+
 /* Surface Duo specific styling */
 @media (horizontal-viewport-segments: 2) {
     div.archives-page {

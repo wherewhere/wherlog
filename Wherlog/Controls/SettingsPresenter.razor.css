@@ -34,6 +34,8 @@ span.description {
 
 div.content-presenter {
     display: grid;
+    grid-auto-flow: column;
+    gap: calc(var(--design-unit) * 1px);
 }
 
 ::deep a.text-button {
@@ -55,6 +57,7 @@ div.content-presenter {
 
     div.content-presenter {
         margin: var(--settings-card-vertical-header-content-spacing);
+        grid-auto-flow: row;
     }
 
     .settings-nowarp div.settings-presenter {
@@ -70,6 +73,7 @@ div.content-presenter {
 
         .settings-nowarp div.settings-presenter div.content-presenter {
             margin: 0;
+            grid-auto-flow: column;
         }
 }
 
@@ -87,6 +91,7 @@ div.content-presenter {
 
     div.content-presenter {
         margin: var(--settings-card-vertical-header-content-spacing);
+        grid-auto-flow: row;
     }
 
     .settings-nowarp div.settings-presenter {
@@ -102,6 +107,7 @@ div.content-presenter {
 
         .settings-nowarp div.settings-presenter div.content-presenter {
             margin: 0;
+            grid-auto-flow: column;
         }
 }
 
@@ -118,4 +124,5 @@ div.content-presenter {
 
     .settings-keepwarp div.settings-presenter div.content-presenter {
         margin: var(--settings-card-vertical-header-content-spacing);
+        grid-auto-flow: row;
     }

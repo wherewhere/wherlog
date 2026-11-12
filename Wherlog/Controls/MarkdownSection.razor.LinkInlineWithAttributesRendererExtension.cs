@@ -4,7 +4,7 @@ using Markdig.Renderers.Html.Inlines;
 
 namespace Wherlog.Controls
 {
-    public class LinkInlineWithAttributesRendererExtension : IMarkdownExtension
+    public sealed class LinkInlineWithAttributesRendererExtension : IMarkdownExtension
     {
         public void Setup(MarkdownPipelineBuilder pipeline)
         {

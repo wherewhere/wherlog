@@ -10,11 +10,9 @@ using Wherlog.Helpers;
 
 namespace Wherlog.Controls
 {
-    public partial class MarkdownSection : FluentComponentBase, IAsyncDisposable
+    public sealed partial class MarkdownSection : FluentComponentBase, IAsyncDisposable
     {
         private const string JAVASCRIPT_FILE = $"./{nameof(Controls)}/{nameof(MarkdownSection)}.razor.js";
-
-        private string _content;
         private bool _raiseContentConverted;
         private IJSObjectReference _jsModule;
 
@@ -36,16 +34,16 @@ namespace Wherlog.Controls
 
         public string InternalContent
         {
-            get => _content;
+            get;
             set
             {
-                if (_content != value)
+                if (field != value)
                 {
-                    _content = value;
+                    field = value;
 
                     HtmlContent = string.IsNullOrWhiteSpace(value)
                         ? new MarkupString(value)
-                        : ConvertToMarkupString(_content);
+                        : ConvertToMarkupString(field);
 
                     if (OnContentConverted.HasDelegate)
                     {
@@ -67,17 +65,17 @@ namespace Wherlog.Controls
             if (firstRender)
             {
                 // add highlight for any code blocks
-                _jsModule ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
+                _jsModule ??= await JSRuntime.TryInvokeAsync<IJSObjectReference>("import", JAVASCRIPT_FILE);
             }
 
             if (_raiseContentConverted)
             {
-                await _jsModule.InvokeVoidAsync("highlight");
-                await _jsModule.InvokeVoidAsync("addCopyButton");
+                await _jsModule.TryInvokeVoidAsync("highlight");
+                await _jsModule.TryInvokeVoidAsync("addCopyButton");
 
                 if (IsChangeCardTheme)
                 {
-                    await _jsModule.InvokeVoidAsync("setTheme");
+                    await _jsModule.TryInvokeVoidAsync("setTheme");
                 }
 
                 _raiseContentConverted = false;
@@ -94,12 +92,13 @@ namespace Wherlog.Controls
             {
                 MarkdownPipelineBuilder builder = new MarkdownPipelineBuilder()
                         .UseAdvancedExtensions()
+                        .Use<LinkInlineWithAttributesRendererExtension>()
                         .Use<MarkdownSectionPreCodeExtension>();
 
                 MarkdownPipeline pipeline = builder.Build();
 
                 // Convert markdown string to HTML
-                string html = Markdown.ToHtml(value, pipeline);
+                string html = Markdown.ToHtml(value.ReplaceCDN(), pipeline);
 
                 // Return sanitized HTML as a MarkupString that Blazor can render
                 return new MarkupString(html);
@@ -125,7 +124,7 @@ namespace Wherlog.Controls
             {
                 // The JSRuntime side may routinely be gone already if the reason we're disposing is that
                 // the client disconnected. This is not an error.
-                Logger.LogWarning(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
+                Logger.LogInformation(ex, "JSRuntime has already disconnected. {message} (0x{hResult:X})", ex.GetMessage(), ex.HResult);
             }
         }
     }

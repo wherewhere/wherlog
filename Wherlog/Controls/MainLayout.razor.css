@@ -18,6 +18,7 @@ div.nav-div {
     align-self: stretch !important;
     width: 100%;
     transition: all 0.083s ease-in-out;
+    container-type: inline-size;
 }
 
 .blazor-error-root {

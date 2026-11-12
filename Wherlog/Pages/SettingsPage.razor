@@ -280,7 +280,9 @@
                         @Loc["NavigateSettingsDescription"]
                     </Description>
                     <ActionContent>
-                        <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
+                        <FluentStack HorizontalAlignment="HorizontalAlignment.Right"
+                                     HorizontalGap="4"
+                                     Style="max-width: var(--settings-card-content-min-width);">
                             <FluentTextField Placeholder="@Loc["NavigateSettingsInput"]"
                                              Style="flex: 1;"
                                              @bind-Value="path" />
@@ -302,7 +304,9 @@
                         @Loc["SourceSettingsDescription"]
                     </Description>
                     <ActionContent>
-                        <FluentStack HorizontalAlignment="HorizontalAlignment.Right" Style="max-width: var(--settings-card-content-min-width);">
+                        <FluentStack HorizontalAlignment="HorizontalAlignment.Right"
+                                     HorizontalGap="4"
+                                     Style="max-width: var(--settings-card-content-min-width);">
                             <FluentTextField Placeholder="@Loc["NavigateSettingsInput"]"
                                              Style="flex: 1;"
                                              @bind-Value="_baseUrl" />

@@ -87,6 +87,7 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+.artifacts/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
@@ -428,5 +429,5 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# VS Code C# Dev Kit
+# Official VS Code C# Dev Kit Extension exclusion
 *.lscache

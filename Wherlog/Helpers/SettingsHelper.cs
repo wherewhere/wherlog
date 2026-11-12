@@ -14,29 +14,40 @@ namespace Wherlog.Helpers
 
         public static Type Get<Type>(string key)
         {
-            string value = GetItem(key);
-            if (string.IsNullOrEmpty(value)) { return default; }
-            System.Type type = typeof(Type);
-            return type == typeof(bool) ? Deserialize(value, SourceGenerationContext.Default.Boolean)
-                : type == typeof(string) ? Deserialize(value, SourceGenerationContext.Default.String)
-                : JsonSerializer.Deserialize(value, type, SourceGenerationContext.Default) is Type result ? result : default;
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo)
+            try
             {
-                TValue value = JsonSerializer.Deserialize(json, jsonTypeInfo);
-                return Unsafe.As<TValue, Type>(ref value);
+                string value = GetItem(key);
+                if (string.IsNullOrEmpty(value)) { return default; }
+                System.Type type = typeof(Type);
+                return type == typeof(bool) ? Deserialize(value, SourceGenerationContext.Default.Boolean)
+                    : type == typeof(string) ? Deserialize(value, SourceGenerationContext.Default.String)
+                    : JsonSerializer.Deserialize(value, type, SourceGenerationContext.Default) is Type result ? result : default;
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                static Type Deserialize<TValue>([StringSyntax(StringSyntaxAttribute.Json)] string json, JsonTypeInfo<TValue> jsonTypeInfo)
+                {
+                    TValue value = JsonSerializer.Deserialize(json, jsonTypeInfo);
+                    return Unsafe.As<TValue, Type>(ref value);
+                }
+            }
+            catch
+            {
+                return default;
             }
         }
 
         public static void Set<Type>(string key, Type value)
         {
-            string result = value switch
+            try
             {
-                bool => JsonSerializer.Serialize(value, SourceGenerationContext.Default.Boolean),
-                string => JsonSerializer.Serialize(value, SourceGenerationContext.Default.String),
-                _ => JsonSerializer.Serialize(value, typeof(Type), SourceGenerationContext.Default)
-            };
-            SetItem(key, result);
+                string result = value switch
+                {
+                    bool => JsonSerializer.Serialize(value, SourceGenerationContext.Default.Boolean),
+                    string => JsonSerializer.Serialize(value, SourceGenerationContext.Default.String),
+                    _ => JsonSerializer.Serialize(value, typeof(Type), SourceGenerationContext.Default)
+                };
+                SetItem(key, result);
+            }
+            catch { }
         }
 
         public static void Reset() => Clear();

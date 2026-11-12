@@ -1,4 +1,8 @@
-﻿::deep .post-header {
+﻿div.post-detail-card {
+    container-type: inline-size;
+}
+
+::deep .post-header {
     margin-bottom: 1rem;
 }
 
@@ -12,8 +16,7 @@
     text-align: right;
 }
 
-::deep .post-tags a svg
-{
-    fill: currentColor;
-    margin-bottom: -3px;
-}
+    ::deep .post-tags a svg {
+        fill: currentColor;
+        margin-bottom: -3px;
+    }

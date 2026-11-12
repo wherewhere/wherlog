@@ -4,7 +4,7 @@ using Markdig.Renderers.Html;
 
 namespace Wherlog.Controls
 {
-    internal class MarkdownSectionPreCodeExtension : IMarkdownExtension
+    internal sealed class MarkdownSectionPreCodeExtension : IMarkdownExtension
     {
         public void Setup(MarkdownPipelineBuilder pipeline)
         {

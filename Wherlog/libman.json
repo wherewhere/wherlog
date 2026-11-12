@@ -12,6 +12,45 @@
         "styles/vs2015.min.css"
       ],
       "destination": "wwwroot/lib/@highlightjs/cdn-assets/"
+    },
+    {
+      "library": "hexo-tag-bilibili-card@latest",
+      "files": [
+        "components/bilibili-card/bilibili-card.js",
+        "components/bilibili-card/bilibili-card.css",
+        "components/bilibili-card/bilibili-card.dark.css",
+        "components/bilibili-card/bilibili-card.light.css",
+        "components/bilibili-card/bilibili-card.fluent.css",
+        "components/bilibili-card/bilibili-card.windose.css",
+        "components/bilibili-card-message/bilibili-card-message.js",
+        "components/bilibili-card-message/bilibili-card-message.esm.min.js",
+        "components/bilibili-card-builder/bilibili-card-builder.js",
+        "components/bilibili-card-builder/bilibili-card-builder.esm.min.js"
+      ],
+      "destination": "wwwroot/lib/hexo-tag-bilibili-card/"
+    },
+    {
+      "library": "js-base64@latest",
+      "files": [
+        "base64.min.js"
+      ],
+      "destination": "wwwroot/lib/js-base64/"
+    },
+    {
+      "library": "marked@latest",
+      "files": [
+        "lib/marked.umd.min.js"
+      ],
+      "destination": "wwwroot/lib/marked/"
+    },
+    {
+      "library": "swagger-ui-dist@latest",
+      "files": [
+        "swagger-ui-bundle.min.js",
+        "swagger-ui.css",
+        "swagger-ui.css.map"
+      ],
+      "destination": "wwwroot/lib/swagger-ui-dist/"
     }
   ]
 }
